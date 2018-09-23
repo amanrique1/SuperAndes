@@ -1,80 +1,50 @@
-package model;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Date;
+/**
+ * 
+ */
+package main.java.model;
 
+/**
+ * @author Andres
+ *
+ */
+public class Categoria {
 
-
-public class Categoria
-{
-	
 	private String nombreCategoria;
-
-
 	
 	private boolean perecedero;
-
 	
-	
-	private Date fechaVencimiento;
-
-	
-	
-	private ArrayList<TipoProducto> tiposProducto;
-
-	public Categoria(String pNombre, Boolean pPerecedero, Date pFecha){
-	nombreCategoria=pNombre;
-	perecedero=pPerecedero;
-	fechaVencimiento=pFecha;
-	tiposProducto=new ArrayList<TipoProducto>();
+	public Categoria(String pNombre,boolean pPerecedero)
+	{
+		nombreCategoria=pNombre;
+		perecedero=pPerecedero;
 	}
-	
+
+	/**
+	 * @return the nombreCategoria
+	 */
 	public String getNombreCategoria() {
 		return nombreCategoria;
 	}
 
-
+	/**
+	 * @param nombreCategoria the nombreCategoria to set
+	 */
 	public void setNombreCategoria(String nombreCategoria) {
 		this.nombreCategoria = nombreCategoria;
 	}
 
-
+	/**
+	 * @return the perecedero
+	 */
 	public boolean isPerecedero() {
 		return perecedero;
 	}
 
-
+	/**
+	 * @param perecedero the perecedero to set
+	 */
 	public void setPerecedero(boolean perecedero) {
 		this.perecedero = perecedero;
 	}
-
-
-	public Date getFechaVencimiento() {
-		return fechaVencimiento;
-	}
-
-
-	public void setFechaVencimiento(Date fechaVencimiento) {
-		this.fechaVencimiento = fechaVencimiento;
-	}
-
-
-	public ArrayList<TipoProducto> getTipoProducto() {
-		return tiposProducto;
-	}
-
-
-	public void setTipoProducto(ArrayList<TipoProducto> tipoProducto) {
-		this.tiposProducto = tipoProducto;
-	}
 	
-	public void addTipoProducto(TipoProducto tipoProducto) {
-		tiposProducto.add(tipoProducto);
-	}
-
-
-
-
 }
-

@@ -1,42 +1,74 @@
-package model;
-import java.util.HashSet;
-import java.util.Set;
+/**
+ * 
+ */
+package main.java.model;
 
+import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * @author Andres
+ *
  */
+public class Factura {
 
-public class Factura
-{
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
+	private Long id;
 	
-	public Persona persona;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
+	private Timestamp fecha;
 	
-	public Set<ProductoVenta> productosVendidos;
-
+	private Long idPersona;
+	
+	
+	public Factura(Long pId,Timestamp pFecha,Long pIdPersona)
+	{
+		id=pId;
+		fecha=pFecha;
+		idPersona=pIdPersona;
+		
+	}
+	
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
+	 * @return the id
 	 */
-	public Factura(){
-		super();
+	public Long getId() {
+		return id;
 	}
 
-}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
+	/**
+	 * @return the fecha
+	 */
+	public Timestamp getFecha() {
+		return fecha;
+	}
+
+	/**
+	 * @param fecha the fecha to set
+	 */
+	public void setFecha(Timestamp fecha) {
+		this.fecha = fecha;
+	}
+
+	/**
+	 * @return the idPersona
+	 */
+	public Long getIdPersona() {
+		return idPersona;
+	}
+
+	/**
+	 * @param idPersona the idPersona to set
+	 */
+	public void setIdPersona(Long idPersona) {
+		this.idPersona = idPersona;
+	}
+
+
+}

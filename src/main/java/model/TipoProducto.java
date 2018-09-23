@@ -1,60 +1,52 @@
-package model;
-import java.util.HashSet;
-import java.util.Set;
-
+/**
+ * 
+ */
+package main.java.model;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * @author Andres
+ *
  */
-
-public class TipoProducto
-{
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
+public class TipoProducto {
 	
-	private String nombreTipo;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
+	private String tipo;
 	
-	private String metodoAlmacenamiento;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
+	private String codigoBarras;
 	
-	public Set<ProductoVenta> producto;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Categoria categoria;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public TipoProducto(){
-		super();
+	public TipoProducto(String pTipo,String pCodigoBarras)
+	{
+		tipo=pTipo;
+		codigoBarras=pCodigoBarras;
 	}
 
-}
+	/**
+	 * @return the tipo
+	 */
+	public String getTipo() {
+		return tipo;
+	}
 
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	/**
+	 * @return the codigoBarras
+	 */
+	public String getCodigoBarras() {
+		return codigoBarras;
+	}
+
+	/**
+	 * @param codigoBarras the codigoBarras to set
+	 */
+	public void setCodigoBarras(String codigoBarras) {
+		this.codigoBarras = codigoBarras;
+	}
+
+	
+	
+}
