@@ -213,6 +213,146 @@ public class PersistenciaSuperAndes
 	 */
 	private void crearClasesSQL ()
 	{
-		
+
+	}
+
+	/**
+	 * @return La cadena de caracteres con el nombre del secuenciador de parranderos
+	 */
+	public String darSeqUniandes ()
+	{
+		return tablas.get (0);
+	}
+
+	public String darTablaEmpresas()
+	{
+		return tablas.get (1);
+	}
+
+	public String darTablaClientePersona()
+	{
+		return tablas.get (2);
+	}
+
+	public String darTablaFacturas()
+	{
+		return tablas.get (3);
+	}
+
+	public String darTablaFacturasSucursal()
+	{
+		return tablas.get (4);
+	}
+
+	public String darTablaProductosVendidos()
+	{
+		return tablas.get (5);
+	}
+	public String darTablaProductosEnVenta()
+	{
+		return tablas.get (6);
+	}
+	public String darTablaCategoriaTipo()
+	{
+		return tablas.get (7);
+	}
+	public String darTablaCategoria()
+	{
+		return tablas.get (8);
+	}
+	public String darTablaLote()
+	{
+		return tablas.get (9);
+	}
+	public String darTablaTipoProducto()
+	{
+		return tablas.get (10);
+	}
+	public String darTablaProductosEnVentaSucursal()
+	{
+		return tablas.get (11);
+	}
+	public String darTablaEstanteProductos()
+	{
+		return tablas.get (12);
+	}
+	public String darTablaProductosPromocion()
+	{
+		return tablas.get (13);
+	}
+	public String darTablaSucursal()
+	{
+		return tablas.get (14);
+	}
+	public String darTablaEstante()
+	{
+		return tablas.get (15);
+	}
+	public String darTablaEstanteTipoProductos()
+	{
+		return tablas.get (16);
+	}
+	public String darTablaPromocion()
+	{
+		return tablas.get (17);
+	}
+	public String darTablaBodegas()
+	{
+		return tablas.get (18);
+	}
+	public String darTablaEstantesPromociones()
+	{
+		return tablas.get (19);
+	}
+	public String darTablaBodegaPromocion()
+	{
+		return tablas.get (20);
+	}
+	public String darTablaBodegaTipoProducto()
+	{
+		return tablas.get (21);
+	}
+	public String darTablaPedido()
+	{
+		return tablas.get (22);
+	}
+	public String darTablaProveedor()
+	{
+		return tablas.get (23);
+	}
+	public String darTablaProductosProveedor()
+	{
+		return tablas.get (24);
+	}
+
+
+
+
+	/**
+	 * Transacción para el generador de secuencia de Parranderos
+	 * Adiciona entradas al log de la aplicación
+	 * @return El siguiente número del secuenciador de Parranderos
+	 */
+	private long nextval ()
+	{
+		long resp = sqlUtil.nextval (pmf.getPersistenceManager());
+		log.trace ("Generando secuencia: " + resp);
+		return resp;
+	}
+
+	/**
+	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle específico del problema encontrado
+	 * @param e - La excepción que ocurrio
+	 * @return El mensaje de la excepción JDO
+	 */
+	private String darDetalleException(Exception e) 
+	{
+		String resp = "";
+		if (e.getClass().getName().equals("javax.jdo.JDODataStoreException"))
+		{
+			JDODataStoreException je = (javax.jdo.JDODataStoreException) e;
+			return je.getNestedExceptions() [0].getMessage();
+		}
+		return resp;
 	}
 }
