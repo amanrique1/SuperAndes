@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class Persona extends Comprador {
 
-	private Long cedula;
+	private String cedula;
 
-	public Persona(Long pCedula,String pNombre,String pCorreo,double pPuntos)
+	public Persona(String pCedula,String pNombre,String pCorreo)
 	{
 		super(pNombre, pCorreo, "CEDULA", 0);
 		cedula=pCedula;
@@ -24,14 +24,14 @@ public class Persona extends Comprador {
 	/**
 	 * @return the cedula
 	 */
-	public Long getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 
 	/**
 	 * @param cedula the cedula to set
 	 */
-	public void setCedula(Long cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
 

@@ -10,7 +10,7 @@ public class Empresa extends Comprador
 	private String direccion;
 
 	public Empresa(String pNit,String pNombre,String pCorreoElectronico,String pDireccion){
-		super(pNombre,pCorreoElectronico,"NIT",0);
+		super(pNit,pNombre,pCorreoElectronico,0);
 		nit=pNit;		
 		direccion=pDireccion;
 		
