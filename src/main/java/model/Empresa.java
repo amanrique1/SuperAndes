@@ -1,23 +1,19 @@
 package main.java.model;
 
 
-public class Empresa
+public class Empresa extends Comprador
 {
 	
 	
 	private String nit;
-
-	private String nombre;
-
-	private String correoElectronico;
 	
 	private String direccion;
 
 	public Empresa(String pNit,String pNombre,String pCorreoElectronico,String pDireccion){
-		nit=pNit;
-		nombre=pNombre;
-		correoElectronico=pCorreoElectronico;
+		super(pNombre,pCorreoElectronico,"NIT",0);
+		nit=pNit;		
 		direccion=pDireccion;
+		
 	}
 
 	/**
@@ -34,34 +30,7 @@ public class Empresa
 		this.nit = nit;
 	}
 
-	/**
-	 * @return the nombre
-	 */
-	public String getNombre() {
-		return nombre;
-	}
-
-	/**
-	 * @param nombre the nombre to set
-	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	/**
-	 * @return the correoElectronico
-	 */
-	public String getCorreoElectronico() {
-		return correoElectronico;
-	}
-
-	/**
-	 * @param correoElectronico the correoElectronico to set
-	 */
-	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
-	}
-
+	
 	/**
 	 * @return the direccion
 	 */

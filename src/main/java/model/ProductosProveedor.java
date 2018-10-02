@@ -11,49 +11,34 @@ import java.sql.Timestamp;
  */
 public class ProductosProveedor {
 
-	private String tipoProducto;
-	
+	private String codigoProducto;
+
 	private Long idPedido;
-	
+
 	private double precioUnidad;
-	
+
 	private int cantidadUnidades;
-	
+
 	private Long idProveedor;
-	
-	private String nombreProducto;
-	
+
 	private Timestamp fechaVencimiento;
-	
+
 	private double calificacionCalidad;
-	
-	public ProductosProveedor(String pTipo,Long pIdP,double pPrecioU,int pCanti,Long pIdProv,String pNombrePro,Timestamp pFechaV,double pCali)
+
+	public ProductosProveedor(String pCodigo,Long pIdP,double pPrecioU,int pCanti,Long pIdProv,Timestamp pFechaV,double pCali)
 	{
-		
-		tipoProducto=pTipo;
+
+		codigoProducto=pCodigo;
 		idPedido=pIdP;
 		precioUnidad=pPrecioU;
 		cantidadUnidades=pCanti;
 		idProveedor=pIdProv;
-		nombreProducto=pNombrePro;
 		fechaVencimiento=pFechaV;
 		calificacionCalidad=pCali;
-		
+
 	}
 
-	/**
-	 * @return the tipoProducto
-	 */
-	public String getTipoProducto() {
-		return tipoProducto;
-	}
-
-	/**
-	 * @param tipoProducto the tipoProducto to set
-	 */
-	public void setTipoProducto(String tipoProducto) {
-		this.tipoProducto = tipoProducto;
-	}
+	
 
 	/**
 	 * @return the idPedido
@@ -111,19 +96,25 @@ public class ProductosProveedor {
 		this.idProveedor = idProveedor;
 	}
 
+	
+	
 	/**
-	 * @return the nombreProducto
+	 * @return the codigoProducto
 	 */
-	public String getNombreProducto() {
-		return nombreProducto;
+	public String getCodigoProducto() {
+		return codigoProducto;
 	}
 
+
+
 	/**
-	 * @param nombreProducto the nombreProducto to set
+	 * @param codigoProducto the codigoProducto to set
 	 */
-	public void setNombreProducto(String nombreProducto) {
-		this.nombreProducto = nombreProducto;
+	public void setCodigoProducto(String codigoProducto) {
+		this.codigoProducto = codigoProducto;
 	}
+
+
 
 	/**
 	 * @return the fechaVencimiento
@@ -152,5 +143,5 @@ public class ProductosProveedor {
 	public void setCalificacionCalidad(double calificacionCalidad) {
 		this.calificacionCalidad = calificacionCalidad;
 	}
-	
+
 }

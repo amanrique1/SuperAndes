@@ -3,46 +3,28 @@
  */
 package main.java.model;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * @author Andres
  *
  */
-public class ClientesPersona {
+public abstract class Comprador {
+	
+	protected String nombre;
+	
+	protected String correoElectronico;
+	
+	protected String identificador;
+	
+	protected double puntos;
 
-	private Long cedula;
-
-	private String nombre;
-
-	private String correoElectronico;
-
-	private double puntos;
-
-	public ClientesPersona(Long pCedula,String pNombre,String pCorreo,double pPuntos)
+	public Comprador(String pNombre, String pCorreoElectronico, String pIdentificador, double pPuntos)
 	{
-		cedula=pCedula;
 		nombre=pNombre;
-		correoElectronico=pCorreo;
+		correoElectronico=pCorreoElectronico;
+		identificador=pIdentificador;
 		puntos=pPuntos;
-		
 	}
-
-	/**
-	 * @return the cedula
-	 */
-	public Long getCedula() {
-		return cedula;
-	}
-
-	/**
-	 * @param cedula the cedula to set
-	 */
-	public void setCedula(Long cedula) {
-		this.cedula = cedula;
-	}
-
+	
 	/**
 	 * @return the nombre
 	 */
@@ -72,6 +54,20 @@ public class ClientesPersona {
 	}
 
 	/**
+	 * @return the identificador
+	 */
+	public String getIdentificador() {
+		return identificador;
+	}
+
+	/**
+	 * @param identificador the identificador to set
+	 */
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
+	}
+
+	/**
 	 * @return the puntos
 	 */
 	public double getPuntos() {
@@ -84,7 +80,7 @@ public class ClientesPersona {
 	public void setPuntos(double puntos) {
 		this.puntos = puntos;
 	}
-
+	
 	
 
 }

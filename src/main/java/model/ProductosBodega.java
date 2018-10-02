@@ -7,17 +7,40 @@ package main.java.model;
  * @author Andres
  *
  */
-public class BodegaProductos {
+public class ProductosBodega {
 	
 	private String codigoProducto;
 	
 	private Long idBodega;
 	
-	public BodegaProductos(String pCodigo,Long pId)
+	private int cantidadProductos;
+	
+	public ProductosBodega(String pCodigo,Long pId, int pCant)
 	{
 		codigoProducto=pCodigo;
 		idBodega=pId;
+		cantidadProductos=pCant;
 	}
+	
+	
+
+	/**
+	 * @return the cantidadProductos
+	 */
+	public int getCantidadProductos() {
+		return cantidadProductos;
+	}
+
+
+
+	/**
+	 * @param cantidadProductos the cantidadProductos to set
+	 */
+	public void setCantidadProductos(int cantidadProductos) {
+		this.cantidadProductos = cantidadProductos;
+	}
+
+
 
 	/**
 	 * @return the codigoProducto

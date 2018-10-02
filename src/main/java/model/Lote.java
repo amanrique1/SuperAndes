@@ -11,29 +11,51 @@ import java.sql.Timestamp;
  */
 public class Lote {
 
-	private Long id;
+	private String codigoProducto;
 	
 	private Timestamp fechaVencimiento;
 	
-	public Lote(Long pId,Timestamp pFecha)
+	private int cantidadProductos;
+	
+	public Lote(String pCodigo ,Timestamp pFecha, int pCantidad)
 	{
-		id=pId;
+		codigoProducto=pCodigo;
 		fechaVencimiento=pFecha;
+		cantidadProductos=pCantidad;
 	}
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
 
 	/**
-	 * @param id the id to set
+	 * @return the codigoProducto
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public String getCodigoProducto() {
+		return codigoProducto;
 	}
+
+
+	/**
+	 * @param codigoProducto the codigoProducto to set
+	 */
+	public void setCodigoProducto(String codigoProducto) {
+		this.codigoProducto = codigoProducto;
+	}
+
+
+	/**
+	 * @return the cantidadProductos
+	 */
+	public int getCantidadProductos() {
+		return cantidadProductos;
+	}
+
+
+	/**
+	 * @param cantidadProductos the cantidadProductos to set
+	 */
+	public void setCantidadProductos(int cantidadProductos) {
+		this.cantidadProductos = cantidadProductos;
+	}
+
 
 	/**
 	 * @return the fechaVencimiento

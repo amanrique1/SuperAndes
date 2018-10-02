@@ -13,10 +13,27 @@ public class TipoProducto {
 	
 	private String codigoBarras;
 	
-	public TipoProducto(String pTipo,String pCodigoBarras)
+	private String nombreCategoria;
+	
+	public TipoProducto(String pTipo,String pCodigoBarras,String pCategoria)
 	{
 		tipo=pTipo;
 		codigoBarras=pCodigoBarras;
+		nombreCategoria=pCategoria;
+	}
+
+	/**
+	 * @return the nombreCategoria
+	 */
+	public String getNombreCategoria() {
+		return nombreCategoria;
+	}
+
+	/**
+	 * @param nombreCategoria the nombreCategoria to set
+	 */
+	public void setNombreCategoria(String nombreCategoria) {
+		this.nombreCategoria = nombreCategoria;
 	}
 
 	/**

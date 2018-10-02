@@ -1,5 +1,5 @@
 package main.java.persistence;
 
-public class SQLProductosEnVenta {
+public class SQLProductosBodega {
 
 }

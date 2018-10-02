@@ -1,16 +1,39 @@
 package main.java.model;
 
-public class EstanteProductos {
+public class ProductosEstante {
 
 	private Long idEstante;
 	
 	private String codigoBarrasProducto;
 	
-	public  EstanteProductos(Long pId,String pCodigoBarras) {
+	private int cantidad;
+	
+	public  ProductosEstante(Long pId,String pCodigoBarras, int pCantidad) {
 		
 		idEstante=pId;
 		codigoBarrasProducto=pCodigoBarras;
+		cantidad=pCantidad;
 	}
+
+	
+	
+	/**
+	 * @return the cantidad
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+
+
+	/**
+	 * @param cantidad the cantidad to set
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+
 
 	/**
 	 * @return the idEstante

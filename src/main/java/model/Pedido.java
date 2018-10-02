@@ -13,15 +13,7 @@ public class Pedido {
 
 	private Long id;
 	
-	private double volumen;
-	
-	private double peso;
-	
-	private String unidadesPeso;
-	
-	private String unidadesVol;
-	
-	private Timestamp fechaPedido;
+	private Timestamp fechaEntregaAcordado;
 	
 	private Timestamp fechaEntrega;
 	
@@ -34,11 +26,7 @@ public class Pedido {
 	public Pedido(Long pId,double pVolumen,double pPeso,String pUnidadesP,String pUnidadesV,Timestamp pFechaP,Timestamp pFechaE,EstadoPedido pEstado,Long pIdSuc,Long pIdPro)
 	{
 		id=pId;
-		volumen=pVolumen;
-		peso=pPeso;
-		unidadesPeso=pUnidadesP;
-		unidadesVol=pUnidadesV;
-		fechaPedido=pFechaP;
+		fechaEntregaAcordado=pFechaP;
 		fechaEntrega=pFechaE;
 		estado=pEstado;
 		idSucursal=pIdSuc;
@@ -59,74 +47,19 @@ public class Pedido {
 		this.id = id;
 	}
 
+
 	/**
-	 * @return the volumen
+	 * @return the fechaEntregaAcordado
 	 */
-	public double getVolumen() {
-		return volumen;
+	public Timestamp getFechaEntregaAcordado() {
+		return fechaEntregaAcordado;
 	}
 
 	/**
-	 * @param volumen the volumen to set
+	 * @param fechaEntregaAcordado the fechaEntregaAcordado to set
 	 */
-	public void setVolumen(double volumen) {
-		this.volumen = volumen;
-	}
-
-	/**
-	 * @return the peso
-	 */
-	public double getPeso() {
-		return peso;
-	}
-
-	/**
-	 * @param peso the peso to set
-	 */
-	public void setPeso(double peso) {
-		this.peso = peso;
-	}
-
-	/**
-	 * @return the unidadesPeso
-	 */
-	public String getUnidadesPeso() {
-		return unidadesPeso;
-	}
-
-	/**
-	 * @param unidadesPeso the unidadesPeso to set
-	 */
-	public void setUnidadesPeso(String unidadesPeso) {
-		this.unidadesPeso = unidadesPeso;
-	}
-
-	/**
-	 * @return the unidadesVol
-	 */
-	public String getUnidadesVol() {
-		return unidadesVol;
-	}
-
-	/**
-	 * @param unidadesVol the unidadesVol to set
-	 */
-	public void setUnidadesVol(String unidadesVol) {
-		this.unidadesVol = unidadesVol;
-	}
-
-	/**
-	 * @return the fechaPedido
-	 */
-	public Timestamp getFechaPedido() {
-		return fechaPedido;
-	}
-
-	/**
-	 * @param fechaPedido the fechaPedido to set
-	 */
-	public void setFechaPedido(Timestamp fechaPedido) {
-		this.fechaPedido = fechaPedido;
+	public void setFechaEntregaAcordado(Timestamp fechaPedido) {
+		this.fechaEntregaAcordado = fechaPedido;
 	}
 
 	/**

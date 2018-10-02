@@ -49,53 +49,43 @@ public class PersistenciaSuperAndes
 
 	private SQLEmpresas sqlEmpresas;
 
-	private SQLClientesPersonas sqlClientesPersonas;
+	private SQLPersonas sqlPersonas;
 
-	private SQLFacturas sqlFacturas;
+	private SQLCompradores sqlCompradores;
 
-	private SQLFacturasSucursal sqlFacturasSucursal;
-
-	private SQLProductosVendidos sqlProductosVendidos;
-
-	private SQLProductosEnVenta sqlProductosEnVenta;
-
-	private SQLCategoriaTipo sqlCategoriaTipo;
-
-	private SQLCategoria sqlCategoria;
-
-	private SQLLote sqlLote;
+	private SQLProductos sqlProductos;
 
 	private SQLTipoProducto sqlTipoProducto;
 
-	private SQLProductosEnVentaSucursal sqlProductosEnVentaSucursal;
-
-	private SQLEstanteProductos sqlEstanteProductos;
-
-	private SQLProductosPromocion sqlProductosPromocion;
-
+	private SQLCategoria sqlCategoria;
+	
 	private SQLSucursal sqlSucursal;
 
-	private SQLEstante SQLEstante;
+	private SQLProductosSucursal sqlProductosSucursal;
+	
+	private SQLLote sqlLote;
+	
+	private SQLFacturasComprador sqlFacturasComprador;
 
-	private SQLEstanteTiposProductos sqlEstanteTiposProductos; 
-
-	private SQLPromocion sqlPromocion;
+	private SQLEstante sqlEstante;
+	
+	private SQLProductosEstantes sqlProductosEstantes;
+	
+	private SQLProductosVendidos sqlProductosVendidos;
 
 	private SQLBodegas sqlBodegas;
+	
+	private SQLPromocion sqlPromocion;
 
-	private SQLEstantePromociones SQLEstantePromociones;
-
-	private SQLBodegaPromocion SQLBodegaPromocion;
-
-	private SQLBodegaTipoProducto sqlBodegaTipoProducto;
-
+	private SQLProductosBodega sqlProductosBodega;
+	
+	private SQLPromocionesVendidas sqlPromocionesVendidas;
+	
+	private SQLProveedor sqlProveedor;
+	
 	private SQLPedido sqlPedido;
 
-	private SQLBodegaProductos sqlBodegaProductos;
-
-	private SQLProveedor sqlProveedor;
-
-	private SQLProductosPreveedor sqlProductosPreveedor;
+	private SQLProductosProveedor sqlProductosProveedor;
 
 
 
@@ -115,29 +105,24 @@ public class PersistenciaSuperAndes
 		tablas = new LinkedList<String> ();
 		tablas.add ("SecuenciaSuperAndes");
 		tablas.add ("Empresas");
-		tablas.add ("ClientesPersona");
-		tablas.add ("Facturas");
-		tablas.add ("FacturasSucursal");
-		tablas.add ("ProductosVendidos");
-		tablas.add ("ProductosEnVenta");
-		tablas.add ("CategoriaTipo");
-		tablas.add ("Categoria");
-		tablas.add ("Lote");
+		tablas.add ("Personas");
+		tablas.add ("Compradores");
+		tablas.add ("Productos");
 		tablas.add ("TipoProducto");
-		tablas.add ("ProductosEnVentaSucursal");
-		tablas.add ("EstanteProductos");
-		tablas.add ("ProductosPromocion");
+		tablas.add ("Categorias");
 		tablas.add ("Sucursal");
-		tablas.add ("Estante");
-		tablas.add ("EstanteTiposProductos");
-		tablas.add ("Promocion");
+		tablas.add ("ProductosSucursal");
+		tablas.add ("Lotes");
+		tablas.add ("FacturasCompradores");
+		tablas.add ("Estantes");
+		tablas.add ("ProductosEstante");
+		tablas.add ("ProductosVendidos");
 		tablas.add ("Bodegas");
-		tablas.add ("EstantePromociones");
-		tablas.add ("BodegaPromocion");
-		tablas.add ("BodegaTipoProducto");
-		tablas.add ("ProductosEnVentaSucursal");
-		tablas.add ("Pedido");
+		tablas.add ("Promociones");
+		tablas.add ("productosBodega");
+		tablas.add ("PromocionesVendidas");
 		tablas.add ("Proveedor");
+		tablas.add ("Pedido");
 		tablas.add ("ProductosProveedor");
 	}
 
@@ -229,100 +214,86 @@ public class PersistenciaSuperAndes
 		return tablas.get (1);
 	}
 
-	public String darTablaClientePersona()
+	public String darTablaPersonas()
 	{
 		return tablas.get (2);
 	}
 
-	public String darTablaFacturas()
+	public String darTablaCompradores()
 	{
 		return tablas.get (3);
 	}
-
-	public String darTablaFacturasSucursal()
+	
+	public String darTablaProductos()
 	{
 		return tablas.get (4);
 	}
-
-	public String darTablaProductosVendidos()
+	
+	public String darTablaTipoProducto()
 	{
 		return tablas.get (5);
 	}
-	public String darTablaProductosEnVenta()
+	
+	public String darTablaCategorias()
 	{
 		return tablas.get (6);
 	}
-	public String darTablaCategoriaTipo()
+	public String darTablaSucursal()
 	{
 		return tablas.get (7);
 	}
-	public String darTablaCategoria()
+	
+	public String darTablaProductosSucursal()
 	{
 		return tablas.get (8);
 	}
-	public String darTablaLote()
+	public String darTablaLotes()
 	{
 		return tablas.get (9);
 	}
-	public String darTablaTipoProducto()
+	public String darTablaFacturasCompradores()
 	{
 		return tablas.get (10);
 	}
-	public String darTablaProductosEnVentaSucursal()
+	public String darTablaEstantes()
 	{
 		return tablas.get (11);
 	}
-	public String darTablaEstanteProductos()
+	public String darTablaProductosEstante()
 	{
 		return tablas.get (12);
 	}
-	public String darTablaProductosPromocion()
+	public String darTablaProductosVendidos()
 	{
 		return tablas.get (13);
 	}
-	public String darTablaSucursal()
+	public String darTablaBodegas()
 	{
 		return tablas.get (14);
 	}
-	public String darTablaEstante()
+	public String darTablaPromociones()
 	{
 		return tablas.get (15);
 	}
-	public String darTablaEstanteTipoProductos()
+	public String darTablaProductosBodega()
 	{
 		return tablas.get (16);
 	}
-	public String darTablaPromocion()
+	public String darTablaPromocionesVendidas()
 	{
 		return tablas.get (17);
 	}
-	public String darTablaBodegas()
+	public String darTablaProveedor()
 	{
 		return tablas.get (18);
 	}
-	public String darTablaEstantesPromociones()
+	public String darTablaPedido()
 	{
 		return tablas.get (19);
 	}
-	public String darTablaBodegaPromocion()
-	{
-		return tablas.get (20);
-	}
-	public String darTablaBodegaTipoProducto()
-	{
-		return tablas.get (21);
-	}
-	public String darTablaPedido()
-	{
-		return tablas.get (22);
-	}
-	public String darTablaProveedor()
-	{
-		return tablas.get (23);
-	}
 	public String darTablaProductosProveedor()
 	{
-		return tablas.get (24);
+		return tablas.get (20);
 	}
 
 

@@ -16,20 +16,43 @@ public class Estante {
 	
 	private String unidadesVolumen;
 	
-	private int cantidadReOrden;
+	private double nivelReOrden;
 	
 	private Long idSucursal;
 	
-	public Estante(Long pId,double pCapVol,double pCapPeso,String pUnidVol,String pUnidPeso, int pCantidad,Long pIdSucursal)
+	private String tipoProducto;
+	
+	public Estante(Long pId,double pCapVol,double pCapPeso,String pUnidVol,String pUnidPeso, double pCantidad,Long pIdSucursal, String pTipo)
 	{
 		id=pId;
 		capacidadVolumen=pCapVol;
 		capacidadPeso=pCapPeso;
 		unidadesPeso=pUnidPeso;
 		unidadesVolumen=pUnidVol;
-		cantidadReOrden=pCantidad;
+		nivelReOrden=pCantidad;
 		idSucursal=pIdSucursal;
+		tipoProducto=pTipo;
 	}
+
+	
+	
+	/**
+	 * @return the tipoProducto
+	 */
+	public String getTipoProducto() {
+		return tipoProducto;
+	}
+
+
+
+	/**
+	 * @param tipoProducto the tipoProducto to set
+	 */
+	public void setTipoProducto(String tipoProducto) {
+		this.tipoProducto = tipoProducto;
+	}
+
+
 
 	/**
 	 * @return the id
@@ -102,17 +125,17 @@ public class Estante {
 	}
 
 	/**
-	 * @return the cantidadReOrden
+	 * @return the nivelReOrden
 	 */
-	public int getCantidadReOrden() {
-		return cantidadReOrden;
+	public double getNivelReOrden() {
+		return nivelReOrden;
 	}
 
 	/**
-	 * @param cantidadReOrden the cantidadReOrden to set
+	 * @param nivelReOrden the nivelReOrden to set
 	 */
-	public void setCantidadReOrden(int cantidadReOrden) {
-		this.cantidadReOrden = cantidadReOrden;
+	public void setNivelReOrden(int cantidadReOrden) {
+		this.nivelReOrden = cantidadReOrden;
 	}
 
 	/**

@@ -21,7 +21,11 @@ public class Bodega {
 	
 	private Long idSucursal;
 	
-	public Bodega(Long pId,double pCapV,double pCapP,String pUniP,String pUniV,Long pIdSuc)
+	private double nivelReOrden;
+	
+	private String tipoProducto;
+	
+	public Bodega(Long pId,double pCapV,double pCapP,String pUniP,String pUniV,Long pIdSuc, double pNivel, String pTipo)
 	{
 		id=pId;
 		capacidadVolumen=pCapV;
@@ -29,7 +33,47 @@ public class Bodega {
 		unidadesPeso=pUniP;
 		unidadesVolumen=pUniV;
 		idSucursal=pIdSuc;
+		nivelReOrden=pNivel;
+		tipoProducto=pTipo;
 	}
+	
+	
+
+	/**
+	 * @return the tipoProducto
+	 */
+	public String getTipoProducto() {
+		return tipoProducto;
+	}
+
+
+
+	/**
+	 * @param tipoProducto the tipoProducto to set
+	 */
+	public void setTipoProducto(String tipoProducto) {
+		this.tipoProducto = tipoProducto;
+	}
+
+
+
+	/**
+	 * @return the nivelReOrden
+	 */
+	public double getNivelReOrden() {
+		return nivelReOrden;
+	}
+
+
+
+	/**
+	 * @param nivelReOrden the nivelReOrden to set
+	 */
+	public void setNivelReOrden(double nivelReOrden) {
+		this.nivelReOrden = nivelReOrden;
+	}
+
+
 
 	/**
 	 * @return the id
