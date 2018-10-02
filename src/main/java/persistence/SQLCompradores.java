@@ -45,7 +45,7 @@ public class SQLCompradores {
 	{
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCompradores() + "(identificador, nombre, correoElectronico, puntos) values (?, ?, ?, ?)");
 		q1.setParameters(pNit, pNombre, pCorreo,0);
-	
+	q1.executeUnique();
 	}
 
 	
@@ -56,14 +56,16 @@ public class SQLCompradores {
 		String identificador=(String)q1.executeUnique();
         Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCompradores () + " WHERE nombre = ?");
         q2.setParameters(nombre);
+        q2.executeUnique();
         return identificador;
 	}
 
 	public void eliminarCompradorPorIdentificador (PersistenceManager pm, String id)
 	{
 		
-        Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCompradores () + " WHERE nombre = ?");
+        Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaCompradores () + " WHERE identificador = ?");
         q2.setParameters(id);
+        q2.executeUnique();
        
 	}
 
@@ -81,8 +83,7 @@ public class SQLCompradores {
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaCompradores());
 		q.setResultClass(Comprador.class);
-		List<Comprador> compradores= (List<Comprador>) q.executeList();
-		return compradores;
+		return (List<Comprador>) q.executeList();
 		
 	}
 

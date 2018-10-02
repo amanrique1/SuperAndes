@@ -49,6 +49,7 @@ public class SQLPersonas {
 		sqlCompradores.agregarComprador(pm, pIdentificador, pNombre, pCorreo);
 		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPersonas() + "(Cedula) values (?)");
         q.setParameters(pIdentificador);
+        q.executeUnique();
 	}
 
 	
@@ -57,6 +58,7 @@ public class SQLPersonas {
 		String Cedula=sqlCompradores.eliminarCompradorPorNombre(pm, nombre);
         Query q3 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaPersonas () + " WHERE Cedula = ?");
         q3.setParameters(Cedula);
+        q3.executeUnique();
 	}
 
 	public void eliminarPersonaPorCedula (PersistenceManager pm, String identificador)
@@ -65,6 +67,7 @@ public class SQLPersonas {
        sqlCompradores.eliminarCompradorPorIdentificador(pm, identificador);
         Query q3 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaPersonas () + " WHERE Cedula = ?");
         q3.setParameters(identificador);
+        q3.executeUnique();
 	}
 
 	public Persona darPersonaPorCedula (PersistenceManager pm, String identificador) 

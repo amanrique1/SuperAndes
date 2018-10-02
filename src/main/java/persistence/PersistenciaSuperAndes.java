@@ -17,6 +17,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import main.java.model.Bodega;
+
 public class PersistenciaSuperAndes 
 {
 	/* ****************************************************************
@@ -58,31 +60,31 @@ public class PersistenciaSuperAndes
 	private SQLTipoProducto sqlTipoProducto;
 
 	private SQLCategoria sqlCategoria;
-	
+
 	private SQLSucursal sqlSucursal;
 
 	private SQLProductosSucursal sqlProductosSucursal;
-	
+
 	private SQLLote sqlLote;
-	
+
 	private SQLFacturasComprador sqlFacturasComprador;
 
 	private SQLEstante sqlEstante;
-	
+
 	private SQLProductosEstantes sqlProductosEstantes;
-	
+
 	private SQLProductosVendidos sqlProductosVendidos;
 
 	private SQLBodegas sqlBodegas;
-	
+
 	private SQLPromocion sqlPromocion;
 
 	private SQLProductosBodega sqlProductosBodega;
-	
+
 	private SQLPromocionesVendidas sqlPromocionesVendidas;
-	
+
 	private SQLProveedor sqlProveedor;
-	
+
 	private SQLPedido sqlPedido;
 
 	private SQLProductosProveedor sqlProductosProveedor;
@@ -199,6 +201,17 @@ public class PersistenciaSuperAndes
 	private void crearClasesSQL ()
 	{
 
+		sqlBodegas=new SQLBodegas(this);
+		sqlCategoria=new SQLCategoria(this);
+		sqlCompradores=new SQLCompradores(this);
+		sqlEmpresas=new SQLEmpresas(this);
+		sqlEstante=new SQLEstante(this);
+		sqlFacturasComprador=new SQLFacturasComprador(this);
+		sqlLote=new SQLLote(this);
+		sqlPedido=new SQLPedido(this);
+		sqlPersonas=new SQLPersonas(this);
+		sqlProductos=new SQLProductos(this);
+
 	}
 
 	/**
@@ -223,17 +236,17 @@ public class PersistenciaSuperAndes
 	{
 		return tablas.get (3);
 	}
-	
+
 	public String darTablaProductos()
 	{
 		return tablas.get (4);
 	}
-	
+
 	public String darTablaTipoProducto()
 	{
 		return tablas.get (5);
 	}
-	
+
 	public String darTablaCategorias()
 	{
 		return tablas.get (6);
@@ -242,7 +255,7 @@ public class PersistenciaSuperAndes
 	{
 		return tablas.get (7);
 	}
-	
+
 	public String darTablaProductosSucursal()
 	{
 		return tablas.get (8);
@@ -325,5 +338,86 @@ public class PersistenciaSuperAndes
 			return je.getNestedExceptions() [0].getMessage();
 		}
 		return resp;
+	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar las Bodegas
+	 *****************************************************************/
+
+	public Bodega agregarBodega(double pCapV,double pCapP,String pUniP,String pUniV,Long pIdSuc, double pNivel, String pTipo)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long id = nextval ();
+			sqlBodegas.agregarBodega(pm, pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
+			tx.commit();
+
+			log.trace ("Inserción de bodega de la sucursal con id: " + pIdSuc);
+
+			return new Bodega(id, pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+	
+	
+	public void eliminarBodegaPorId (long idBodega) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlBodegas.eliminarBodegaPorId(pm, idBodega);
+			tx.commit();
+			return;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return ;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+	
+	public List<Bodega> darBodegas ()
+	{
+		return sqlBodegas.darBodegas(pmf.getPersistenceManager());
+	}
+
+	
+	public List<Bodega> darBodegaPorNombre (long idSucursal)
+	{
+		return sqlBodegas.darBodegasSucursal(pmf.getPersistenceManager(), idSucursal); 
+	}
+
+	public Bodega darBodegaPorId (long idBodega)
+	{
+		return sqlBodegas.darBodegaId (pmf.getPersistenceManager(), idBodega);
 	}
 }

@@ -85,8 +85,7 @@ public class SQLEmpresas {
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaCompradores()+" INNER JOIN "+pp.darTablaEmpresas()+" ON identenficador=NIT");
 		q.setResultClass(Empresa.class);
-		List<Empresa> empresas= (List<Empresa>) q.executeList();
-		return empresas;
+		return (List<Empresa>) q.executeList();
 		
 	}
 
