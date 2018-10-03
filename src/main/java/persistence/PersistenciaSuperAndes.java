@@ -1856,5 +1856,21 @@ public class PersistenciaSuperAndes
 	{
 		return sqlProveedor.darProveedorPorNombre (pmf.getPersistenceManager(), identificador);
 	}
+	
+	
+	/** ****************************************************************
+	 * 			Requerimientos funcionales
+	 *****************************************************************/
+public void requerimiento1(String pNit,String pNombre,String pCorreo,long pTel)
+{
+	agregarProveedor(pNit, pNombre, pCorreo, pTel);
+}
+
+public void requerimiento2(String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto) throws Exception
+{
+	
+	agregarProducto(codigo, nombre, marca, presentacion, unidadPeso, cantidadPeso, unidadVolumen, cantidadVolumen, tipoProducto);
+}
+
 
 }
