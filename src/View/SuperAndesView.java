@@ -5,117 +5,159 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+import main.java.model.Productos;
+import main.java.model.Sucursal;
 import main.java.model.TipoPromocion;
 
 public class SuperAndesView {
 
+	
+	private static long idSucursal;
+	Sucursal sucursal;
 	public static void main(String[] args) 
 	{
+		idSucursal=-1l;
 		Scanner sc = new Scanner(System.in);
 		boolean fin=false;
 		while(!fin)
 		{
-			printMenu();
-			
-			int option = sc.nextInt();
-			
-			switch(option)
+			if(idSucursal==-1l)
 			{
-				case 1:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar un nuevo proveedor debe proporcionar los siguientes datos:\n");
-					
-					registrarProveedor(sc);
-					
-					
+				printMenu();
+				
+				int option = sc.nextInt();
 
-					break;
-				case 2:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar un nuevo producto debe proporcionar los siguientes datos:\n");
 				
-					registrarProducto(sc);
+				switch(option)
+				{
+					case 1:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar una nueva Sucursal debe proporcionar los siguientes datos:\n");
+						
+						registrarSucursal(sc);						
+						
+
+						break;
+					case 2:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para ingresar a su sucursal debe proporcionar los siguientes datos:\n");
 					
-					break;
-				case 3:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar un nuevo cliente debe proporcionar los siguientes datos:\n");
+						ingresarASucursal(sc);
+						
+						break;
+						
+					case 0:	
+						fin=true;
+						sc.close();
+						break;
+				}
+
+			}
+			else
+			{
+				printMenuSucursal();
 				
-					registrarCliente(sc);
-					break;
-				case 4:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar una nueva sucursal debe proporcionar los siguientes datos:\n");
+				int option = sc.nextInt();
 				
-					registrarSucursal(sc);
+				switch(option)
+				{
+					case 1:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar un nuevo proveedor debe proporcionar los siguientes datos:\n");
+						
+						registrarProveedor(sc);
+						
+						
+	
+						break;
+					case 2:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar un nuevo producto debe proporcionar los siguientes datos:\n");
 					
-					break;
-				case 5:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar una nueva Bodega a una Sucursal debe proporcionar los siguientes datos:\n");
-				
-					registrarBodegaASucursal(sc);
-					break;
-				case 6:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar un Estante a una Sucursal debe proporcionar los siguientes datos:\n");
-				
-					registrarEstanteASucursal(sc);
-					break;
-				case 7:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar una nueva Promoción debe proporcionar los siguientes datos:\n");
-				
-					break;
-				case 8:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para finalizar una promocion...:\n");
-				
-					break;
-				case 9:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar un nuevo  Pedido de un Producto a un Proveedor para una Sucursal debe proporcionar los siguientes datos:\n");
-				
-					break;
-				case 10:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar la llegada de un pedido de un producto a una sucursal debe proporcionar los siguientes datos:\n");
-				
-					break;
-				case 11:
-					System.out.println("----------------------------------------------------------------");
-					System.out.println("Para registrar la venta de un producto en una sucursal debe proporcionar los siguientes datos:\n");
-				
-					break;
-				case 12:
-					System.out.println("----------------------------------------------------------------");
+						registrarProducto(sc);
+						
+						break;
+					case 3:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar un nuevo cliente debe proporcionar los siguientes datos:\n");
 					
+						registrarCliente(sc);
+						break;
+					case 4:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar una nueva sucursal debe proporcionar los siguientes datos:\n");
 					
-					break;
-				case 13:
-					System.out.println("----------------------------------------------------------------");
-				
-					break;
-				case 14:
-					System.out.println("----------------------------------------------------------------");
-				
-					break;
-				case 15:
-					System.out.println("----------------------------------------------------------------");
+						registrarSucursal(sc);
+						
+						break;
+					case 5:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar una nueva Bodega a una Sucursal debe proporcionar los siguientes datos:\n");
 					
-					break;
-				case 16:
-					System.out.println("----------------------------------------------------------------");
-			
-					break;
-				case 17:
-					System.out.println("----------------------------------------------------------------");
+						registrarBodegaASucursal(sc);
+						break;
+					case 6:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar un Estante a una Sucursal debe proporcionar los siguientes datos:\n");
+					
+						registrarEstanteASucursal(sc);
+						break;
+					case 7:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar una nueva Promoción debe proporcionar los siguientes datos:\n");
+					
+						registrarPromocion(sc);
+						break;
+					case 8:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para finalizar una promocion...:\n");
+					
+						break;
+					case 9:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar un nuevo  Pedido de un Producto a un Proveedor para una Sucursal debe proporcionar los siguientes datos:\n");
+					
+						break;
+					case 10:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar la llegada de un pedido de un producto a una sucursal debe proporcionar los siguientes datos:\n");
+					
+						break;
+					case 11:
+						System.out.println("----------------------------------------------------------------");
+						System.out.println("Para registrar la venta de un producto en una sucursal debe proporcionar los siguientes datos:\n");
+					
+						break;
+					case 12:
+						System.out.println("----------------------------------------------------------------");
+						
+						
+						break;
+					case 13:
+						System.out.println("----------------------------------------------------------------");
+					
+						break;
+					case 14:
+						System.out.println("----------------------------------------------------------------");
+					
+						break;
+					case 15:
+						System.out.println("----------------------------------------------------------------");
+						
+						break;
+					case 16:
+						System.out.println("----------------------------------------------------------------");
 				
-					break;
-				case 0:	
-					fin=true;
-					sc.close();
-					break;
+						break;
+					case 17:
+						System.out.println("----------------------------------------------------------------");
+					
+						break;
+					case 0:	
+						fin=true;
+						sc.close();
+						break;
+				}
 			}
 		}
 	}
@@ -181,6 +223,9 @@ public class SuperAndesView {
 
 		}
 		
+		//TODO GENERAR PROVEEDOR CON LOS DATOS
+
+		
 		System.out.println("nit: "+nit+" ,nombre: "+nombre+" ,correoElectronico: "+correoElectronico+" ,telefono: (+57)"+telefono);
 		
 	}
@@ -188,150 +233,217 @@ public class SuperAndesView {
 	public static void registrarProducto(Scanner sc)
 	{
 		sc.nextLine();
-		String codigoBarras ="";
+		
+		
+		String codigoProducto ="";
+		String resp ="0";
+//		Productos producto=new Productos("x","x","x","x","x",5,"x",5,"x");
+		Productos producto=null;
+		
 		while(true)
 		{
 			System.out.println("Ingrese el codigoBarras del producto:");
-			codigoBarras = sc.nextLine();
-			if(codigoBarras.trim().equals(""))
+			codigoProducto = sc.nextLine();
+			if(codigoProducto.trim().equals(""))
 				System.out.println("¡El codigoBarras no puede ser vacio!");
-			else 
+			else
+			{
+				//TODO traer porducto con ese codigo barras
+//				producto=
+				
+				
+				if(producto==null)
+				{
+					while(true)
+					{
+						System.out.println("NO existe un producto con ese codigoBarras, ¿Desea Crearlo?:");
+						System.out.println("1) SI");
+						System.out.println("2) NO");
+						resp = sc.nextLine();
+						if(resp.equals("1"))
+							break;
+						if(resp.equals("2"))
+							break;
+						System.out.println("¡Debe escoger una opción valida!");
+						
+					}				
+				}
+
 				break;
+			}
 
 		}
-		
-		String nombre ="";
-		while(true)
+		if(resp.equals("1"))
 		{
-			System.out.println("Ingrese el nombre del producto:");
-			nombre = sc.nextLine();
-			if(nombre.trim().equals(""))
-				System.out.println("¡El nombre no puede ser vacio!");
-			else 
-				break;
-		}
-		
-		String marca ="";
-		while(true)
-		{
-			System.out.println("Ingrese la marca del producto:");
-			marca = sc.nextLine();
-			if(marca.trim().equals(""))
-				System.out.println("¡La marca no puede ser vacia!");
-			else 
-				break;
-		}
-		
-		String presentacion ="";
-		while(true)
-		{
-			System.out.println("Ingrese la presentacion del producto:");
-			presentacion = sc.nextLine();
-			if(presentacion.trim().equals(""))
-				System.out.println("¡La presentacion no puede ser vacia!");
-			else 
-				break;
-		}
-		
-		String unidadPeso ="";
-		while(true)
-		{
-			System.out.println("Escoja la unidadPeso del producto escogiendo el numero de opción:");
-			System.out.println("1) g");
-			System.out.println("2) kg");
-			unidadPeso = sc.nextLine();
-			if(unidadPeso.equals("1"))
+			String nombre ="";
+			while(true)
 			{
-				unidadPeso = "g";
-				break;
-			}
-			if(unidadPeso.equals("2"))
-			{
-				unidadPeso = "kg";
-				break;
-			}	
-			System.out.println("¡Debe escoger una opción valida!");
-			
-		}
-		
-		String unidadVolumen ="";
-		while(true)
-		{
-			System.out.println("Escoja la unidadVolumen del producto escogiendo el numero de opción:");
-			System.out.println("1) l");
-			System.out.println("2) ml");
-			unidadVolumen = sc.nextLine();
-			if(unidadVolumen.equals("1"))
-			{
-				unidadVolumen = "l";
-				break;
-			}
-			if(unidadVolumen.equals("2"))
-			{
-				unidadVolumen = "ml";
-				break;
-			}	
-			System.out.println("¡Debe escoger una opción valida!");
-			
-		}
-		
-		
-		double cantidadPeso=0;
-		while(true)
-		{
-			System.out.println("Ingrese la cantidadPeso del producto");
-			String cant= sc.nextLine();
-			try
-			{
-				cantidadPeso=Double.parseDouble(cant);
-				if(cantidadPeso<=0)
-					System.out.println("¡Debe ingresar un numero mayor a cero!");
+				System.out.println("Ingrese el nombre del producto:");
+				nombre = sc.nextLine();
+				if(nombre.trim().equals(""))
+					System.out.println("¡El nombre no puede ser vacio!");
 				else 
 					break;
 			}
-			catch(Exception e)
-			{
-				System.out.println("¡Debe ingresar un numero!");
-			}
 			
-		}
-		
-		double cantidadVolumen=0;
-		while(true)
-		{
-			System.out.println("Ingrese la cantidadVolumen del producto");
-			String cant= sc.nextLine();
-			try
+			String marca ="";
+			while(true)
 			{
-				cantidadVolumen=Double.parseDouble(cant);
-				if(cantidadVolumen<=0)
-					System.out.println("¡Debe ingresar un numero mayor a cero!");
+				System.out.println("Ingrese la marca del producto:");
+				marca = sc.nextLine();
+				if(marca.trim().equals(""))
+					System.out.println("¡La marca no puede ser vacia!");
 				else 
 					break;
 			}
-			catch(Exception e)
+			
+			String presentacion ="";
+			while(true)
 			{
-				System.out.println("¡Debe ingresar un numero!");
+				System.out.println("Ingrese la presentacion del producto:");
+				presentacion = sc.nextLine();
+				if(presentacion.trim().equals(""))
+					System.out.println("¡La presentacion no puede ser vacia!");
+				else 
+					break;
 			}
+			
+			String unidadPeso ="";
+			while(true)
+			{
+				System.out.println("Escoja la unidadPeso del producto escogiendo el numero de opción:");
+				System.out.println("1) g");
+				System.out.println("2) kg");
+				unidadPeso = sc.nextLine();
+				if(unidadPeso.equals("1"))
+				{
+					unidadPeso = "g";
+					break;
+				}
+				if(unidadPeso.equals("2"))
+				{
+					unidadPeso = "kg";
+					break;
+				}	
+				System.out.println("¡Debe escoger una opción valida!");
+				
+			}
+			
+			String unidadVolumen ="";
+			while(true)
+			{
+				System.out.println("Escoja la unidadVolumen del producto escogiendo el numero de opción:");
+				System.out.println("1) l");
+				System.out.println("2) ml");
+				unidadVolumen = sc.nextLine();
+				if(unidadVolumen.equals("1"))
+				{
+					unidadVolumen = "l";
+					break;
+				}
+				if(unidadVolumen.equals("2"))
+				{
+					unidadVolumen = "ml";
+					break;
+				}	
+				System.out.println("¡Debe escoger una opción valida!");
+				
+			}
+			
+			
+			double cantidadPeso=0;
+			while(true)
+			{
+				System.out.println("Ingrese la cantidadPeso del producto");
+				String cant= sc.nextLine();
+				try
+				{
+					cantidadPeso=Double.parseDouble(cant);
+					if(cantidadPeso<=0)
+						System.out.println("¡Debe ingresar un numero mayor a cero!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
+				
+			}
+			
+			double cantidadVolumen=0;
+			while(true)
+			{
+				System.out.println("Ingrese la cantidadVolumen del producto");
+				String cant= sc.nextLine();
+				try
+				{
+					cantidadVolumen=Double.parseDouble(cant);
+					if(cantidadVolumen<=0)
+						System.out.println("¡Debe ingresar un numero mayor a cero!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
+				
+			}
+			
+			
+			String tipoProducto="";
+			while(true)
+			{	
+				System.out.println("Ingrese el tipoProducto del producto:");
+				tipoProducto = sc.nextLine();
+				if(tipoProducto.trim().equals(""))
+					System.out.println("¡El tipoProducto no puede ser vacio!");
+				else 
+					break;
+			}
+			
+			//TODO GENERAR PRODUCTO CON LOS DATOS
+			producto=new Productos("x","x","x","x","x",5,"x",5,"x");
+			
+			System.out.println("codigoBarras: "+codigoProducto+" ,nombre: "+nombre+" ,presentacion: "+presentacion+" ,unidadPeso: "+unidadPeso
+					+" unidadVolumen: "+unidadVolumen+" ,cantidadPeso: "+cantidadPeso+" ,cantidadVolumen: "+cantidadVolumen+" ,tipoProducto: "+tipoProducto);
+			
+			
+		}
+		if(producto!=null)
+		{
+			double precio=0;
+			while(true)
+			{
+				System.out.println("Ingrese el precio que el producto tendra en su sucursal");
+				String cant= sc.nextLine();
+				try
+				{
+					precio=Double.parseDouble(cant);
+					if(precio<=0)
+						System.out.println("¡Debe ingresar un numero mayor a cero!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
+				
+				
+			}
+			String idProductoSucursal=idSucursal+"-"+codigoProducto;
+			
+			//TODO GEENERAR PRODUCTO SUCURSAL CON VALORES
+			System.out.println("idProductoSucursal: "+idProductoSucursal+" ,idSucursal: "+idSucursal+" ,precio: "+precio+" ,codigoProducto: "+codigoProducto);
+			
 			
 		}
 		
-		
-		String tipoProducto="";
-		while(true)
-		{	
-			System.out.println("Ingrese el tipoProducto del producto:");
-			tipoProducto = sc.nextLine();
-			if(tipoProducto.trim().equals(""))
-				System.out.println("¡El tipoProducto no puede ser vacio!");
-			else 
-				break;
-		}
+
 		
 		
-		
-		System.out.println("codigoBarras: "+codigoBarras+" ,nombre: "+nombre+" ,presentacion: "+presentacion+" ,unidadPeso: "+unidadPeso
-				+" unidadVolumen: "+unidadVolumen+" ,cantidadPeso: "+cantidadPeso+" ,cantidadVolumen: "+cantidadVolumen+" ,tipoProducto: "+tipoProducto);
 		
 	}
 	
@@ -481,8 +593,8 @@ public class SuperAndesView {
 				break;
 		}
 		
-		//PONER EL ID QUE GENERO EL SISTEMA
-		Long idSucursal=0l;
+		//TODO PONER EL ID QUE GENERO EL SISTEMA
+		idSucursal=0l;
 		
 		System.out.println("idSucursal: "+idSucursal+" ,nombre: "+nombre+" ,ciudad: "+ciudad+" ,direccion: "+direccion);
 		
@@ -495,25 +607,6 @@ public class SuperAndesView {
 	{
 		
 		sc.nextLine();
-		
-		long idSucursal=0;
-		while(true)
-		{
-			System.out.println("Ingrese el id de la Sucursal a la que sera asignada la nueva Bodega");
-			String cant= sc.nextLine();
-			try
-			{
-				Integer.parseInt(cant);
-				idSucursal=Long.valueOf(cant);
-				break;
-			}
-			catch(Exception e)
-			{
-				System.out.println("¡Debe ingresar un numero!");
-			}
-			
-		}
-		
 		
 		
 		
@@ -632,6 +725,8 @@ public class SuperAndesView {
 		}
 		
 		
+		//TODO CREAR BOGEGA CON IDSUCURSAL=idSucursal
+		
 		//PONER EL ID QUE GENERO EL SISTEMA
 		Long idBodega=0l;
 		
@@ -649,27 +744,6 @@ public class SuperAndesView {
 	{
 		
 		sc.nextLine();
-		
-		long idSucursal=0;
-		while(true)
-		{
-			System.out.println("Ingrese el id de la Sucursal a la que sera asignada la nueva Estante");
-			String cant= sc.nextLine();
-			try
-			{
-				Integer.parseInt(cant);
-				idSucursal=Long.valueOf(cant);
-				break;
-			}
-			catch(Exception e)
-			{
-				System.out.println("¡Debe ingresar un numero!");
-			}
-			
-		}
-		
-		
-		
 		
 		String unidadPeso ="";
 		while(true)
@@ -785,8 +859,8 @@ public class SuperAndesView {
 				break;
 		}
 		
-		
-		//PONER EL ID QUE GENERO EL SISTEMA
+		//TODO CREAR ESTANTE CON IDSUCURSAL=idSucursal
+		//TODO PONER EL ID QUE GENERO EL SISTEMA
 		Long idEstante=0l;
 		
 		
@@ -800,6 +874,8 @@ public class SuperAndesView {
 
 	public static void registrarPromocion(Scanner sc)
 	{
+		sc.nextLine();
+
 		TipoPromocion tipoPromocion;
 		while(true)
 		{
@@ -850,7 +926,7 @@ public class SuperAndesView {
 				try
 				{
 					anio=Integer.parseInt(cant);
-					if(anio<=2018)
+					if(anio<2018)
 						System.out.println("¡Debe ingresar un año valido!");
 					else 
 						break;
@@ -916,7 +992,7 @@ public class SuperAndesView {
 				try
 				{
 					anio=Integer.parseInt(cant);
-					if(anio<=2018)
+					if(anio<2018)
 						System.out.println("¡Debe ingresar un año valido!");
 					else 
 						break;
@@ -1004,6 +1080,8 @@ public class SuperAndesView {
 					y=Double.parseDouble(cant);
 					if(y<=0)
 						System.out.println("¡Debe ingresar un numero mayor a cero!");
+					else if(y<=x)
+						System.out.println("¡y debe ser mayor a x!");		
 					else 
 						break;
 				}
@@ -1016,27 +1094,31 @@ public class SuperAndesView {
 			
 		}
 		boolean termine=false;
-		ArrayList<Long> idsProductos=new ArrayList<Long>(); 
+		ArrayList<String> idsProductos=new ArrayList<String>(); 
 		while(!termine)
 		{
+			System.out.println("Ingrese el codigo de barras de los productos a los que desea aplicarle la promoción");
+			System.out.println("Para indicar que termino envie la palabra \"termine\"");
 			while(true)
 			{
-				System.out.println("Ingrese el id de la Sucursal a la que sera asignada la nueva Estante");
-				String cant= sc.nextLine();
-				try
+				System.out.println("Ingrese el codigo de barras del producto al que desea agregarle una promoción");
+				System.out.println("Para indicar que termino envie la palabra \"termine\"");
+				String cod= sc.nextLine();
+			
+				if(cod.equals("termine"))
 				{
-					Integer.parseInt(cant);
-					//TODO REVISAR SI ID EXISTEEEEEEE
-					
-					
-					
-					idsProductos.add(Long.valueOf(cant));
+					termine=true;
 					break;
 				}
-				catch(Exception e)
+				if(!cod.trim().equals(""))
 				{
-					System.out.println("¡Debe ingresar un numero!");
+					//TODO REVISAR SI ID EXISTEEEEEEE
+					idsProductos.add(cod);
+					System.out.println("agregado");
 				}
+				else
+				System.out.println("¡El codigo no puede ser vacio!");
+				
 				
 			}
 		}
@@ -1053,12 +1135,55 @@ public class SuperAndesView {
 		}
 		
 		
+		//TODO GENERAR PROMOCION CON INFO Y DAR A IDPROMOCION VALOR GENERADO
+		long idPromocion=0l;
+		System.out.println("idPromocion: "+idPromocion+" ,x: "+x+" ,y: "+y
+				+" fechaInicial: "+fechaInicial+" ,fechaFinal: "+fechaFinal+" ,tipoPromocion: "+tipoPromocion.toString()
+				+" ,descripcion: "+descripcion);
+		
+		
+		for(String codigoProducto:idsProductos)
+		{
+			//TODO REGISTRAR PROMOCION A PRODUCTO SUCURSAL CON idProductoSucursal
+			String idProductoSucursal=idSucursal+"-"+codigoProducto;
+			System.out.println("idProductoSucursal: "+idProductoSucursal+" ,idPromocion: "+idPromocion);
+			
+		}
+		
+		
 		
 		
 		
 		
 	}
 
+	public static void ingresarASucursal(Scanner sc)
+	{
+		sc.nextLine();
+
+		while(true)
+		{
+			System.out.println("Ingrese el id de la Sucursal a la que desea ingresar");
+			String cant= sc.nextLine();
+			try
+			{
+				Integer.parseInt(cant);
+				idSucursal=Long.valueOf(cant);
+				
+				//TODO ENCONTRAR SUCURSAL Y GUARDARLA EN
+//				sucursal=;
+				
+				break;
+			}
+			catch(Exception e)
+			{
+				idSucursal=-1l;
+				System.out.println("¡Debe ingresar un numero!");
+			}
+			
+		}
+	}
+	
 	public static String getFechaActual()
 	{
 		Calendar c = Calendar.getInstance();
@@ -1074,11 +1199,12 @@ public class SuperAndesView {
 		return fech.compareTo(fech2);
 	}
 	
-	private static void printMenu() {
-		
+	private static void printMenuSucursal() {
+				
 		System.out.println("---------ISIS - Sistemas Transaccionales----------");
 		System.out.println("---------------------Iteración 1----------------------");
 		System.out.println("---------------------Super Andes----------------------");
+		System.out.println("---------------------Sucursal "+ idSucursal+"----------------------");
 		System.out.println("1) RF1. REGISTRAR PROVEEDORES ");
 		System.out.println("2) RF2. REGISTRAR PRODUCTOS");		
 		System.out.println("3) RF3. REGISTRAR CLIENTES");		
@@ -1098,6 +1224,30 @@ public class SuperAndesView {
 		System.out.println("17) RFC6. MOSTRAR LAS VENTAS DE SUPERANDES A UN USUARIO DADO, EN UN RANGO DE FECHAS INDICADO");		
 		System.out.println("0)  Salir");
 		System.out.println("Digite el número de opción para ejecutar la tarea, luego presione enter: (Ej., 1):");
+		
+	}
+	
+private static void printMenu() {
+				
+		System.out.println("---------ISIS - Sistemas Transaccionales----------");
+		System.out.println("---------------------Iteración 1----------------------");
+		System.out.println("---------------------Super Andes----------------------");
+		System.out.println("1) RF4. REGISTRAR UNA SUCURSAL");		
+		System.out.println("2) INGRESAR A SU SUCURSAL SUCURSAL");		
+//		System.out.println("6) RF6. REGISTRAR UN ESTANTE EN UNA SUCURSAL");		
+//		System.out.println("7) RF7. REGISTRAR UNA PROMOCIÓN");		
+//		System.out.println("8) RF8. FINALIZAR UNA PROMOCIÓN");		
+//		System.out.println("9) RF9. REGISTRAR UN PEDIDO DE UN PRODUCTO A UN PROVEEDOR PARA UNA SUCURSAL");		
+//		System.out.println("10) RF10. REGISTRAR LA LLEGADA DE UN PEDIDO DE UN PRODUCTO A UNA SUCURSAL");		
+//		System.out.println("11) RF11. REGISTRAR UNA VENTA DE UN PRODUCTO EN UNA SUCURSAL");		
+//		System.out.println("12) RFC1. MOSTRAR EL DINERO RECOLECTADO POR VENTAS EN CADA SUCURSAL DURANTE UN PERIODO DE TIEMPO Y EN EL AÑO CORRIDO");		
+//		System.out.println("13) RFC2. MOSTRAR LAS 20 PROMOCIONES MÁS POPULARES.");		
+//		System.out.println("14) RFC3. MOSTRAR EL ÍNDICE DE OCUPACIÓN DE CADA UNA DE BODEGAS Y ESTANTES DE UNA SUCURSAL");		
+//		System.out.println("15) RFC4. MOSTRAR LOS PRODUCTOS QUE CUMPLEN CON CIERTA CARACTERÍSTICA");		
+//		System.out.println("16) RFC5. MOSTRAR LAS COMPRAS HECHAS POR SUPERANDES A LOS PROVEEDORES");		
+//		System.out.println("17) RFC6. MOSTRAR LAS VENTAS DE SUPERANDES A UN USUARIO DADO, EN UN RANGO DE FECHAS INDICADO");		
+//		System.out.println("0)  Salir");
+//		System.out.println("Digite el número de opción para ejecutar la tarea, luego presione enter: (Ej., 1):");
 		
 	}
 }
