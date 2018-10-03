@@ -40,16 +40,16 @@ public class SQLPedido {
 	}
 
 
-	public void agregarPedido (PersistenceManager pm,Timestamp fechaEntregaAc,Timestamp fechaEntrega,EstadoPedido estado, long idSucursal, long idProveedor) 
+	public void agregarPedido (PersistenceManager pm,long id,Timestamp fechaEntregaAc,Timestamp fechaEntrega,EstadoPedido estado, long idSucursal, String idProveedor) throws Exception 
 	{
-		/**
-		if (sqlSucursal.darSucursalPorId(pm,idSucursal)==null&&sqlProveedor.darProveedor(pm,idProveedor)==null)
+		
+		if (sqlSucursal.darSucursalPorId(pm,idSucursal)==null||sqlProveedor.darProveedorPorNit(pm,idProveedor)==null)
 		{
 		throw new Exception("Datos invalidos");
 		}
-		*/
-		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPedido() + "(fechaEntregaAcordada, fechaEntrega, estado, idSucursal, idProveedor) values (?, ?, ?, ?, ?)");
-		q1.setParameters(  fechaEntregaAc, fechaEntrega, estado.toString(),  idSucursal,  idProveedor);
+		
+		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPedido() + "(idPedido,fechaEntregaAcordada, fechaEntrega, estado, idSucursal, idProveedor) values (?, ?, ?, ?, ?)");
+		q1.setParameters(  id,fechaEntregaAc, fechaEntrega, estado.toString(),  idSucursal,  idProveedor);
 		q1.executeUnique();
 	}
 
@@ -60,6 +60,16 @@ public class SQLPedido {
 		Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaPedido () + " WHERE idPedido = ?");
 		q2.setParameters(id);
 		q2.executeUnique();
+
+	}
+	
+	public Pedido darPedidoPorId (PersistenceManager pm, Long id)
+	{
+
+		Query q2 = pm.newQuery(SQL, "SELECT FROM " + pp.darTablaPedido () + " WHERE idPedido = ?");
+		q2.setResultClass(Pedido.class);
+		q2.setParameters(id);
+		return (Pedido)q2.executeUnique();
 
 	}
 

@@ -21,16 +21,16 @@ public class Pedido {
 	
 	private Long idSucursal;
 	
-	private Long idProveedor;
+	private String idProveedor;
 	
-	public Pedido(Long pId,Timestamp pFechaP,Timestamp pFechaE,EstadoPedido pEstado,Long pIdSuc,Long pIdPro)
+	public Pedido(Long pId,Timestamp pFechaP,Timestamp pFechaE,EstadoPedido pEstado,Long pIdSuc,String idProveedor2)
 	{
 		id=pId;
 		fechaEntregaAcordado=pFechaP;
 		fechaEntrega=pFechaE;
 		estado=pEstado;
 		idSucursal=pIdSuc;
-		idProveedor=pIdPro;
+		idProveedor=idProveedor2;
 	}
 
 	/**
@@ -107,14 +107,14 @@ public class Pedido {
 	/**
 	 * @return the idProveedor
 	 */
-	public Long getIdProveedor() {
+	public String getIdProveedor() {
 		return idProveedor;
 	}
 
 	/**
 	 * @param idProveedor the idProveedor to set
 	 */
-	public void setIdProveedor(Long idProveedor) {
+	public void setIdProveedor(String idProveedor) {
 		this.idProveedor = idProveedor;
 	}
 	

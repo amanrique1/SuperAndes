@@ -28,8 +28,17 @@ import main.java.model.Lote;
 import main.java.model.Pedido;
 import main.java.model.Persona;
 import main.java.model.Productos;
+import main.java.model.ProductosBodega;
+import main.java.model.ProductosEstante;
+import main.java.model.ProductosProveedor;
+import main.java.model.ProductosSucursal;
+import main.java.model.ProductosVendidos;
+import main.java.model.Promocion;
+import main.java.model.PromocionesVendidas;
+import main.java.model.Proveedor;
 import main.java.model.Sucursal;
 import main.java.model.TipoProducto;
+import main.java.model.TipoPromocion;
 
 public class PersistenciaSuperAndes 
 {
@@ -357,35 +366,26 @@ public class PersistenciaSuperAndes
 	 * 			Métodos para manejar las Bodegas
 	 *****************************************************************/
 
-	public Bodega agregarBodega(double pCapV,double pCapP,String pUniP,String pUniV,Long pIdSuc, double pNivel, String pTipo)
+	public Bodega agregarBodega(double pCapV,double pCapP,String pUniP,String pUniV,Long pIdSuc, double pNivel, String pTipo) throws Exception
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long id = nextval ();
-			sqlBodegas.agregarBodega(pm, pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
-			tx.commit();
 
-			log.trace ("Inserción de bodega de la sucursal con id: " + pIdSuc);
+		tx.begin();
+		long id = nextval ();
+		sqlBodegas.agregarBodega(pm, id,pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
+		tx.commit();
 
-			return new Bodega(id, pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
-		}
-		catch (Exception e)
+		log.trace ("Inserción de bodega de la sucursal con id: " + pIdSuc);
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+		return new Bodega(id, pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
+
+
+
 	}
 
 
@@ -394,27 +394,18 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlBodegas.eliminarBodegaPorId(pm, idBodega);
-			tx.commit();
 
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		tx.begin();
+		sqlBodegas.eliminarBodegaPorId(pm, idBodega);
+		tx.commit();
 
-		}
-		finally
+
+		if (tx.isActive())
 		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
+			tx.rollback();
 		}
+		pm.close();
+
 	}
 
 
@@ -439,35 +430,24 @@ public class PersistenciaSuperAndes
 	 * 			Métodos para manejar las Categorias
 	 *****************************************************************/
 
-	public Categoria agregarCategoria(String nombre,boolean perecedero)
+	public Categoria agregarCategoria(String nombre,boolean perecedero) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlCategoria.agregarCategoria(pm, nombre, perecedero);
-			tx.commit();
 
-			log.trace ("Inserción de categoria con nombre: " + nombre);
+		tx.begin();
+		sqlCategoria.agregarCategoria(pm, nombre, perecedero);
+		tx.commit();
 
-			return new Categoria(nombre, perecedero);
+		log.trace ("Inserción de categoria con nombre: " + nombre);
 
-		}
-		catch (Exception e)
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+		return new Categoria(nombre, perecedero);
+
 	}
 
 
@@ -476,27 +456,18 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlCategoria.eliminarCategoriaPorNombre(pm, nombre);
-			tx.commit();
 
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		tx.begin();
+		sqlCategoria.eliminarCategoriaPorNombre(pm, nombre);
+		tx.commit();
 
-		}
-		finally
+
+		if (tx.isActive())
 		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
+			tx.rollback();
 		}
+		pm.close();
+
 	}
 
 
@@ -513,30 +484,21 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlEmpresas.agregarEmpresa(pm, pNit, pDireccion, pNombre, pCorreo);
-			tx.commit();
 
-			log.trace ("Inserción de empresa con identificador: " + pNit);
+		tx.begin();
+		sqlEmpresas.agregarEmpresa(pm, pNit, pDireccion, pNombre, pCorreo);
+		tx.commit();
 
-			return new Empresa(pNit, pNombre, pCorreo, pDireccion);
-		}
-		catch (Exception e)
+		log.trace ("Inserción de empresa con identificador: " + pNit);
+
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+		return new Empresa(pNit, pNombre, pCorreo, pDireccion);
+
+
 	}
 
 
@@ -545,53 +507,35 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlEmpresas.eliminarEmpresaPorNombre(pm, nombreEmpresa);
-			tx.commit();
 
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		tx.begin();
+		sqlEmpresas.eliminarEmpresaPorNombre(pm, nombreEmpresa);
+		tx.commit();
 
-		}
-		finally
+
+		if (tx.isActive())
 		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
+			tx.rollback();
 		}
+		pm.close();
+
 	}
 
 	public void eliminarEmpresaPorNit ( String nit)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlEmpresas.eliminarEmpresaPorNit(pm, nit);
-			tx.commit();
+		tx.begin();
+		sqlEmpresas.eliminarEmpresaPorNit(pm, nit);
+		tx.commit();
 
-		}
-		catch (Exception e)
+
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+
 	}
 
 
@@ -610,35 +554,26 @@ public class PersistenciaSuperAndes
 	 * 			Métodos para manejar los Estantes
 	 *****************************************************************/
 
-	public Estante agregarEstante(double pCapV,double pCapP,String pUniP,String pUniV,Long pIdSuc, double pNivel, String pTipo) 
+	public Estante agregarEstante(double pCapV,double pCapP,String pUniP,String pUniV,Long pIdSuc, double pNivel, String pTipo) throws Exception 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long id = nextval ();
-			sqlEstante.agregarEstante(pm, pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
-			tx.commit();
 
-			log.trace ("Inserción del estante de la sucursal con id: " + pIdSuc);
+		tx.begin();
+		long id = nextval ();
+		sqlEstante.agregarEstante(pm, id,pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
+		tx.commit();
 
-			return new Estante(id, pCapV, pCapP, pUniV, pUniP, pNivel, pIdSuc, pTipo);
-		}
-		catch (Exception e)
+		log.trace ("Inserción del estante de la sucursal con id: " + pIdSuc);
+
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+
+		return new Estante(id, pCapV, pCapP, pUniV, pUniP, pNivel, pIdSuc, pTipo);
+
 	}
 
 
@@ -647,26 +582,17 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlEstante.eliminarEstantePorId(pm, id);
-			tx.commit();
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
-		}
-		finally
+		tx.begin();
+		sqlEstante.eliminarEstantePorId(pm, id);
+		tx.commit();
+
+		if (tx.isActive())
 		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
+			tx.rollback();
 		}
+		pm.close();
+
 	}
 
 
@@ -690,35 +616,26 @@ public class PersistenciaSuperAndes
 	 * 			Métodos para manejar las FacturasComprador
 	 *****************************************************************/
 
-	public FacturasComprador agregarFacturasComprador ( Timestamp fecha, String idComprador, long idSucursal) 
+	public FacturasComprador agregarFacturasComprador ( Timestamp fecha, String idComprador, long idSucursal) throws Exception 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long id = nextval ();
-			sqlFacturasComprador.agregarFacturasComprador(pm, fecha, idComprador, idSucursal);
-			tx.commit();
 
-			log.trace ("Inserción de factura a comprador con id: " + idComprador);
+		tx.begin();
+		long id = nextval ();
+		sqlFacturasComprador.agregarFacturasComprador(pm, id,fecha, idComprador, idSucursal);
+		tx.commit();
 
-			return new FacturasComprador(id, fecha, idComprador, idSucursal);
-		}
-		catch (Exception e)
+		log.trace ("Inserción de factura a comprador con id: " + idComprador);
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+		return new FacturasComprador(id, fecha, idComprador, idSucursal);
+
+
+
 	}
 
 
@@ -727,26 +644,17 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlFacturasComprador.eliminarFacturasCompradorPorNumero(pm, numero);
-			tx.commit();
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 
-		}
-		finally
+		tx.begin();
+		sqlFacturasComprador.eliminarFacturasCompradorPorNumero(pm, numero);
+		tx.commit();
+
+		if (tx.isActive())
 		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
+			tx.rollback();
 		}
+		pm.close();
+
 	}
 
 
@@ -770,34 +678,23 @@ public class PersistenciaSuperAndes
 	 * 			Métodos para manejar los lotes
 	 *****************************************************************/
 
-	public Lote agregarLote ( String codigo, Timestamp fecha, int cantidad) 
+	public Lote agregarLote ( String codigo, Timestamp fecha, int cantidad) throws Exception 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlLote.agregarLote(pm, codigo, fecha, cantidad);
-			tx.commit();
 
-			log.trace ("Inserción de lote del producto: " + codigo);
+		tx.begin();
+		sqlLote.agregarLote(pm, codigo, fecha, cantidad);
+		tx.commit();
 
-			return new Lote(codigo, fecha, cantidad);
-		}
-		catch (Exception e)
+		log.trace ("Inserción de lote del producto: " + codigo);
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+		return new Lote(codigo, fecha, cantidad);
+
 	}
 
 
@@ -807,27 +704,18 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlLote.eliminarLote(pm, codigo, fecha);
-			tx.commit();
 
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		tx.begin();
+		sqlLote.eliminarLote(pm, codigo, fecha);
+		tx.commit();
 
-		}
-		finally
+
+		if (tx.isActive())
 		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
+			tx.rollback();
 		}
+		pm.close();
+
 	}
 
 
@@ -846,35 +734,27 @@ public class PersistenciaSuperAndes
 	 * 			Métodos para manejar los Pedidos
 	 *****************************************************************/
 
-	public Pedido  agregarPedido (Timestamp fechaEntregaAc,Timestamp fechaEntrega,EstadoPedido estado, Long idSucursal, Long idProveedor) 
+	public Pedido  agregarPedido (Timestamp fechaEntregaAc,Timestamp fechaEntrega,EstadoPedido estado, Long idSucursal, String idProveedor) throws Exception 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long id = nextval ();
-			sqlPedido.agregarPedido(pm, fechaEntregaAc, fechaEntrega, estado, idSucursal, idProveedor);
-			tx.commit();
 
-			log.trace ("Inserción de un pedido" );
+		tx.begin();
+		long id = nextval ();
+		sqlPedido.agregarPedido(pm, id,fechaEntregaAc, fechaEntrega, estado, idSucursal, idProveedor);
+		tx.commit();
 
-			return new Pedido(id, fechaEntregaAc, fechaEntrega, estado, idSucursal, idProveedor);
-		}
-		catch (Exception e)
+		log.trace ("Inserción de un pedido" );
+
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+		return new Pedido(id, fechaEntregaAc, fechaEntrega, estado, idSucursal, idProveedor);
+
+
+
 	}
 
 
@@ -883,27 +763,18 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlPedido.eliminarPedidoPorId(pm, id);
-			tx.commit();
 
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		tx.begin();
+		sqlPedido.eliminarPedidoPorId(pm, id);
+		tx.commit();
 
-		}
-		finally
+
+		if (tx.isActive())
 		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
+			tx.rollback();
 		}
+		pm.close();
+
 	}
 
 
@@ -931,30 +802,22 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			sqlPersonas.agregarPersona(pm, pIdentificador, pNombre, pCorreo);
-			tx.commit();
 
-			log.trace ("Inserción de una persona" );
+		tx.begin();
+		sqlPersonas.agregarPersona(pm, pIdentificador, pNombre, pCorreo);
+		tx.commit();
 
-			return new Persona(pIdentificador, pNombre, pCorreo);
-		}
-		catch (Exception e)
+		log.trace ("Inserción de una persona" );
+		if (tx.isActive())
 		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
+			tx.rollback();
 		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
+		pm.close();
+
+		return new Persona(pIdentificador, pNombre, pCorreo);
+
+
+
 	}
 
 
@@ -963,54 +826,36 @@ public class PersistenciaSuperAndes
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
+		
 			tx.begin();
 			sqlPersonas.eliminarPersonaPorNombre(pm, nombre);
 			tx.commit();
 
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-
-		}
-		finally
-		{
+		
 			if (tx.isActive())
 			{
 				tx.rollback();
 			}
 			pm.close();
-		}
+		
 	}
 
 	public void eliminarPersonaPorCedula ( String identificador)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
+		
 			tx.begin();
 			sqlPersonas.eliminarPersonaPorCedula(pm, identificador);
 			tx.commit();
 
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-
-		}
-		finally
-		{
+		
 			if (tx.isActive())
 			{
 				tx.rollback();
 			}
 			pm.close();
-		}
+		
 	}
 
 
@@ -1029,34 +874,25 @@ public class PersistenciaSuperAndes
 	 * 			Métodos para manejar los Productos
 	 *****************************************************************/
 
-	public Productos agregarProducto (String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto) 
+	public Productos agregarProducto (String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto) throws Exception 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-		try
-		{
+		
 			tx.begin();
 			sqlProductos.agregarProducto(pm, codigo, nombre, marca, presentacion, unidadPeso, cantidadPeso, unidadVolumen, cantidadVolumen, tipoProducto);
 			tx.commit();
 
 			log.trace ("Inserción de un producto" );
-
-			return new Productos( codigo, nombre, marca, presentacion, unidadPeso, cantidadPeso, unidadVolumen, cantidadVolumen, tipoProducto);
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
 			if (tx.isActive())
 			{
 				tx.rollback();
 			}
 			pm.close();
-		}
+		
+			return new Productos( codigo, nombre, marca, presentacion, unidadPeso, cantidadPeso, unidadVolumen, cantidadVolumen, tipoProducto);
+		
+			
 	}
 
 
@@ -1139,7 +975,7 @@ public class PersistenciaSuperAndes
 		{
 			tx.begin();
 			long id = nextval ();
-			sqlSucursal.agregarSucursal(pm, pNombre, pCiudad, pDireccion);
+			sqlSucursal.agregarSucursal(pm, id,pNombre, pCiudad, pDireccion);
 			tx.commit();
 
 			log.trace ("Inserción de un producto" );
@@ -1223,7 +1059,7 @@ public class PersistenciaSuperAndes
 	{
 		return sqlSucursal.darSucursalPorId(pmf.getPersistenceManager(), identificador);
 	}
-	
+
 	public Sucursal  darSucursalPorNombre( String nombre) 
 	{
 		return sqlSucursal.darSucursalPorNombre(pmf.getPersistenceManager(), nombre);
@@ -1312,5 +1148,713 @@ public class PersistenciaSuperAndes
 		return sqlTipoProducto.darTipoProducto(pmf.getPersistenceManager(), tipo);
 	}
 
+	/* ****************************************************************
+	 * 			Métodos para manejar los ProductosBodega
+	 *****************************************************************/
+
+	public ProductosBodega agregarProductosBodega (long idBodega,int cantidad, String idProductoSucursal) throws Exception 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosBodega.agregarProductosBodega(pm, idBodega, cantidad, idProductoSucursal);
+		tx.commit();
+
+		log.trace ("Inserción de un producto a una bodega ");
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+		return new ProductosBodega(idBodega, cantidad, idProductoSucursal);
+
+
+	}
+
+
+
+	public void eliminarProductosBodegaVacios ()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosBodega.eliminarProductosBodegaVacios(pm);
+		tx.commit();
+
+
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+	public void descontarProductoSucursalDeBodegaEnCantidad (long idBodega,int cant,String idProductoSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosBodega.descontarProductoSucursalDeBodegaEnCantidad(pm, idBodega, cant, idProductoSucursal);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void abastecerProductoSucursalDeBodegaEnCantidad (long idBodega,int cant,String idProductoSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosBodega.abastecerProductoSucursalDeBodegaEnCantidad(pm, idBodega, cant, idProductoSucursal);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+
+
+	public List<ProductosBodega> darProductosSucursal (PersistenceManager pm, long idSucursal)
+	{
+		return sqlProductosBodega.darProductosSucursal(pmf.getPersistenceManager(), idSucursal);
+	}
+
+
+	public List<ProductosBodega> darProductosBodega (PersistenceManager pm, long idBodega)
+	{
+		return sqlProductosBodega.darProductosBodega(pmf.getPersistenceManager(), idBodega);
+	}
+
+	public ProductosBodega darProductoBodega (PersistenceManager pm, long idBodega, String idProductoSucursal )
+	{
+		return sqlProductosBodega.darProductoBodega(pmf.getPersistenceManager(), idBodega, idProductoSucursal);
+	}
+
+	public int darCantidadProductoBodega (PersistenceManager pm, long idBodega, String idProductoSucursal )
+	{
+		return sqlProductosBodega.darCantidadProductoSucursalDeBogega(pmf.getPersistenceManager(), idBodega, idProductoSucursal);
+	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar los ProductosEstante
+	 *****************************************************************/
+
+	public ProductosBodega agregarProductosEstante (long idBodega,int cantidad, String idProductoSucursal) throws Exception 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosEstantes.agregarProductosEstante(pm, idBodega, cantidad, idProductoSucursal);
+		tx.commit();
+
+		log.trace ("Inserción de un producto a un Estante ");
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+		return new ProductosBodega(idBodega, cantidad, idProductoSucursal);
+
+
+	}
+
+
+
+	public void eliminarProductosEstanteVacios ()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosEstantes.eliminarProductosEstanteVacios(pm);
+		tx.commit();
+
+
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+	public void descontarProductoSucursalDeEstanteEnCantidad (long idEstante,int cant,String idProductoSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosEstantes.descontarProductoSucursalDeEstanteEnCantidad(pm, idEstante, cant, idProductoSucursal);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void abastecerProductoSucursalDeEstanteEnCantidad (long idEstante,int cant,String idProductoSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosEstantes.abastecerProductoSucursalDeEstanteEnCantidad(pm, idEstante, cant, idProductoSucursal);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+
+
+	public List<ProductosEstante> darProductosEstanteSucursal (PersistenceManager pm, long idSucursal)
+	{
+		return sqlProductosEstantes.darProductosSucursal(pmf.getPersistenceManager(), idSucursal);
+	}
+
+
+	public List<ProductosEstante> darProductosEstante (PersistenceManager pm, long idBodega)
+	{
+		return sqlProductosEstantes.darProductosEstante(pmf.getPersistenceManager(), idBodega);
+	}
+
+	public ProductosEstante darProductoEstante (PersistenceManager pm, long idEstante, String idProductoSucursal )
+	{
+		return sqlProductosEstantes.darProductoEstante(pmf.getPersistenceManager(), idEstante, idProductoSucursal);
+	}
+
+	public int darCantidadProductoEstante (PersistenceManager pm, long idEstante, String idProductoSucursal )
+	{
+		return sqlProductosEstantes.darCantidadProductoSucursalDeEstante(pmf.getPersistenceManager(), idEstante, idProductoSucursal);
+	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar los ProductosProveedor
+	 *****************************************************************/
+
+	public ProductosProveedor agregarProductosProveedor (String pCodigo,long pIdP,double pPrecioU,int pCanti,String pIdProv,Timestamp pFechaV,double pCali) throws Exception
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosProveedor.agregarProductosProveedor(pm, pCodigo, pIdP, pPrecioU, pCanti, pIdProv, pFechaV, pCali);
+		tx.commit();
+
+		log.trace ("Inserción de un producto a un Estante ");
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+		return new ProductosProveedor(pCodigo, pIdP, pPrecioU, pCanti, pIdProv, pFechaV, pCali);
+
+
+	}
+
+
+
+	public void eliminarProductosProveedorVacios ()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosProveedor.eliminarProductosProveedorVacios(pm);
+		tx.commit();
+
+
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+
+
+	public List<ProductosProveedor> darProductosProveedor ( long idProveedor)
+	{
+		return sqlProductosProveedor.darProductosProveedor(pmf.getPersistenceManager(), idProveedor);
+	}
+
+
+	public List<ProductosProveedor> darProductosProveedorPedido (long idPedido)
+	{
+		return sqlProductosProveedor.darProductosProveedorPedido(pmf.getPersistenceManager(), idPedido);
+	}
+
+	public ProductosProveedor darProductoProveedor ( String codigo, long idProveedor )
+	{
+		return sqlProductosProveedor.darProductoProveedor(pmf.getPersistenceManager(), codigo, idProveedor);
+	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar los ProductosSucursal
+	 *****************************************************************/
+
+	public ProductosSucursal agregarProductosSucursal (long pIdSuc, double pPrecio,String pCodigo, long pIdPromo, String pIdProductoSucursal) throws Exception 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosSucursal.agregarProductosSucursal(pm, pIdSuc, pPrecio, pCodigo, pIdPromo, pIdProductoSucursal);
+		tx.commit();
+
+		log.trace ("Inserción de un producto a uns Sucrusal ");
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+		return new ProductosSucursal(pIdSuc, pPrecio, pCodigo, pIdPromo, pIdProductoSucursal);
+
+
+	}
+
+
+
+	public void eliminarProductosSucursalVacios ()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosSucursal.eliminarProductosSucursalVacios(pm);
+		tx.commit();
+
+
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void descontarProductoSucursalEnCantidad (long idProductoSucursal, int cantidadDescontar, String codigo)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosSucursal.descontarProductoSucursalEnCantidad(pm, idProductoSucursal, cantidadDescontar, codigo);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void abastecerProductoSucursalEnCantidad (long idProductoSucursal, int cantidadDescontar, String codigo)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosSucursal.abastecerProductoSucursalEnCantidad(pm, idProductoSucursal, cantidadDescontar, codigo);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public List<ProductosSucursal> darProductosSucursal ( long idSucursal)
+	{
+		return sqlProductosSucursal.darProductosSucursal(pmf.getPersistenceManager(), idSucursal);
+	}
+
+
+	public ProductosSucursal darProductoSucursal (String idProductoSucursal)
+	{
+		return sqlProductosSucursal.darProductoSucursal(pmf.getPersistenceManager(), idProductoSucursal);
+	}
+
+	public ProductosSucursal darPromocionSucursal (PersistenceManager pm, long idPromocion)
+	{
+		return sqlProductosSucursal.darPromocionSucursal(pmf.getPersistenceManager(), idPromocion);
+	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar los ProductosVendidos
+	 *****************************************************************/
+
+	public ProductosVendidos agregarProductosVendidos (long noFactura,int cantidad, String idProductoSucursal) throws Exception 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosVendidos.agregarProductosVendidos(pm, noFactura, cantidad, idProductoSucursal);
+		tx.commit();
+
+		log.trace ("Inserción de un producto vendido ");
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+		return new ProductosVendidos(noFactura, idProductoSucursal, cantidad);
+
+
+	}
+
+
+
+	public void eliminarProductosVendidosVacios ()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosVendidos.eliminarProductosVendidosVacios(pm);
+		tx.commit();
+
+
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void disminuirProductosVendidosDeFacturaEnCantidad (long noFactura,int cant,String idProductoSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosVendidos.disminuirProductosVendidosDeFacturaEnCantidad(pm, noFactura, cant, idProductoSucursal);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void aumentarProductosVendidosDeFacturaEnCantidad (long noFactura,int cant,String idProductoSucursal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProductosVendidos.aumentarProductosVendidosDeFacturaEnCantidad(pm, noFactura, cant, idProductoSucursal);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public ProductosVendidos darProductoVendido ( long noFactura, String idProductoSucursal )
+	{
+		return sqlProductosVendidos.darProductoVendido(pmf.getPersistenceManager(), noFactura, idProductoSucursal);
+	}
+
+	public List<ProductosVendidos> darProductosVendidos ( long noFactura)
+	{
+		return sqlProductosVendidos.darProductosVendidos(pmf.getPersistenceManager(), noFactura);
+	}
+
+	public List<ProductosVendidos> darProductosVendidosSucursal (long idSucursal)
+	{
+		return sqlProductosVendidos.darProductosSucursal(pmf.getPersistenceManager(), idSucursal);
+	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar las promociones
+	 *****************************************************************/
+
+	public Promocion agregarPromocion (String pDescripcion,Timestamp pFechaIni,Timestamp pFechaFin,int px, int py, TipoPromocion pTipo) throws Exception 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		long id = nextval ();
+		Transaction tx=pm.currentTransaction();
+		
+			tx.begin();
+			sqlPromocion.agregarPromocion(pm, id,pDescripcion, pFechaIni, pFechaFin, px, py, pTipo);
+			tx.commit();
+
+			log.trace ("Inserción de un producto" );
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		
+			return new Promocion(id, px, py, pFechaFin, pFechaIni, pTipo, pDescripcion);
+		
+			
+	}
+
+
+	public void eliminarPromocionPorId ( long id)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlPromocion.eliminarPromocionPorId(pm, id);
+			tx.commit();
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+
+	public Promocion darPromocionPorId ( long identificador) 
+	{
+		return sqlPromocion.darPromocionPorId(pmf.getPersistenceManager(), identificador);
+	}
+	
+	public Promocion darPromocionPorDescripcion ( String descrip) 
+	{
+		return sqlPromocion.darPromocionPorDescripcion(pmf.getPersistenceManager(), descrip);
+	}
+
+
+	public List<Promocion> darPromociones (PersistenceManager pm)
+	{
+		return sqlPromocion.darPromociones(pmf.getPersistenceManager()); 
+	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar las PromocionesVendidos
+	 *****************************************************************/
+
+	public PromocionesVendidas agregarPromocionesVendidas (long noFactura,int cantidad, long idPromocion) throws Exception 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlPromocionesVendidas.agregarPromocionesVendidas(pm, noFactura, cantidad, idPromocion);
+		tx.commit();
+
+		log.trace ("Inserción de un producto vendido ");
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+		return new PromocionesVendidas(noFactura, idPromocion, cantidad);
+
+
+	}
+
+
+
+	public void eliminarPromocionesVendidasVacios ()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlPromocionesVendidas.eliminarPromocionesVendidasVacios(pm);
+		tx.commit();
+
+
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void disminuirPromocionesVendidasDeFacturaEnCantidad (long noFactura,int cant,long idPromocion)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlPromocionesVendidas.disminuirPromocionesVendidasDeFacturaEnCantidad(pm, noFactura, cant, idPromocion);;
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void aumentarPromocionesVendidasDeFacturaEnCantidad (long noFactura,int cant,long idPromocion)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlPromocionesVendidas.aumentarPromocionesVendidasDeFacturaEnCantidad(pm, noFactura, cant, idPromocion);
+		tx.commit();
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public int darCantidadPromocionesVendidasDeFactura ( long noFactura, long idPromocion )
+	{
+		return sqlPromocionesVendidas.darCantidadPromocionesVendidasDeFactura(pmf.getPersistenceManager(), noFactura,idPromocion);
+	}
+	
+	public PromocionesVendidas darProductoVendido (PersistenceManager pm, long noFactura, long idPromocion )
+	{
+		return sqlPromocionesVendidas.darProductoVendido(pm, noFactura, idPromocion);
+	}
+
+	public List<PromocionesVendidas> darPromocionesVendidas (PersistenceManager pm, long noFactura)
+	{
+		return sqlPromocionesVendidas.darPromocionesVendidas(pmf.getPersistenceManager(), noFactura);
+	}
+
+	public List<PromocionesVendidas> darPromocionesSucursal (PersistenceManager pm, long idSucursal)
+	{
+		return sqlPromocionesVendidas.darPromocionesSucursal(pmf.getPersistenceManager(), idSucursal);
+	}
+
+	/* ****************************************************************
+	 * 			Métodos para manejar los Proveedores
+	 *****************************************************************/
+
+	public Proveedor agregarProveedor (String pNit,String pNombre,String pCorreo,long pTel) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProveedor.agregarProveedor(pm, pNit, pNombre, pCorreo, pTel);
+		tx.commit();
+
+		log.trace ("Inserción de proveedor con identificador: " + pNit);
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+		return new Proveedor(pNit, pNombre, pCorreo, pTel);
+
+
+	}
+
+
+
+	public void eliminarProveedorPorNombre (String nombre)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		tx.begin();
+		sqlProveedor.eliminarProveedorPorNombre(pm, nombre);
+		tx.commit();
+
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+	public void eliminarProveedorPorNit ( String nit)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		tx.begin();
+		sqlProveedor.eliminarProveedorPorNit(pm, nit);
+		tx.commit();
+
+
+		if (tx.isActive())
+		{
+			tx.rollback();
+		}
+		pm.close();
+
+	}
+
+
+	public List<Proveedor> darProveedores (PersistenceManager pm)
+	{
+		return sqlProveedor.darProveedores(pmf.getPersistenceManager());
+	}
+
+
+	public Proveedor darProveedorPorNit ( String identificador) 
+	{
+		return sqlProveedor.darProveedorPorNit (pmf.getPersistenceManager(), identificador);
+	}
+	
+	public Proveedor darProveedorPorNombre ( String identificador) 
+	{
+		return sqlProveedor.darProveedorPorNombre (pmf.getPersistenceManager(), identificador);
+	}
 
 }

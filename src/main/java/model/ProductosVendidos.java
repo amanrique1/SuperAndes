@@ -2,45 +2,45 @@ package main.java.model;
 
 public class ProductosVendidos {
 
-	private Long idFactura;
+	private long idFactura;
 	
-	private String codigoProducto;
+	private String idProductoSucursal;
 	
 	private int cantidad;
 	
-	public ProductosVendidos(Long pIdFactura,String pCodigo, int pCantidad)
+	public ProductosVendidos(long pIdFactura,String pIdProductoSucursal, int pCantidad)
 	{
 		idFactura=pIdFactura;
-		codigoProducto=pCodigo;
+		idProductoSucursal=pIdProductoSucursal;
 		cantidad=pCantidad;
 	}
 
 	/**
 	 * @return the idFactura
 	 */
-	public Long getIdFactura() {
+	public long getIdFactura() {
 		return idFactura;
 	}
 
 	/**
 	 * @param idFactura the idFactura to set
 	 */
-	public void setIdFactura(Long idFactura) {
+	public void setIdFactura(long idFactura) {
 		this.idFactura = idFactura;
 	}
 
 	/**
 	 * @return the codigoProducto
 	 */
-	public String getCodigoProducto() {
-		return codigoProducto;
+	public String getIdProductoSucursal() {
+		return idProductoSucursal;
 	}
 
 	/**
 	 * @param codigoProducto the codigoProducto to set
 	 */
-	public void setCodigoProducto(String codigoProducto) {
-		this.codigoProducto = codigoProducto;
+	public void setIdProductoSucursalProducto(String codigoProducto) {
+		this.idProductoSucursal = codigoProducto;
 	}
 
 	/**

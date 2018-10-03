@@ -9,38 +9,38 @@ package main.java.model;
  */
 public class ProductosSucursal {
 	
-	private Long idSucursal;
+	private long idSucursal;
 	
 	private double precio;
 	
-	private int cantidad;
-	
 	private String codigoProducto;
 	
-	private Long idPromocion;
+	private long idPromocion;
 	
-	public ProductosSucursal(Long pIdSuc, double pPrecio,int pCantidad,String pCodigo, Long pIdPromo)
+	private String idProductoSucursal;
+	
+	public ProductosSucursal(long pIdSuc, double pPrecio,String pCodigo, long pIdPromo, String pIdProductoSucursal)
 	{
 	
 		idSucursal=pIdSuc;
 		precio=pPrecio;
-		cantidad=pCantidad;
 		codigoProducto=pCodigo;
 		idPromocion=pIdPromo;
+		idProductoSucursal=pIdProductoSucursal;
 		
 	}
 
 	/**
 	 * @return the idSucursal
 	 */
-	public Long getIdSucursal() {
+	public long getIdSucursal() {
 		return idSucursal;
 	}
 
 	/**
 	 * @param idSucursal the idSucursal to set
 	 */
-	public void setIdSucursal(Long idSucursal) {
+	public void setIdSucursal(long idSucursal) {
 		this.idSucursal = idSucursal;
 	}
 
@@ -56,20 +56,6 @@ public class ProductosSucursal {
 	 */
 	public void setPrecio(double precio) {
 		this.precio = precio;
-	}
-
-	/**
-	 * @return the cantidad
-	 */
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	/**
-	 * @param cantidad the cantidad to set
-	 */
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
 	}
 
 	/**
@@ -89,15 +75,32 @@ public class ProductosSucursal {
 	/**
 	 * @return the idPromocion
 	 */
-	public Long getIdPromocion() {
+	public long getIdPromocion() {
 		return idPromocion;
 	}
 
 	/**
 	 * @param idPromocion the idPromocion to set
 	 */
-	public void setIdPromocion(Long idPromocion) {
+	public void setIdPromocion(long idPromocion) {
 		this.idPromocion = idPromocion;
 	}
+
+	/**
+	 * @return the idProductoSucursal
+	 */
+	public String getIdProductoSucursal() {
+		return idProductoSucursal;
+	}
+
+	/**
+	 * @param idProductoSucursal the idProductoSucursal to set
+	 */
+	public void setIdProductoSucursal(String idProductoSucursal) {
+		this.idProductoSucursal = idProductoSucursal;
+	}
+
+	
+	
 
 }

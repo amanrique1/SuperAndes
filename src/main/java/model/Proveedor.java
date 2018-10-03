@@ -15,15 +15,15 @@ public class Proveedor {
 	
 	private String correoElectronico;
 	
-	private String direccion;
+	private long telefono;
 	
-	public Proveedor(String pNit,String pNombre,String pCorreo,String pDire)
+	public Proveedor(String pNit,String pNombre,String pCorreo,long pTel)
 	{
 		
 		nit=pNit;
 		nombre=pNombre;
 		correoElectronico=pCorreo;
-		direccion=pDire;
+		telefono=pTel;
 		
 	}
 
@@ -70,17 +70,17 @@ public class Proveedor {
 	}
 
 	/**
-	 * @return the direccion
+	 * @return the telefono
 	 */
-	public String getDireccion() {
-		return direccion;
+	public long getTelefono() {
+		return telefono;
 	}
 
 	/**
-	 * @param direccion the direccion to set
+	 * @param telefono the telefono to set
 	 */
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setTelefono(long telefono) {
+		this.telefono = telefono;
 	}
 	
 	

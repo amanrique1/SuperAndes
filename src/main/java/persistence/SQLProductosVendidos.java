@@ -27,6 +27,10 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	 * El manejador de persistencia general de la aplicación
 	 */
 	private PersistenciaSuperAndes pp;
+	
+	private SQLFacturasComprador sqlFacturas;
+	
+	private SQLProductosSucursal sqlProductosSucursal;
 
 	/* ********
 	 * 			Métodos
@@ -42,8 +46,12 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	}
 
 
-	public void agregarProductosVendidos (PersistenceManager pm,long noFactura,int cantidad, long idProductoSucursal) 
+	public void agregarProductosVendidos (PersistenceManager pm,long noFactura,int cantidad, String idProductoSucursal) throws Exception 
 	{
+		if(sqlFacturas.darFacturaCompradorPorNumero(pm, noFactura)==null||sqlProductosSucursal.darProductoSucursal(pm, idProductoSucursal)==null)
+		{
+			throw new Exception("Datos Invalidos");
+		}
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProductosVendidos() + "(noFactura, cantidad, idProductoSucursal) values (?, ?, ?)");
 		q1.setParameters(  noFactura,  cantidad,idProductoSucursal);
 		q1.executeUnique();
@@ -58,7 +66,7 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
-	public void disminuirProductosVendidosDeFacturaEnCantidad (PersistenceManager pm,long noFactura,int cant,long idProductoSucursal)
+	public void disminuirProductosVendidosDeFacturaEnCantidad (PersistenceManager pm,long noFactura,int cant,String idProductoSucursal)
 	{
 
 		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosVendidos () + " SET cantidad=cantidad-? WHERE noFactura=? AND idProductoSucursal=?");
@@ -67,7 +75,7 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 
-	public void aumentarProductosVendidosDeFacturaEnCantidad (PersistenceManager pm,long noFactura,int cant,long idProductoSucursal)
+	public void aumentarProductosVendidosDeFacturaEnCantidad (PersistenceManager pm,long noFactura,int cant,String idProductoSucursal)
 	{
 
 		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosVendidos () + " SET cantidad=cantidad+? WHERE noFactura=? AND idProductoSucursal=?");
@@ -76,7 +84,7 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
-	public int darCantidadProductosVendidosDeFactura (PersistenceManager pm, long noFactura, long idProductoSucursal )
+	public int darCantidadProductosVendidosDeFactura (PersistenceManager pm, long noFactura, String idProductoSucursal )
 	{
 		Query q = pm.newQuery(SQL, "SELECT cantidad FROM "+ pp.darTablaFacturasCompradores()+ " WHERE noFactura=? AND idProductoSucursal=?");
 		q.setParameters(noFactura,idProductoSucursal);
@@ -84,7 +92,7 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
-	public ProductosVendidos darProductoVendido (PersistenceManager pm, long noFactura, long idProductoSucursal )
+	public ProductosVendidos darProductoVendido (PersistenceManager pm, long noFactura, String idProductoSucursal )
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaProductosVendidos()+ " WHERE noFactura=? AND idProductoSucursal=?");
 		q.setResultClass(ProductosVendidos.class);
