@@ -26,6 +26,8 @@ public class SQLProductos {
 	 * El manejador de persistencia general de la aplicación
 	 */
 	private PersistenciaSuperAndes pp;
+	
+	private SQLTipoProducto sqlTipoProducto;
 
 	/* ****************************************************************
 	 * 			Métodos
@@ -41,8 +43,13 @@ public class SQLProductos {
 	}
 	
 	
-	public void agregarProducto (PersistenceManager pm, String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto) 
+	public void agregarProducto (PersistenceManager pm, String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto) throws Exception 
 	{
+		if (sqlTipoProducto.darTipoProducto(pm,tipoProducto)==null)
+		{
+		throw new Exception("Datos invalidos");
+		}
+		
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProductos() + "( CodigoBarras,  nombre,  marca,  presentacion,  unidadPeso,  cantidadPeso,  unidadVolumen, cantidadVolumen, TipoProducto) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		q1.setParameters( codigo,  nombre,  marca,  presentacion,  unidadPeso,  cantidadPeso,  unidadVolumen, cantidadVolumen, tipoProducto);
 	q1.executeUnique();

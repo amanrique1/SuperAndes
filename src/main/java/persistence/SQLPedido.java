@@ -21,6 +21,10 @@ public class SQLPedido {
 	 * El manejador de persistencia general de la aplicación
 	 */
 	private PersistenciaSuperAndes pp;
+	
+	private SQLSucursal sqlSucursal;
+	
+	private SQLProveedor sqlProveedor;
 
 	/* ****************************************************************
 	 * 			Métodos
@@ -36,8 +40,14 @@ public class SQLPedido {
 	}
 
 
-	public void agregarPedido (PersistenceManager pm,Timestamp fechaEntregaAc,Timestamp fechaEntrega,EstadoPedido estado, Long idSucursal, Long idProveedor) 
+	public void agregarPedido (PersistenceManager pm,Timestamp fechaEntregaAc,Timestamp fechaEntrega,EstadoPedido estado, long idSucursal, long idProveedor) 
 	{
+		/**
+		if (sqlSucursal.darSucursalPorId(pm,idSucursal)==null&&sqlProveedor.darProveedor(pm,idProveedor)==null)
+		{
+		throw new Exception("Datos invalidos");
+		}
+		*/
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPedido() + "(fechaEntregaAcordada, fechaEntrega, estado, idSucursal, idProveedor) values (?, ?, ?, ?, ?)");
 		q1.setParameters(  fechaEntregaAc, fechaEntrega, estado.toString(),  idSucursal,  idProveedor);
 		q1.executeUnique();

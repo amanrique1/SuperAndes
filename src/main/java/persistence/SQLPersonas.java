@@ -44,7 +44,7 @@ public class SQLPersonas {
 	}
 	
 	
-	public void agregarPersona (PersistenceManager pm, String pIdentificador, String pDireccion,String pNombre,String pCorreo) 
+	public void agregarPersona (PersistenceManager pm, String pIdentificador,String pNombre,String pCorreo) 
 	{
 		sqlCompradores.agregarComprador(pm, pIdentificador, pNombre, pCorreo);
 		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPersonas() + "(Cedula) values (?)");
@@ -78,7 +78,7 @@ public class SQLPersonas {
 		return pers;
 	}
 
-	public List<Persona> darPersona (PersistenceManager pm)
+	public List<Persona> darPersonas (PersistenceManager pm)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaCompradores()+" INNER JOIN "+pp.darTablaPersonas()+" ON identenficador=Cedula");
 		q.setResultClass(Persona.class);

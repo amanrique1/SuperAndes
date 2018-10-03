@@ -11,14 +11,14 @@ public class TipoProducto {
 	
 	private String tipo;
 	
-	private String codigoBarras;
+	private String metodoAlmacenamiento;
 	
 	private String nombreCategoria;
 	
-	public TipoProducto(String pTipo,String pCodigoBarras,String pCategoria)
+	public TipoProducto(String pTipo,String pMetodoAlmacenamiento,String pCategoria)
 	{
 		tipo=pTipo;
-		codigoBarras=pCodigoBarras;
+		metodoAlmacenamiento=pMetodoAlmacenamiento;
 		nombreCategoria=pCategoria;
 	}
 
@@ -51,17 +51,17 @@ public class TipoProducto {
 	}
 
 	/**
-	 * @return the codigoBarras
+	 * @return the metodoAlmacenamiento
 	 */
-	public String getCodigoBarras() {
-		return codigoBarras;
+	public String getMetodoAlmacenamiento() {
+		return metodoAlmacenamiento;
 	}
 
 	/**
-	 * @param codigoBarras the codigoBarras to set
+	 * @param metodoAlmacenamiento the metodoAlmacenamiento to set
 	 */
-	public void setCodigoBarras(String codigoBarras) {
-		this.codigoBarras = codigoBarras;
+	public void setMetodoAlmacenamiento(String metodoAlmacenamiento) {
+		this.metodoAlmacenamiento = metodoAlmacenamiento;
 	}
 
 	

@@ -27,6 +27,10 @@ public class SQLFacturasComprador {
 	 * El manejador de persistencia general de la aplicación
 	 */
 	private PersistenciaSuperAndes pp;
+	
+	private SQLSucursal sqlSucursal;
+	
+	private SQLCompradores sqlComprador;
 
 	/* ****************************************************************
 	 * 			Métodos
@@ -42,15 +46,20 @@ public class SQLFacturasComprador {
 	}
 
 
-	public void agregarFacturasComprador (PersistenceManager pm, Timestamp fecha, String idComprador, Long idSucursal) 
+	public void agregarFacturasComprador (PersistenceManager pm, Timestamp fecha, String idComprador, long idSucursal)  throws Exception 
 	{
+		if (sqlSucursal.darSucursalPorId(pm,idSucursal)==null&&sqlComprador.darCompradorPorIdentificador(pm,idComprador)==null)
+		{
+		throw new Exception("Datos invalidos");
+		}
+		
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaFacturasCompradores() + "(fecha, idComprador, idSucursal) values (?, ?, ?, ?)");
 		q1.setParameters(  fecha,  idComprador,  idSucursal);
 		q1.executeUnique();
 	}
 
 
-	public void eliminarFacturasCompradorPorNombre (PersistenceManager pm, Long numero)
+	public void eliminarFacturasCompradorPorNumero (PersistenceManager pm, long numero)
 	{
 
 		Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaFacturasCompradores () + " WHERE numero = ?");

@@ -17,11 +17,11 @@ public class FacturasComprador {
 	
 	private Timestamp fecha;
 	
-	private Long idCliente;
+	private String idCliente;
 	
 	private Long idSucursal;
 	
-	public FacturasComprador(Long pId,Timestamp pFecha,Long pIdPersona, Long pIdSucursal)
+	public FacturasComprador(Long pId,Timestamp pFecha,String pIdPersona, long pIdSucursal)
 	{
 		numero=pId;
 		fecha=pFecha;
@@ -35,7 +35,7 @@ public class FacturasComprador {
 	/**
 	 * @return the idCliente
 	 */
-	public Long getIdCliente() {
+	public String getIdCliente() {
 		return idCliente;
 	}
 
@@ -44,7 +44,7 @@ public class FacturasComprador {
 	/**
 	 * @param idCliente the idCliente to set
 	 */
-	public void setIdCliente(Long idCliente) {
+	public void setIdCliente(String idCliente) {
 		this.idCliente = idCliente;
 	}
 
@@ -96,19 +96,6 @@ public class FacturasComprador {
 		this.fecha = fecha;
 	}
 
-	/**
-	 * @return the idCliente
-	 */
-	public Long getIdPersona() {
-		return idCliente;
-	}
-
-	/**
-	 * @param idCliente the idCliente to set
-	 */
-	public void setIdPersona(Long idPersona) {
-		this.idCliente = idPersona;
-	}
 
 
 }

@@ -64,7 +64,7 @@ public class Productos {
 		this.tipoProducto = tipoProducto;
 	}
 
-	public Productos(String pCodigo,String pNombre,String pMarca,String pPresentacion, String pUnidadPeso, double pCantidadPeso,double pVol,String pUnidadVol,String pTipoProducto )
+	public Productos(String pCodigo,String pNombre,String pMarca,String pPresentacion, String pUnidadPeso, double pCantidadPeso,String pUnidadVol,double pVol,String pTipoProducto )
 	{
 		codigoBarras=pCodigo;
 		nombre=pNombre;

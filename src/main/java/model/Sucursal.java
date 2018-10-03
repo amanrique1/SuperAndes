@@ -9,7 +9,7 @@ package main.java.model;
  */
 public class Sucursal {
 
-	private Long id;
+	private long id;
 	
 	private String nombre;
 	
@@ -17,7 +17,7 @@ public class Sucursal {
 	
 	private String direccion;
 	
-	public Sucursal(Long pId,String pNombre,String pCiudad,String pDireccion)
+	public Sucursal(long pId,String pNombre,String pCiudad,String pDireccion)
 	{
 		id=pId;
 		nombre=pNombre;

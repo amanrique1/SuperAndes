@@ -41,10 +41,10 @@ public class SQLCompradores {
 	}
 	
 	
-	public void agregarComprador (PersistenceManager pm, String pNit,String pNombre,String pCorreo) 
+	public void agregarComprador (PersistenceManager pm, String pIdentificacio,String pNombre,String pCorreo) 
 	{
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCompradores() + "(identificador, nombre, correoElectronico, puntos) values (?, ?, ?, ?)");
-		q1.setParameters(pNit, pNombre, pCorreo,0);
+		q1.setParameters(pIdentificacio, pNombre, pCorreo,0);
 	q1.executeUnique();
 	}
 

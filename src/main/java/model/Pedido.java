@@ -23,7 +23,7 @@ public class Pedido {
 	
 	private Long idProveedor;
 	
-	public Pedido(Long pId,double pVolumen,double pPeso,String pUnidadesP,String pUnidadesV,Timestamp pFechaP,Timestamp pFechaE,EstadoPedido pEstado,Long pIdSuc,Long pIdPro)
+	public Pedido(Long pId,Timestamp pFechaP,Timestamp pFechaE,EstadoPedido pEstado,Long pIdSuc,Long pIdPro)
 	{
 		id=pId;
 		fechaEntregaAcordado=pFechaP;

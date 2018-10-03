@@ -37,7 +37,7 @@ public class SQLCategoria {
 	public void agregarCategoria (PersistenceManager pm,String nombre,boolean perecedero) 
 	{
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCategorias() + "(nombre, perecedero) values (?, ?)");
-		q1.setParameters( nombre, perecedero);
+		q1.setParameters( nombre, perecedero+"");
 		q1.executeUnique();
 	}
 
@@ -51,7 +51,15 @@ public class SQLCategoria {
 
 	}
 
+	public Categoria darCategoria (PersistenceManager pm, String nombre)
+	{
+		Query q2 = pm.newQuery(SQL, "SELECT FROM " + pp.darTablaCategorias () + " WHERE nombreCategoria = ?");
+		q2.setResultClass(Categoria.class);
+		q2.setParameters(nombre);
+		return (Categoria)q2.executeUnique();
 
+	}
+	
 	public List<Categoria> darCategorias (PersistenceManager pm)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaCategorias());
