@@ -42,15 +42,11 @@ public class SQLSucursal {
 	}
 
 
-	public String eliminarSucursalPorNombre (PersistenceManager pm, String nombre)
+	public void eliminarSucursalPorNombre (PersistenceManager pm, String nombre)
 	{
-		Query q1 = pm.newQuery(SQL, "SELECT identificador FROM " + pp.darTablaSucursal () + " WHERE nombre = ?");
-		q1.setResultClass(String.class);
-		String identificador=(String)q1.executeUnique();
 		Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaSucursal () + " WHERE nombre = ?");
 		q2.setParameters(nombre);
 		q2.executeUnique();
-		return identificador;
 	}
 
 	public void eliminarSucursalPorId (PersistenceManager pm, long id)
@@ -81,7 +77,7 @@ public class SQLSucursal {
 	}
 
 
-	public List<Sucursal> darSucusales (PersistenceManager pm)
+	public List<Sucursal> darSucursales (PersistenceManager pm)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaSucursal());
 		q.setResultClass(Sucursal.class);

@@ -28,6 +28,8 @@ import main.java.model.Lote;
 import main.java.model.Pedido;
 import main.java.model.Persona;
 import main.java.model.Productos;
+import main.java.model.Sucursal;
+import main.java.model.TipoProducto;
 
 public class PersistenciaSuperAndes 
 {
@@ -444,7 +446,6 @@ public class PersistenciaSuperAndes
 		try
 		{
 			tx.begin();
-			long id = nextval ();
 			sqlCategoria.agregarCategoria(pm, nombre, perecedero);
 			tx.commit();
 
@@ -515,7 +516,6 @@ public class PersistenciaSuperAndes
 		try
 		{
 			tx.begin();
-			long id = nextval ();
 			sqlEmpresas.agregarEmpresa(pm, pNit, pDireccion, pNombre, pCorreo);
 			tx.commit();
 
@@ -777,7 +777,6 @@ public class PersistenciaSuperAndes
 		try
 		{
 			tx.begin();
-			long id = nextval ();
 			sqlLote.agregarLote(pm, codigo, fecha, cantidad);
 			tx.commit();
 
@@ -935,7 +934,6 @@ public class PersistenciaSuperAndes
 		try
 		{
 			tx.begin();
-			long id = nextval ();
 			sqlPersonas.agregarPersona(pm, pIdentificador, pNombre, pCorreo);
 			tx.commit();
 
@@ -976,7 +974,7 @@ public class PersistenciaSuperAndes
 		{
 			//        	e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			
+
 		}
 		finally
 		{
@@ -1003,7 +1001,7 @@ public class PersistenciaSuperAndes
 		{
 			//        	e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			
+
 		}
 		finally
 		{
@@ -1038,7 +1036,6 @@ public class PersistenciaSuperAndes
 		try
 		{
 			tx.begin();
-			long id = nextval ();
 			sqlProductos.agregarProducto(pm, codigo, nombre, marca, presentacion, unidadPeso, cantidadPeso, unidadVolumen, cantidadVolumen, tipoProducto);
 			tx.commit();
 
@@ -1079,7 +1076,7 @@ public class PersistenciaSuperAndes
 		{
 			//        	e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			
+
 		}
 		finally
 		{
@@ -1106,7 +1103,7 @@ public class PersistenciaSuperAndes
 		{
 			//        	e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			
+
 		}
 		finally
 		{
@@ -1130,7 +1127,190 @@ public class PersistenciaSuperAndes
 		return sqlProductos.darProductos(pmf.getPersistenceManager()); 
 	}
 
+	/* ****************************************************************
+	 * 			Métodos para manejar las sucursales
+	 *****************************************************************/
+
+	public Sucursal agregarSucursal (String pNombre,String pCiudad,String pDireccion) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long id = nextval ();
+			sqlSucursal.agregarSucursal(pm, pNombre, pCiudad, pDireccion);
+			tx.commit();
+
+			log.trace ("Inserción de un producto" );
+
+			return new Sucursal( id, pNombre, pCiudad, pDireccion);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
 
 
+
+	public void eliminarSucursalPorNombre ( String nombre)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlSucursal.eliminarSucursalPorNombre(pm, nombre);
+			tx.commit();
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+	public void eliminarSucursalPorId ( long id)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlSucursal.eliminarSucursalPorId(pm, id);
+			tx.commit();
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+
+	public Sucursal  darSucursalPorId( long identificador) 
+	{
+		return sqlSucursal.darSucursalPorId(pmf.getPersistenceManager(), identificador);
+	}
 	
+	public Sucursal  darSucursalPorNombre( String nombre) 
+	{
+		return sqlSucursal.darSucursalPorNombre(pmf.getPersistenceManager(), nombre);
+	}
+
+
+	public List<Sucursal> darSucusales ()
+	{
+		return sqlSucursal.darSucursales(pmf.getPersistenceManager()); 
+	}
+
+
+	/* ****************************************************************
+	 * 			Métodos para manejar los TiposProductos
+	 *****************************************************************/
+
+	public TipoProducto agregarTipoProducto ( String pTipo,String pMetodoAlmacenamiento,String pCategoria) throws Exception 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlTipoProducto.agregarTipoProducto(pm, pTipo, pMetodoAlmacenamiento, pCategoria);
+			tx.commit();
+
+			log.trace ("Inserción del tipo: " + pTipo);
+
+			return new TipoProducto(pTipo, pMetodoAlmacenamiento, pCategoria);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+
+
+
+	public void eliminarTipoProducto ( String tipo)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlTipoProducto.eliminarTipoProducto(pm, tipo);
+			tx.commit();
+
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+
+	public List<TipoProducto> darTiposProducto ()
+	{
+		return sqlTipoProducto.darTiposProducto(pmf.getPersistenceManager());
+	}
+
+
+	public TipoProducto darTipoProducto (String tipo)
+	{
+		return sqlTipoProducto.darTipoProducto(pmf.getPersistenceManager(), tipo);
+	}
+
+
 }
