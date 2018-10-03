@@ -46,15 +46,15 @@ public class SQLFacturasComprador {
 	}
 
 
-	public void agregarFacturasComprador (PersistenceManager pm, Timestamp fecha, String idComprador, long idSucursal)  throws Exception 
+	public void agregarFacturasComprador (PersistenceManager pm, long id,Timestamp fecha, String idComprador, long idSucursal)  throws Exception 
 	{
-		if (sqlSucursal.darSucursalPorId(pm,idSucursal)==null&&sqlComprador.darCompradorPorIdentificador(pm,idComprador)==null)
+		if (sqlSucursal.darSucursalPorId(pm,idSucursal)==null||sqlComprador.darCompradorPorIdentificador(pm,idComprador)==null)
 		{
 		throw new Exception("Datos invalidos");
 		}
 		
-		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaFacturasCompradores() + "(fecha, idComprador, idSucursal) values (?, ?, ?, ?)");
-		q1.setParameters(  fecha,  idComprador,  idSucursal);
+		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaFacturasCompradores() + "(numero,fecha, idComprador, idSucursal) values (?,?, ?, ?, ?)");
+		q1.setParameters(  id,fecha,  idComprador,  idSucursal);
 		q1.executeUnique();
 	}
 
@@ -65,6 +65,16 @@ public class SQLFacturasComprador {
 		Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaFacturasCompradores () + " WHERE numero = ?");
 		q2.setParameters(numero);
 		q2.executeUnique();
+
+	}
+	
+	public FacturasComprador darFacturaCompradorPorNumero (PersistenceManager pm, long numero)
+	{
+
+		Query q2 = pm.newQuery(SQL, "SELECT FROM " + pp.darTablaFacturasCompradores () + " WHERE numero = ?");
+		q2.setResultClass(FacturasComprador.class);
+		q2.setParameters(numero);
+		return (FacturasComprador)q2.executeUnique();
 
 	}
 

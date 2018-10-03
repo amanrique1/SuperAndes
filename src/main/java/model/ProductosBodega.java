@@ -9,15 +9,15 @@ package main.java.model;
  */
 public class ProductosBodega {
 	
-	private String codigoProducto;
+	private String idProductoSucursal;
 	
-	private Long idBodega;
+	private long idBodega;
 	
 	private int cantidadProductos;
 	
-	public ProductosBodega(String pCodigo,Long pId, int pCant)
+	public ProductosBodega(long pId, int pCant,String pIdProductoSucursal)
 	{
-		codigoProducto=pCodigo;
+		idProductoSucursal=pIdProductoSucursal;
 		idBodega=pId;
 		cantidadProductos=pCant;
 	}
@@ -42,32 +42,37 @@ public class ProductosBodega {
 
 
 
-	/**
-	 * @return the codigoProducto
-	 */
-	public String getCodigoProducto() {
-		return codigoProducto;
-	}
-
-	/**
-	 * @param codigoProducto the codigoProducto to set
-	 */
-	public void setCodigoProducto(String codigoProducto) {
-		this.codigoProducto = codigoProducto;
-	}
-
+	
 	/**
 	 * @return the idBodega
 	 */
-	public Long getIdBodega() {
+	public long getIdBodega() {
 		return idBodega;
 	}
 
 	/**
 	 * @param idBodega the idBodega to set
 	 */
-	public void setIdBodega(Long idBodega) {
+	public void setIdBodega(long idBodega) {
 		this.idBodega = idBodega;
+	}
+
+
+
+	/**
+	 * @return the idProductoSucursal
+	 */
+	public String getIdProductoSucursal() {
+		return idProductoSucursal;
+	}
+
+
+
+	/**
+	 * @param idProductoSucursal the idProductoSucursal to set
+	 */
+	public void setIdProductoSucursal(String idProductoSucursal) {
+		this.idProductoSucursal = idProductoSucursal;
 	}
 
 	

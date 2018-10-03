@@ -38,14 +38,14 @@ public class SQLEstante {
 	}
 
 
-	public void agregarEstante (PersistenceManager pm,double pCapV,double pCapP,String pUniP,String pUniV,long pIdSuc, double pNivel, String pTipo) throws Exception 
+	public void agregarEstante (PersistenceManager pm,long id,double pCapV,double pCapP,String pUniP,String pUniV,long pIdSuc, double pNivel, String pTipo) throws Exception 
 	{
-		if (sqlSucursal.darSucursalPorId(pm,pIdSuc)==null&&sqlTipoProducto.darTipoProducto(pm,pTipo)==null)
+		if (sqlSucursal.darSucursalPorId(pm,pIdSuc)==null||sqlTipoProducto.darTipoProducto(pm,pTipo)==null)
 		{
 		throw new Exception("Datos invalidos");
 		}
-		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaEstantes() + "(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, nivelReOrden, idSucursal, tipoProducto ) values (?, ?, ?, ?, ?, ?, ?)");
-		q1.setParameters( pCapV, pCapP, pUniP, pUniV, pIdSuc,  pNivel, pTipo);
+		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaEstantes() + "(idEstante,capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, nivelReOrden, idSucursal, tipoProducto ) values (?,?, ?, ?, ?, ?, ?, ?)");
+		q1.setParameters( id,pCapV, pCapP, pUniP, pUniV, pIdSuc,  pNivel, pTipo);
 		q1.executeUnique();
 	}
 

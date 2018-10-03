@@ -27,6 +27,10 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	 * El manejador de persistencia general de la aplicación
 	 */
 	private PersistenciaSuperAndes pp;
+	
+	private SQLEstante sqlEstante;
+	
+	private SQLProductosSucursal sqlProductosSucursal;
 
 	/* ********
 	 * 			Métodos
@@ -42,8 +46,12 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	}
 
 
-	public void agregarProductosEstante (PersistenceManager pm,long idEstante,int cantidad, long idProductoSucursal) 
+	public void agregarProductosEstante (PersistenceManager pm,long idEstante,int cantidad, String idProductoSucursal) throws Exception 
 	{
+		if(sqlEstante.darEstante(pm, idEstante)==null||sqlProductosSucursal.darProductoSucursal(pm, idProductoSucursal)==null)
+		{
+			throw new Exception("Datos invalidos");
+		}
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProductosEstante() + "(idEstante, cantidad, idProductoSucursal) values (?, ?, ?)");
 		q1.setParameters(  idEstante,  cantidad,idProductoSucursal);
 		q1.executeUnique();
@@ -58,7 +66,7 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
-	public void descontarProductoSucursalDeEstanteEnCantidad (PersistenceManager pm,long idEstante,int cant,long idProductoSucursal)
+	public void descontarProductoSucursalDeEstanteEnCantidad (PersistenceManager pm,long idEstante,int cant,String idProductoSucursal)
 	{
 
 		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosEstante () + " SET cantidad=cantidad-? WHERE idEstante=? AND idProductoSucursal=?");
@@ -67,7 +75,7 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 
-	public void abastecerProductoSucursalDeEstanteEnCantidad (PersistenceManager pm,long idEstante,int cant,long idProductoSucursal)
+	public void abastecerProductoSucursalDeEstanteEnCantidad (PersistenceManager pm,long idEstante,int cant,String idProductoSucursal)
 	{
 
 		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosEstante () + " SET cantidad=cantidad+? WHERE idEstante=? AND idProductoSucursal=?");
@@ -76,16 +84,16 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
-	public int darCantidadProductoSucursalDeEstante (PersistenceManager pm, long idEstante, long idProductoSucursal )
+	public int darCantidadProductoSucursalDeEstante (PersistenceManager pm, long idEstante, String idProductoSucursal )
 	{
-		Query q = pm.newQuery(SQL, "SELECT cantidad FROM "+ pp.darTablaFacturasCompradores()+ " WHERE idEstante= ? AND idProductoSucursal=?");
+		Query q = pm.newQuery(SQL, "SELECT cantidad FROM "+ pp.darTablaProductosEstante()+ " WHERE idEstante= ? AND idProductoSucursal=?");
 		q.setParameters(idEstante,idProductoSucursal);
 		return (int) q.executeUnique();
 
 	}
 	
 	
-	public ProductosEstante darProductoEstante (PersistenceManager pm, long idEstante, long idProductoSucursal )
+	public ProductosEstante darProductoEstante (PersistenceManager pm, long idEstante, String idProductoSucursal )
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaProductosVendidos()+ " WHERE idEstante=? AND idProductoSucursal=?");
 		q.setResultClass(ProductosEstante.class);

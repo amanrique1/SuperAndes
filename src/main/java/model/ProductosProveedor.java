@@ -13,19 +13,19 @@ public class ProductosProveedor {
 
 	private String codigoProducto;
 
-	private Long idPedido;
+	private long idPedido;
 
 	private double precioUnidad;
 
 	private int cantidadUnidades;
 
-	private Long idProveedor;
+	private String idProveedor;
 
 	private Timestamp fechaVencimiento;
 
 	private double calificacionCalidad;
 
-	public ProductosProveedor(String pCodigo,Long pIdP,double pPrecioU,int pCanti,Long pIdProv,Timestamp pFechaV,double pCali)
+	public ProductosProveedor(String pCodigo,long pIdP,double pPrecioU,int pCanti,String pIdProv,Timestamp pFechaV,double pCali)
 	{
 
 		codigoProducto=pCodigo;
@@ -43,14 +43,14 @@ public class ProductosProveedor {
 	/**
 	 * @return the idPedido
 	 */
-	public Long getIdPedido() {
+	public long getIdPedido() {
 		return idPedido;
 	}
 
 	/**
 	 * @param idPedido the idPedido to set
 	 */
-	public void setIdPedido(Long idPedido) {
+	public void setIdPedido(long idPedido) {
 		this.idPedido = idPedido;
 	}
 
@@ -85,14 +85,14 @@ public class ProductosProveedor {
 	/**
 	 * @return the idProveedor
 	 */
-	public Long getIdProveedor() {
+	public String getIdProveedor() {
 		return idProveedor;
 	}
 
 	/**
 	 * @param idProveedor the idProveedor to set
 	 */
-	public void setIdProveedor(Long idProveedor) {
+	public void setIdProveedor(String idProveedor) {
 		this.idProveedor = idProveedor;
 	}
 

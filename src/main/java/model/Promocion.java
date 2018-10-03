@@ -4,9 +4,9 @@ import java.sql.Timestamp;
 
 public class Promocion {
 
-	private Long id;
+	private long id;
 	
-	private double precioPromocion;
+	private String descripcion;
 	
 	private Timestamp fechaInicial;
 	
@@ -18,15 +18,15 @@ public class Promocion {
 	
 	private TipoPromocion tipoPromocion;
 	
-	public Promocion(Long pId,double pPrecio,Timestamp pFechaIni,Timestamp pFechaFin,int px, int py, TipoPromocion pTipo)
+	public Promocion( long pId, int px,  int py, Timestamp pFechaFin, Timestamp pFechaIni, TipoPromocion pTipo,String pDescripcion)
 	{
 		id=pId;
-		precioPromocion=pPrecio;
 		fechaInicial=pFechaIni;
 		fechaFinal=pFechaFin;
 		x=px;
 		y=py;
 		tipoPromocion=pTipo;
+		descripcion=pDescripcion;
 	}
 	
 	
@@ -99,20 +99,7 @@ public class Promocion {
 		this.id = id;
 	}
 
-	/**
-	 * @return the precioPromocion
-	 */
-	public double getPrecioPromocion() {
-		return precioPromocion;
-	}
-
-	/**
-	 * @param precioPromocion the precioPromocion to set
-	 */
-	public void setPrecioPromocion(double precioPromocion) {
-		this.precioPromocion = precioPromocion;
-	}
-
+	
 	/**
 	 * @return the fechaInicial
 	 */
@@ -140,5 +127,27 @@ public class Promocion {
 	public void setFechaFinal(Timestamp fechaFinal) {
 		this.fechaFinal = fechaFinal;
 	}
+
+
+
+	/**
+	 * @return the descripcion
+	 */
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+
+
+	/**
+	 * @param descripcion the descripcion to set
+	 */
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+
+
+	
 	
 }
