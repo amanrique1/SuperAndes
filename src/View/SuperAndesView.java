@@ -1,5 +1,8 @@
 package View;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 import main.java.model.TipoPromocion;
@@ -837,66 +840,140 @@ public class SuperAndesView {
 			
 		}
 		String fechaInicial="";
-		
-		int anio=0;
-		while(true)
+		while(fechaInicial.equals(""))
 		{
-			System.out.println("Ingrese el dia de inicio de la promocion "+tipoPromocion.toString());
-			String cant= sc.nextLine();
-			try
+			int anio=0;
+			while(true)
 			{
-				anio=Integer.parseInt(cant);
-				if(anio<=2018)
-					System.out.println("¡Debe ingresar un año valido!");
-				else 
-					break;
+				System.out.println("Ingrese el año de inicio de la promocion "+tipoPromocion.toString());
+				String cant= sc.nextLine();
+				try
+				{
+					anio=Integer.parseInt(cant);
+					if(anio<=2018)
+						System.out.println("¡Debe ingresar un año valido!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
 			}
-			catch(Exception e)
+			
+			int mes=0;
+			while(true)
 			{
-				System.out.println("¡Debe ingresar un numero!");
+				System.out.println("Ingrese el mes de inicio de la promocion "+tipoPromocion.toString());
+				String cant= sc.nextLine();
+				try
+				{
+					mes=Integer.parseInt(cant);
+					if(mes<=0||mes>12)
+						System.out.println("¡Debe ingresar un mes valido!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
 			}
+			
+			int dia=0;
+			while(true)
+			{
+				System.out.println("Ingrese el dia de inicio de la promocion "+tipoPromocion.toString());
+				String cant= sc.nextLine();
+				try
+				{
+					dia=Integer.parseInt(cant);
+					if(dia<=0||dia>31)
+						System.out.println("¡Debe ingresar un dia valido!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
+			}
+			if(compararFechas(anio+"-"+mes+"-"+dia, getFechaActual())>=0)
+				fechaInicial=anio+"-"+mes+"-"+dia;
+			else
+				System.out.println("¡Debe ingresar una fecha posterior a la fecha actual!   fecha actual: "+getFechaActual());
+
+
+		}
+		String fechaFinal="";
+		while(fechaFinal.equals(""))
+		{
+			int anio=0;
+			while(true)
+			{
+				System.out.println("Ingrese el año de fin de la promocion "+tipoPromocion.toString());
+				String cant= sc.nextLine();
+				try
+				{
+					anio=Integer.parseInt(cant);
+					if(anio<=2018)
+						System.out.println("¡Debe ingresar un año valido!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
+			}
+			
+			int mes=0;
+			while(true)
+			{
+				System.out.println("Ingrese el ultimo mes de la promocion "+tipoPromocion.toString());
+				String cant= sc.nextLine();
+				try
+				{
+					mes=Integer.parseInt(cant);
+					if(mes<=0||mes>12)
+						System.out.println("¡Debe ingresar un mes valido!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
+			}
+			
+			int dia=0;
+			while(true)
+			{
+				System.out.println("Ingrese el ultimo dia de de la promocion "+tipoPromocion.toString());
+				String cant= sc.nextLine();
+				try
+				{
+					dia=Integer.parseInt(cant);
+					if(dia<=0||dia>31)
+						System.out.println("¡Debe ingresar un dia valido!");
+					else 
+						break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
+			}
+			if(compararFechas(anio+"-"+mes+"-"+dia, fechaInicial)>=0)
+				fechaFinal=anio+"-"+mes+"-"+dia;
+			else
+				System.out.println("¡Debe ingresar una fecha posterior a la fecha inicial!   fecha inicial: "+fechaInicial);
+
+
 		}
 		
-		int mes=0;
-		while(true)
-		{
-			System.out.println("Ingrese el dia de inicio de la promocion "+tipoPromocion.toString());
-			String cant= sc.nextLine();
-			try
-			{
-				mes=Integer.parseInt(cant);
-				if(mes<=0||mes>12)
-					System.out.println("¡Debe ingresar un mes valido!");
-				else 
-					break;
-			}
-			catch(Exception e)
-			{
-				System.out.println("¡Debe ingresar un numero!");
-			}
-		}
 		
-		int dia=0;
-		while(true)
-		{
-			System.out.println("Ingrese el dia de inicio de la promocion "+tipoPromocion.toString());
-			String cant= sc.nextLine();
-			try
-			{
-				dia=Integer.parseInt(cant);
-				if(dia<=0||dia>31)
-					System.out.println("¡Debe ingresar un dia valido!");
-				else 
-					break;
-			}
-			catch(Exception e)
-			{
-				System.out.println("¡Debe ingresar un numero!");
-			}
-		}
-		
-		
-		
+		double y=0;
 		double x=0;
 		while(true)
 		{
@@ -916,13 +993,8 @@ public class SuperAndesView {
 			}
 			
 		}
-		if(tipoPromocion==TipoPromocion.X_PORCENTAJE_DESCUENTO)
+		if(tipoPromocion!=TipoPromocion.X_PORCENTAJE_DESCUENTO)
 		{
-			
-		}
-		else 
-		{
-			double y=0;
 			while(true)
 			{
 				System.out.println("Ingrese y, teniendo en cuenta que este representara el valor de \"y\" en la promocion "+tipoPromocion.toString());
@@ -943,7 +1015,42 @@ public class SuperAndesView {
 			}
 			
 		}
+		boolean termine=false;
+		ArrayList<Long> idsProductos=new ArrayList<Long>(); 
+		while(!termine)
+		{
+			while(true)
+			{
+				System.out.println("Ingrese el id de la Sucursal a la que sera asignada la nueva Estante");
+				String cant= sc.nextLine();
+				try
+				{
+					Integer.parseInt(cant);
+					//TODO REVISAR SI ID EXISTEEEEEEE
+					
+					
+					
+					idsProductos.add(Long.valueOf(cant));
+					break;
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡Debe ingresar un numero!");
+				}
+				
+			}
+		}
 		
+		String descripcion="";
+		while(true)
+		{	
+			System.out.println("Ingrese la descripcion de la promocion:");
+			descripcion = sc.nextLine();
+			if(descripcion.trim().equals(""))
+				System.out.println("¡El tipo promocion no puede ser vacia!");
+			else 
+				break;
+		}
 		
 		
 		
@@ -952,10 +1059,23 @@ public class SuperAndesView {
 		
 	}
 
+	public static String getFechaActual()
+	{
+		Calendar c = Calendar.getInstance();
+		
+		String dia = Integer.toString(c.get(Calendar.DATE));
+		String mes = Integer.toString(c.get(Calendar.MONTH)+1);
+		String annio = Integer.toString(c.get(Calendar.YEAR));
+		return(annio+"-"+mes+"-"+dia);	
+	}
 	
+	public static int compararFechas(String fech,String fech2)
+	{
+		return fech.compareTo(fech2);
+	}
 	
 	private static void printMenu() {
-				
+		
 		System.out.println("---------ISIS - Sistemas Transaccionales----------");
 		System.out.println("---------------------Iteración 1----------------------");
 		System.out.println("---------------------Super Andes----------------------");
