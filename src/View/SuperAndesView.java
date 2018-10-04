@@ -8,14 +8,29 @@ import java.util.Scanner;
 import main.java.model.Productos;
 import main.java.model.Sucursal;
 import main.java.model.TipoPromocion;
+import main.java.persistence.PersistenciaSuperAndes;
 
 public class SuperAndesView {
 
+	private static PersistenciaSuperAndes persistencia;
 	
 	private static long idSucursal;
 	Sucursal sucursal;
 	public static void main(String[] args) 
 	{
+//		persistencia=new PersistenciaSuperAndes();
+//		try
+//		{
+//		Sucursal sucursal=persistencia.agregarSucursal("Pepe Sierra", "Bogota", "Calle 116 #15-66");
+//		if(sucursal!=null)
+//			System.out.println("id: "+sucursal.getId()+" ,nombre: "+sucursal.getNombre());
+//		}
+//		catch(Exception e)
+//		{
+//			System.out.println("Se totio");
+//
+//		}
+		
 		borrarPromocionesVencidas();
 		idSucursal=-1l;
 		Scanner sc = new Scanner(System.in);

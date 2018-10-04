@@ -119,7 +119,7 @@ public class PersistenciaSuperAndes
 	/**
 	 * Constructor privado con valores por defecto - Patrón SINGLETON
 	 */
-	private PersistenciaSuperAndes ()
+	public PersistenciaSuperAndes ()
 	{
 		pmf = JDOHelper.getPersistenceManagerFactory("SuperAndes");		
 		crearClasesSQL ();
@@ -127,26 +127,26 @@ public class PersistenciaSuperAndes
 		// Define los nombres por defecto de las tablas de la base de datos
 		tablas = new LinkedList<String> ();
 		tablas.add ("SecuenciaSuperAndes");
-		tablas.add ("Empresas");
-		tablas.add ("Personas");
-		tablas.add ("Compradores");
-		tablas.add ("Productos");
-		tablas.add ("TipoProducto");
-		tablas.add ("Categorias");
-		tablas.add ("Sucursal");
-		tablas.add ("ProductosSucursal");
-		tablas.add ("Lotes");
-		tablas.add ("FacturasCompradores");
-		tablas.add ("Estantes");
-		tablas.add ("ProductosEstante");
-		tablas.add ("ProductosVendidos");
-		tablas.add ("Bodegas");
-		tablas.add ("Promociones");
-		tablas.add ("productosBodega");
-		tablas.add ("PromocionesVendidas");
-		tablas.add ("Proveedor");
-		tablas.add ("Pedido");
-		tablas.add ("ProductosProveedor");
+		tablas.add ("EMPRESAS");
+		tablas.add ("PERSONAS");
+		tablas.add ("COMPRADORES");
+		tablas.add ("PRODUCTOS");
+		tablas.add ("TIPOPRODUCTO");
+		tablas.add ("CATEGORIA");
+		tablas.add ("SUCURSAL");
+		tablas.add ("PRODUCTOSSUCURSAL");
+		tablas.add ("LOTE");
+		tablas.add ("FACTURASCOMPRADOR");
+		tablas.add ("ESTANTE");
+		tablas.add ("PRODUCTOSESTANTE");
+		tablas.add ("PRODUCTOSVENDIDOS");
+		tablas.add ("BODEGAS");
+		tablas.add ("PROMOCION");
+		tablas.add ("PRODUCTOSBODEGA");
+		tablas.add ("PROMOCIONESVENDIDAS");
+		tablas.add ("PROVEEDOR");
+		tablas.add ("PEDIDO");
+		tablas.add ("PRODUCTOSPROVEEDOR");
 	}
 
 	/**
