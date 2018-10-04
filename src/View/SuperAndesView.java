@@ -1,5 +1,6 @@
 package View;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,24 +14,24 @@ import main.java.persistence.PersistenciaSuperAndes;
 public class SuperAndesView {
 
 	private static PersistenciaSuperAndes persistencia;
-	
+
 	private static long idSucursal;
 	Sucursal sucursal;
 	public static void main(String[] args) 
 	{
-//		persistencia=new PersistenciaSuperAndes();
-//		try
-//		{
-//		Sucursal sucursal=persistencia.agregarSucursal("Pepe Sierra", "Bogota", "Calle 116 #15-66");
-//		if(sucursal!=null)
-//			System.out.println("id: "+sucursal.getId()+" ,nombre: "+sucursal.getNombre());
-//		}
-//		catch(Exception e)
-//		{
-//			System.out.println("Se totio");
-//
-//		}
-		
+		//		persistencia=new PersistenciaSuperAndes();
+		//		try
+		//		{
+		//		Sucursal sucursal=persistencia.agregarSucursal("Pepe Sierra", "Bogota", "Calle 116 #15-66");
+		//		if(sucursal!=null)
+		//			System.out.println("id: "+sucursal.getId()+" ,nombre: "+sucursal.getNombre());
+		//		}
+		//		catch(Exception e)
+		//		{
+		//			System.out.println("Se totio");
+		//
+		//		}
+
 		borrarPromocionesVencidas();
 		idSucursal=-1l;
 		Scanner sc = new Scanner(System.in);
@@ -40,150 +41,150 @@ public class SuperAndesView {
 			if(idSucursal==-1l)
 			{
 				printMenu();
-				
+
 				int option = sc.nextInt();
 
-				
+
 				switch(option)
 				{
-					case 1:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar una nueva Sucursal debe proporcionar los siguientes datos:\n");
-						
-						registrarSucursal(sc);						
-						
+				case 1:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar una nueva Sucursal debe proporcionar los siguientes datos:\n");
 
-						break;
-					case 2:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para ingresar a su sucursal debe proporcionar los siguientes datos:\n");
-					
-						ingresarASucursal(sc);
-						
-						break;
-						
-					case 0:	
-						fin=true;
-						sc.close();
-						break;
+					registrarSucursal(sc);						
+
+
+					break;
+				case 2:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para ingresar a su sucursal debe proporcionar los siguientes datos:\n");
+
+					ingresarASucursal(sc);
+
+					break;
+
+				case 0:	
+					fin=true;
+					sc.close();
+					break;
 				}
 
 			}
 			else
 			{
 				printMenuSucursal();
-				
+
 				int option = sc.nextInt();
-				
+
 				switch(option)
 				{
-					case 1:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar un nuevo proveedor debe proporcionar los siguientes datos:\n");
-						
-						registrarProveedor(sc);
-						
-						
-	
-						break;
-					case 2:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar un nuevo producto debe proporcionar los siguientes datos:\n");
-					
-						registrarProducto(sc);
-						
-						break;
-					case 3:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar un nuevo cliente debe proporcionar los siguientes datos:\n");
-					
-						registrarCliente(sc);
-						break;
-					case 4:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar una nueva sucursal debe proporcionar los siguientes datos:\n");
-					
-						registrarSucursal(sc);
-						
-						break;
-					case 5:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar una nueva Bodega a una Sucursal debe proporcionar los siguientes datos:\n");
-					
-						registrarBodegaASucursal(sc);
-						break;
-					case 6:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar un Estante a una Sucursal debe proporcionar los siguientes datos:\n");
-					
-						registrarEstanteASucursal(sc);
-						break;
-					case 7:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar una nueva Promoción debe proporcionar los siguientes datos:\n");
-					
-						registrarPromocion(sc);
-						break;
-					case 8:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Esta acción se realiza sola cada vez que se abre la aplicación");
-					
-						break;
-					case 9:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar un nuevo  Pedido de un Producto a un Proveedor para una Sucursal debe proporcionar los siguientes datos:\n");
-					
-						break;
-					case 10:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar la llegada de un pedido de un producto a una sucursal debe proporcionar los siguientes datos:\n");
-					
-						break;
-					case 11:
-						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para registrar la venta de un producto en una sucursal debe proporcionar los siguientes datos:\n");
-					
-						break;
-					case 12:
-						System.out.println("----------------------------------------------------------------");
-						
-						
-						break;
-					case 13:
-						System.out.println("----------------------------------------------------------------");
-					
-						break;
-					case 14:
-						System.out.println("----------------------------------------------------------------");
-					
-						break;
-					case 15:
-						System.out.println("----------------------------------------------------------------");
-						
-						break;
-					case 16:
-						System.out.println("----------------------------------------------------------------");
-				
-						break;
-					case 17:
-						System.out.println("----------------------------------------------------------------");
-					
-						break;
-					case 0:	
-						fin=true;
-						sc.close();
-						break;
+				case 1:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar un nuevo proveedor debe proporcionar los siguientes datos:\n");
+
+					registrarProveedor(sc);
+
+
+
+					break;
+				case 2:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar un nuevo producto debe proporcionar los siguientes datos:\n");
+
+					registrarProducto(sc);
+
+					break;
+				case 3:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar un nuevo cliente debe proporcionar los siguientes datos:\n");
+
+					registrarCliente(sc);
+					break;
+				case 4:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar una nueva sucursal debe proporcionar los siguientes datos:\n");
+
+					registrarSucursal(sc);
+
+					break;
+				case 5:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar una nueva Bodega a una Sucursal debe proporcionar los siguientes datos:\n");
+
+					registrarBodegaASucursal(sc);
+					break;
+				case 6:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar un Estante a una Sucursal debe proporcionar los siguientes datos:\n");
+
+					registrarEstanteASucursal(sc);
+					break;
+				case 7:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar una nueva Promoción debe proporcionar los siguientes datos:\n");
+
+					registrarPromocion(sc);
+					break;
+				case 8:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Esta acción se realiza sola cada vez que se abre la aplicación");
+
+					break;
+				case 9:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar un nuevo  Pedido de un Producto a un Proveedor para una Sucursal debe proporcionar los siguientes datos:\n");
+
+					break;
+				case 10:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar la llegada de un pedido de un producto a una sucursal debe proporcionar los siguientes datos:\n");
+
+					break;
+				case 11:
+					System.out.println("----------------------------------------------------------------");
+					System.out.println("Para registrar la venta de un producto en una sucursal debe proporcionar los siguientes datos:\n");
+
+					break;
+				case 12:
+					System.out.println("----------------------------------------------------------------");
+
+
+					break;
+				case 13:
+					System.out.println("----------------------------------------------------------------");
+
+					break;
+				case 14:
+					System.out.println("----------------------------------------------------------------");
+
+					break;
+				case 15:
+					System.out.println("----------------------------------------------------------------");
+
+					break;
+				case 16:
+					System.out.println("----------------------------------------------------------------");
+
+					break;
+				case 17:
+					System.out.println("----------------------------------------------------------------");
+
+					break;
+				case 0:	
+					fin=true;
+					sc.close();
+					break;
 				}
 			}
 		}
 	}
-	
+
 	public static void borrarPromocionesVencidas()
 	{
 		//TODO BORRAR TODAS LAS PROMOCIONES CUYA FECHA<FECHAACTUAL
 	}
 
-	
+
 	public static void registrarProveedor(Scanner sc)
 	{
 		sc.nextLine();
@@ -198,7 +199,7 @@ public class SuperAndesView {
 				break;
 
 		}
-		
+
 		String nombre ="";
 		while(true)
 		{
@@ -209,8 +210,8 @@ public class SuperAndesView {
 			else 
 				break;
 		}
-		
-		
+
+
 		String correoElectronico="";
 		while(true)
 		{	
@@ -222,14 +223,14 @@ public class SuperAndesView {
 				System.out.println("¡El correo electronico no tiene el formato esperado!");
 
 		}
-		
+
 		String telefono = "";
 		while(true) {
-		System.out.println("Ingrese el telefono del proveedor (sin incluir +57):");
-		telefono = sc.nextLine();
-		if(telefono.length()!=10)
-			System.out.println("¡La longitud del telefono no es correcta!");
-		else {
+			System.out.println("Ingrese el telefono del proveedor (sin incluir +57):");
+			telefono = sc.nextLine();
+			if(telefono.length()!=10)
+				System.out.println("¡La longitud del telefono no es correcta!");
+			else {
 				try
 				{
 					Integer.parseInt(telefono.substring(0,6));
@@ -243,24 +244,24 @@ public class SuperAndesView {
 			}
 
 		}
-		
-		//TODO GENERAR PROVEEDOR CON LOS DATOS
 
-		
+		//TODO GENERAR PROVEEDOR CON LOS DATOS
+		persistencia.requerimiento1(nit, nombre, correoElectronico, Long.valueOf(telefono));
+
 		System.out.println("nit: "+nit+" ,nombre: "+nombre+" ,correoElectronico: "+correoElectronico+" ,telefono: (+57)"+telefono);
-		
+
 	}
-	
+
 	public static void registrarProducto(Scanner sc)
 	{
 		sc.nextLine();
-		
-		
+
+
 		String codigoProducto ="";
 		String resp ="0";
-//		Productos producto=new Productos("x","x","x","x","x",5,"x",5,"x");
+		//		Productos producto=new Productos("x","x","x","x","x",5,"x",5,"x");
 		Productos producto=null;
-		
+
 		while(true)
 		{
 			System.out.println("Ingrese el codigoBarras del producto:");
@@ -270,9 +271,9 @@ public class SuperAndesView {
 			else
 			{
 				//TODO traer porducto con ese codigo barras
-//				producto=
-				
-				
+				//				producto=
+
+
 				if(producto==null)
 				{
 					while(true)
@@ -286,7 +287,7 @@ public class SuperAndesView {
 						if(resp.equals("2"))
 							break;
 						System.out.println("¡Debe escoger una opción valida!");
-						
+
 					}				
 				}
 
@@ -306,7 +307,7 @@ public class SuperAndesView {
 				else 
 					break;
 			}
-			
+
 			String marca ="";
 			while(true)
 			{
@@ -317,7 +318,7 @@ public class SuperAndesView {
 				else 
 					break;
 			}
-			
+
 			String presentacion ="";
 			while(true)
 			{
@@ -328,7 +329,7 @@ public class SuperAndesView {
 				else 
 					break;
 			}
-			
+
 			String unidadPeso ="";
 			while(true)
 			{
@@ -347,9 +348,9 @@ public class SuperAndesView {
 					break;
 				}	
 				System.out.println("¡Debe escoger una opción valida!");
-				
+
 			}
-			
+
 			String unidadVolumen ="";
 			while(true)
 			{
@@ -368,10 +369,10 @@ public class SuperAndesView {
 					break;
 				}	
 				System.out.println("¡Debe escoger una opción valida!");
-				
+
 			}
-			
-			
+
+
 			double cantidadPeso=0;
 			while(true)
 			{
@@ -389,9 +390,9 @@ public class SuperAndesView {
 				{
 					System.out.println("¡Debe ingresar un numero!");
 				}
-				
+
 			}
-			
+
 			double cantidadVolumen=0;
 			while(true)
 			{
@@ -409,10 +410,10 @@ public class SuperAndesView {
 				{
 					System.out.println("¡Debe ingresar un numero!");
 				}
-				
+
 			}
-			
-			
+
+
 			String tipoProducto="";
 			while(true)
 			{	
@@ -423,14 +424,14 @@ public class SuperAndesView {
 				else 
 					break;
 			}
-			
+
 			//TODO GENERAR PRODUCTO CON LOS DATOS
 			producto=new Productos("x","x","x","x","x",5,"x",5,"x");
-			
+
 			System.out.println("codigoBarras: "+codigoProducto+" ,nombre: "+nombre+" ,presentacion: "+presentacion+" ,unidadPeso: "+unidadPeso
 					+" unidadVolumen: "+unidadVolumen+" ,cantidadPeso: "+cantidadPeso+" ,cantidadVolumen: "+cantidadVolumen+" ,tipoProducto: "+tipoProducto);
-			
-			
+
+
 		}
 		if(producto!=null)
 		{
@@ -451,29 +452,36 @@ public class SuperAndesView {
 				{
 					System.out.println("¡Debe ingresar un numero!");
 				}
-				
-				
+
+
 			}
 			String idProductoSucursal=idSucursal+"-"+codigoProducto;
-			
-			//TODO GEENERAR PRODUCTO SUCURSAL CON VALORES
-			System.out.println("idProductoSucursal: "+idProductoSucursal+" ,idSucursal: "+idSucursal+" ,precio: "+precio+" ,codigoProducto: "+codigoProducto);
-			
-			
-		}
-		
 
-		
-		
-		
+			//TODO GEENERAR PRODUCTO SUCURSAL CON VALORES
+			try {
+				persistencia.agregarProductosSucursal(idSucursal, precio, codigoProducto, Long.MAX_VALUE, idProductoSucursal);
+				System.out.println("idProductoSucursal: "+idProductoSucursal+" ,idSucursal: "+idSucursal+" ,precio: "+precio+" ,codigoProducto: "+codigoProducto);
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+		}
+
+
+
+
+
 	}
-	
+
 
 	public static void registrarCliente(Scanner sc)
 	{
-		
+
 		sc.nextLine();
-		
+
 		boolean registrarPersona =true;
 		while(true)
 		{
@@ -489,7 +497,7 @@ public class SuperAndesView {
 				break;
 			}	
 			System.out.println("¡Debe escoger una opción valida!");
-			
+
 		}
 		String identificador="";
 		String cedula ="";
@@ -505,17 +513,17 @@ public class SuperAndesView {
 					System.out.println("¡La cedula debe tener más de 6 digitos!");
 				else 
 					try
-					{
+				{
 						Integer.parseInt(cedula.substring(0,5));
 						Integer.parseInt(cedula.substring(5));
 						identificador=cedula;
 						break;
-					}
-					catch(Exception e)
-					{
-						System.out.println("¡La cedula debe estar compuesta unicamente de numeros!");
+				}
+				catch(Exception e)
+				{
+					System.out.println("¡La cedula debe estar compuesta unicamente de numeros!");
 
-					}			
+				}			
 			}
 		}
 		else
@@ -532,7 +540,7 @@ public class SuperAndesView {
 				}
 
 			}
-		
+
 		String nombre ="";
 		while(true)
 		{
@@ -543,7 +551,7 @@ public class SuperAndesView {
 			else 
 				break;
 		}
-		
+
 		String correoElectronico="";
 		while(true)
 		{	
@@ -555,32 +563,32 @@ public class SuperAndesView {
 				System.out.println("¡El correo electronico no tiene el formato esperado!");
 
 		}
-		
+
 		double puntos=0;
-		
-		
+
+
 		if(registrarPersona)
 		{
 			System.out.println("cedula: "+cedula+" ,nombre: "+nombre+" ,correoElectronico: "+correoElectronico+" ,puntos: "+puntos
 					+" identificador: "+identificador);
-		
+
 		}
 		else
 		{
 			System.out.println("NIT: "+nit+" ,nombre: "+nombre+" ,correoElectronico: "+correoElectronico+" ,puntos: "+puntos
 					+" identificador: "+identificador);
-		
+
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 	public static void registrarSucursal(Scanner sc)
 	{
-		
+
 		sc.nextLine();
-		
+
 		String nombre ="";
 		while(true)
 		{
@@ -591,7 +599,7 @@ public class SuperAndesView {
 			else 
 				break;
 		}
-		
+
 		String ciudad ="";
 		while(true)
 		{
@@ -602,7 +610,7 @@ public class SuperAndesView {
 			else 
 				break;
 		}
-		
+
 		String direccion ="";
 		while(true)
 		{
@@ -613,24 +621,22 @@ public class SuperAndesView {
 			else 
 				break;
 		}
-		
+
 		//TODO PONER EL ID QUE GENERO EL SISTEMA
 		idSucursal=0l;
-		
+		persistencia.requerimiento4(nombre, ciudad, direccion);
 		System.out.println("idSucursal: "+idSucursal+" ,nombre: "+nombre+" ,ciudad: "+ciudad+" ,direccion: "+direccion);
-		
-		
-		
+
 	}
-	
-	
+
+
 	public static void registrarBodegaASucursal(Scanner sc)
 	{
-		
+
 		sc.nextLine();
-		
-		
-		
+
+
+
 		String unidadPeso ="";
 		while(true)
 		{
@@ -649,9 +655,9 @@ public class SuperAndesView {
 				break;
 			}	
 			System.out.println("¡Debe escoger una opción valida!");
-			
+
 		}
-		
+
 		String unidadVolumen ="";
 		while(true)
 		{
@@ -670,10 +676,10 @@ public class SuperAndesView {
 				break;
 			}	
 			System.out.println("¡Debe escoger una opción valida!");
-			
+
 		}
-		
-		
+
+
 		double capacidadPeso=0;
 		while(true)
 		{
@@ -691,9 +697,9 @@ public class SuperAndesView {
 			{
 				System.out.println("¡Debe ingresar un numero!");
 			}
-			
+
 		}
-		
+
 		double capacidadVolumen=0;
 		while(true)
 		{
@@ -711,9 +717,9 @@ public class SuperAndesView {
 			{
 				System.out.println("¡Debe ingresar un numero!");
 			}
-			
+
 		}
-		
+
 		double nivelReOrden=0;
 		while(true)
 		{
@@ -731,9 +737,9 @@ public class SuperAndesView {
 			{
 				System.out.println("¡Debe ingresar un numero!");
 			}
-			
+
 		}
-		
+
 		String tipoProducto="";
 		while(true)
 		{	
@@ -744,28 +750,34 @@ public class SuperAndesView {
 			else 
 				break;
 		}
-		
-		
+
+
 		//TODO CREAR BOGEGA CON IDSUCURSAL=idSucursal
-		
+
 		//PONER EL ID QUE GENERO EL SISTEMA
 		Long idBodega=0l;
-		
-		
-		System.out.println("idBodega: "+idBodega+" ,idSucursal: "+idSucursal+" ,unidadPeso: "+unidadPeso
-				+" unidadVolumen: "+unidadVolumen+" ,capacidadPeso: "+capacidadPeso+" ,capacidadVolumen: "+capacidadVolumen
-				+" ,tipoProducto: "+tipoProducto+" ,nivelReOrden: "+nivelReOrden);
-		
-		
-		
+
+		try {
+			persistencia.requerimiento5(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, idSucursal, nivelReOrden, tipoProducto);
+			System.out.println("idBodega: "+idBodega+" ,idSucursal: "+idSucursal+" ,unidadPeso: "+unidadPeso
+					+" unidadVolumen: "+unidadVolumen+" ,capacidadPeso: "+capacidadPeso+" ,capacidadVolumen: "+capacidadVolumen
+					+" ,tipoProducto: "+tipoProducto+" ,nivelReOrden: "+nivelReOrden);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
 	}
-	
-	
+
+
 	public static void registrarEstanteASucursal(Scanner sc)
 	{
-		
+
 		sc.nextLine();
-		
+
 		String unidadPeso ="";
 		while(true)
 		{
@@ -784,9 +796,9 @@ public class SuperAndesView {
 				break;
 			}	
 			System.out.println("¡Debe escoger una opción valida!");
-			
+
 		}
-		
+
 		String unidadVolumen ="";
 		while(true)
 		{
@@ -805,10 +817,10 @@ public class SuperAndesView {
 				break;
 			}	
 			System.out.println("¡Debe escoger una opción valida!");
-			
+
 		}
-		
-		
+
+
 		double capacidadPeso=0;
 		while(true)
 		{
@@ -826,9 +838,9 @@ public class SuperAndesView {
 			{
 				System.out.println("¡Debe ingresar un numero!");
 			}
-			
+
 		}
-		
+
 		double capacidadVolumen=0;
 		while(true)
 		{
@@ -846,9 +858,9 @@ public class SuperAndesView {
 			{
 				System.out.println("¡Debe ingresar un numero!");
 			}
-			
+
 		}
-		
+
 		double nivelReOrden=0;
 		while(true)
 		{
@@ -866,9 +878,9 @@ public class SuperAndesView {
 			{
 				System.out.println("¡Debe ingresar un numero!");
 			}
-			
+
 		}
-		
+
 		String tipoProducto="";
 		while(true)
 		{	
@@ -879,18 +891,24 @@ public class SuperAndesView {
 			else 
 				break;
 		}
-		
+
 		//TODO CREAR ESTANTE CON IDSUCURSAL=idSucursal
 		//TODO PONER EL ID QUE GENERO EL SISTEMA
 		Long idEstante=0l;
-		
-		
-		System.out.println("idEstante: "+idEstante+" ,idSucursal: "+idSucursal+" ,unidadPeso: "+unidadPeso
-				+" unidadVolumen: "+unidadVolumen+" ,capacidadPeso: "+capacidadPeso+" ,capacidadVolumen: "+capacidadVolumen
-				+" ,tipoProducto: "+tipoProducto+" ,nivelReOrden: "+nivelReOrden);
-		
-		
-		
+		try {
+			persistencia.requerimiento6(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, idSucursal, nivelReOrden, tipoProducto);
+			System.out.println("idEstante: "+idEstante+" ,idSucursal: "+idSucursal+" ,unidadPeso: "+unidadPeso
+					+" unidadVolumen: "+unidadVolumen+" ,capacidadPeso: "+capacidadPeso+" ,capacidadVolumen: "+capacidadVolumen
+					+" ,tipoProducto: "+tipoProducto+" ,nivelReOrden: "+nivelReOrden);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
+
 	}
 
 	public static void registrarPromocion(Scanner sc)
@@ -934,7 +952,7 @@ public class SuperAndesView {
 				break;
 			}	
 			System.out.println("¡Debe escoger una opción valida!");
-			
+
 		}
 		String fechaInicial="";
 		while(fechaInicial.equals(""))
@@ -957,7 +975,7 @@ public class SuperAndesView {
 					System.out.println("¡Debe ingresar un numero!");
 				}
 			}
-			
+
 			int mes=0;
 			while(true)
 			{
@@ -976,7 +994,7 @@ public class SuperAndesView {
 					System.out.println("¡Debe ingresar un numero!");
 				}
 			}
-			
+
 			int dia=0;
 			while(true)
 			{
@@ -1026,7 +1044,7 @@ public class SuperAndesView {
 					System.out.println("¡Debe ingresar un numero!");
 				}
 			}
-			
+
 			int mes=0;
 			while(true)
 			{
@@ -1045,7 +1063,7 @@ public class SuperAndesView {
 					System.out.println("¡Debe ingresar un numero!");
 				}
 			}
-			
+
 			int dia=0;
 			while(true)
 			{
@@ -1071,8 +1089,8 @@ public class SuperAndesView {
 
 
 		}
-		
-		
+
+
 		double y=0;
 		double x=0;
 		while(true)
@@ -1091,7 +1109,7 @@ public class SuperAndesView {
 			{
 				System.out.println("¡Debe ingresar un numero!");
 			}
-			
+
 		}
 		if(tipoPromocion!=TipoPromocion.X_PORCENTAJE_DESCUENTO)
 		{
@@ -1113,9 +1131,9 @@ public class SuperAndesView {
 				{
 					System.out.println("¡Debe ingresar un numero!");
 				}
-				
+
 			}
-			
+
 		}
 		boolean termine=false;
 		ArrayList<String> idsProductos=new ArrayList<String>(); 
@@ -1128,7 +1146,7 @@ public class SuperAndesView {
 				System.out.println("Ingrese el codigo de barras del producto al que desea agregarle una promoción");
 				System.out.println("Para indicar que termino envie la palabra \"termine\"");
 				String cod= sc.nextLine();
-			
+
 				if(cod.equals("termine"))
 				{
 					termine=true;
@@ -1141,12 +1159,12 @@ public class SuperAndesView {
 					System.out.println("agregado");
 				}
 				else
-				System.out.println("¡El codigo no puede ser vacio!");
-				
-				
+					System.out.println("¡El codigo no puede ser vacio!");
+
+
 			}
 		}
-		
+
 		String descripcion="";
 		while(true)
 		{	
@@ -1157,38 +1175,43 @@ public class SuperAndesView {
 			else 
 				break;
 		}
-		
-		
+
+
 		//TODO GENERAR PROMOCION CON INFO Y DAR A IDPROMOCION VALOR GENERADO
 		long idPromocion=0l;
+		
 		System.out.println("idPromocion: "+idPromocion+" ,x: "+x+" ,y: "+y
 				+" fechaInicial: "+fechaInicial+" ,fechaFinal: "+fechaFinal+" ,tipoPromocion: "+tipoPromocion.toString()
 				+" ,descripcion: "+descripcion);
-		
-		
+
+
 		for(String codigoProducto:idsProductos)
 		{
 			//TODO REGISTRAR PROMOCION A PRODUCTO SUCURSAL CON idProductoSucursal
 			String idProductoSucursal=idSucursal+"-"+codigoProducto;
 			System.out.println("idProductoSucursal: "+idProductoSucursal+" ,idPromocion: "+idPromocion);
-			
+
 		}
-		
-		
-		
-		
-		
-		
+
+try {
+	persistencia.requerimiento7(descripcion, Timestamp.valueOf(fechaInicial), Timestamp.valueOf(fechaFinal),(int) x, (int) y, tipoPromocion);
+} catch (Exception e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+
+
+
+
 	}
 
 	public static void registrarPedidoProductoAUnProveedor(Scanner sc)
 	{
 		sc.nextLine();
 
-		
 	}
-	
-	
+
+
 	public static void ingresarASucursal(Scanner sc)
 	{
 		sc.nextLine();
@@ -1201,10 +1224,10 @@ public class SuperAndesView {
 			{
 				Integer.parseInt(cant);
 				idSucursal=Long.valueOf(cant);
-				
+
 				//TODO ENCONTRAR SUCURSAL Y GUARDARLA EN
-//				sucursal=;
-				
+				//				sucursal=;
+
 				break;
 			}
 			catch(Exception e)
@@ -1212,20 +1235,20 @@ public class SuperAndesView {
 				idSucursal=-1l;
 				System.out.println("¡Debe ingresar un numero!");
 			}
-			
+
 		}
 	}
-	
+
 	public static String getFechaActual()
 	{
 		Calendar c = Calendar.getInstance();
-		
+
 		String dia = Integer.toString(c.get(Calendar.DATE));
 		String mes = Integer.toString(c.get(Calendar.MONTH)+1);
 		String annio = Integer.toString(c.get(Calendar.YEAR));
 		return(annio+"-"+mes+"-"+dia);	
 	}
-	
+
 	public static int compararFechas(String fech,String fech2)
 	{
 		String[]a=fech.split("-");
@@ -1244,9 +1267,9 @@ public class SuperAndesView {
 			return -1;
 		return 0;
 	}
-	
+
 	private static void printMenuSucursal() {
-				
+
 		System.out.println("---------ISIS - Sistemas Transaccionales----------");
 		System.out.println("---------------------Iteración 1----------------------");
 		System.out.println("---------------------Super Andes----------------------");
@@ -1270,30 +1293,30 @@ public class SuperAndesView {
 		System.out.println("17) RFC6. MOSTRAR LAS VENTAS DE SUPERANDES A UN USUARIO DADO, EN UN RANGO DE FECHAS INDICADO");		
 		System.out.println("0)  Salir");
 		System.out.println("Digite el número de opción para ejecutar la tarea, luego presione enter: (Ej., 1):");
-		
+
 	}
-	
-private static void printMenu() {
-				
+
+	private static void printMenu() {
+
 		System.out.println("---------ISIS - Sistemas Transaccionales----------");
 		System.out.println("---------------------Iteración 1----------------------");
 		System.out.println("---------------------Super Andes----------------------");
 		System.out.println("1) RF4. REGISTRAR UNA SUCURSAL");		
 		System.out.println("2) INGRESAR A SU SUCURSAL SUCURSAL");		
-//		System.out.println("6) RF6. REGISTRAR UN ESTANTE EN UNA SUCURSAL");		
-//		System.out.println("7) RF7. REGISTRAR UNA PROMOCIÓN");		
-//		System.out.println("8) RF8. FINALIZAR UNA PROMOCIÓN");		
-//		System.out.println("9) RF9. REGISTRAR UN PEDIDO DE UN PRODUCTO A UN PROVEEDOR PARA UNA SUCURSAL");		
-//		System.out.println("10) RF10. REGISTRAR LA LLEGADA DE UN PEDIDO DE UN PRODUCTO A UNA SUCURSAL");		
-//		System.out.println("11) RF11. REGISTRAR UNA VENTA DE UN PRODUCTO EN UNA SUCURSAL");		
-//		System.out.println("12) RFC1. MOSTRAR EL DINERO RECOLECTADO POR VENTAS EN CADA SUCURSAL DURANTE UN PERIODO DE TIEMPO Y EN EL AÑO CORRIDO");		
-//		System.out.println("13) RFC2. MOSTRAR LAS 20 PROMOCIONES MÁS POPULARES.");		
-//		System.out.println("14) RFC3. MOSTRAR EL ÍNDICE DE OCUPACIÓN DE CADA UNA DE BODEGAS Y ESTANTES DE UNA SUCURSAL");		
-//		System.out.println("15) RFC4. MOSTRAR LOS PRODUCTOS QUE CUMPLEN CON CIERTA CARACTERÍSTICA");		
-//		System.out.println("16) RFC5. MOSTRAR LAS COMPRAS HECHAS POR SUPERANDES A LOS PROVEEDORES");		
-//		System.out.println("17) RFC6. MOSTRAR LAS VENTAS DE SUPERANDES A UN USUARIO DADO, EN UN RANGO DE FECHAS INDICADO");		
-//		System.out.println("0)  Salir");
-//		System.out.println("Digite el número de opción para ejecutar la tarea, luego presione enter: (Ej., 1):");
-		
+		//		System.out.println("6) RF6. REGISTRAR UN ESTANTE EN UNA SUCURSAL");		
+		//		System.out.println("7) RF7. REGISTRAR UNA PROMOCIÓN");		
+		//		System.out.println("8) RF8. FINALIZAR UNA PROMOCIÓN");		
+		//		System.out.println("9) RF9. REGISTRAR UN PEDIDO DE UN PRODUCTO A UN PROVEEDOR PARA UNA SUCURSAL");		
+		//		System.out.println("10) RF10. REGISTRAR LA LLEGADA DE UN PEDIDO DE UN PRODUCTO A UNA SUCURSAL");		
+		//		System.out.println("11) RF11. REGISTRAR UNA VENTA DE UN PRODUCTO EN UNA SUCURSAL");		
+		//		System.out.println("12) RFC1. MOSTRAR EL DINERO RECOLECTADO POR VENTAS EN CADA SUCURSAL DURANTE UN PERIODO DE TIEMPO Y EN EL AÑO CORRIDO");		
+		//		System.out.println("13) RFC2. MOSTRAR LAS 20 PROMOCIONES MÁS POPULARES.");		
+		//		System.out.println("14) RFC3. MOSTRAR EL ÍNDICE DE OCUPACIÓN DE CADA UNA DE BODEGAS Y ESTANTES DE UNA SUCURSAL");		
+		//		System.out.println("15) RFC4. MOSTRAR LOS PRODUCTOS QUE CUMPLEN CON CIERTA CARACTERÍSTICA");		
+		//		System.out.println("16) RFC5. MOSTRAR LAS COMPRAS HECHAS POR SUPERANDES A LOS PROVEEDORES");		
+		//		System.out.println("17) RFC6. MOSTRAR LAS VENTAS DE SUPERANDES A UN USUARIO DADO, EN UN RANGO DE FECHAS INDICADO");		
+		//		System.out.println("0)  Salir");
+		//		System.out.println("Digite el número de opción para ejecutar la tarea, luego presione enter: (Ej., 1):");
+
 	}
 }
