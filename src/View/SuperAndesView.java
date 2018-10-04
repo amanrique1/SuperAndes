@@ -8,14 +8,30 @@ import java.util.Scanner;
 import main.java.model.Productos;
 import main.java.model.Sucursal;
 import main.java.model.TipoPromocion;
+import main.java.persistence.PersistenciaSuperAndes;
 
 public class SuperAndesView {
 
+	private static PersistenciaSuperAndes persistencia;
 	
 	private static long idSucursal;
 	Sucursal sucursal;
 	public static void main(String[] args) 
 	{
+//		persistencia=new PersistenciaSuperAndes();
+//		try
+//		{
+//		Sucursal sucursal=persistencia.agregarSucursal("Pepe Sierra", "Bogota", "Calle 116 #15-66");
+//		if(sucursal!=null)
+//			System.out.println("id: "+sucursal.getId()+" ,nombre: "+sucursal.getNombre());
+//		}
+//		catch(Exception e)
+//		{
+//			System.out.println("Se totio");
+//
+//		}
+		
+		borrarPromocionesVencidas();
 		idSucursal=-1l;
 		Scanner sc = new Scanner(System.in);
 		boolean fin=false;
@@ -110,7 +126,7 @@ public class SuperAndesView {
 						break;
 					case 8:
 						System.out.println("----------------------------------------------------------------");
-						System.out.println("Para finalizar una promocion...:\n");
+						System.out.println("Esta acción se realiza sola cada vez que se abre la aplicación");
 					
 						break;
 					case 9:
@@ -162,6 +178,11 @@ public class SuperAndesView {
 		}
 	}
 	
+	public static void borrarPromocionesVencidas()
+	{
+		//TODO BORRAR TODAS LAS PROMOCIONES CUYA FECHA<FECHAACTUAL
+	}
+
 	
 	public static void registrarProveedor(Scanner sc)
 	{
@@ -967,7 +988,10 @@ public class SuperAndesView {
 					if(dia<=0||dia>31)
 						System.out.println("¡Debe ingresar un dia valido!");
 					else 
+					{
+						System.out.println(getFechaActual());
 						break;
+					}
 				}
 				catch(Exception e)
 				{
@@ -1157,6 +1181,14 @@ public class SuperAndesView {
 		
 	}
 
+	public static void registrarPedidoProductoAUnProveedor(Scanner sc)
+	{
+		sc.nextLine();
+
+		
+	}
+	
+	
 	public static void ingresarASucursal(Scanner sc)
 	{
 		sc.nextLine();
@@ -1196,7 +1228,21 @@ public class SuperAndesView {
 	
 	public static int compararFechas(String fech,String fech2)
 	{
-		return fech.compareTo(fech2);
+		String[]a=fech.split("-");
+		String[]b=fech.split("-");
+		if(Integer.parseInt(a[1])>Integer.parseInt(a[1]))
+			return 1;
+		if(Integer.parseInt(a[1])<Integer.parseInt(a[1]))
+			return -1;
+		if(Integer.parseInt(a[2])>Integer.parseInt(a[2]))
+			return 1;
+		if(Integer.parseInt(a[2])<Integer.parseInt(a[2]))
+			return -1;
+		if(Integer.parseInt(a[3])>Integer.parseInt(a[3]))
+			return 1;
+		if(Integer.parseInt(a[3])<Integer.parseInt(a[3]))
+			return -1;
+		return 0;
 	}
 	
 	private static void printMenuSucursal() {
