@@ -52,6 +52,15 @@ public class SQLPedido {
 		q1.setParameters(  id,fechaEntregaAc, fechaEntrega, estado.toString(),  idSucursal,  idProveedor);
 		q1.executeUnique();
 	}
+	
+	public void recibirPedido (PersistenceManager pm,EstadoPedido estado, long idPedido) 
+	{
+		
+		
+		Query q1 = pm.newQuery(SQL, "UPDATE " + pp.darTablaPedido() + " SET estado= ? WHERE idPedido= ?");
+		q1.setParameters(  estado.toString(),idPedido);
+		q1.executeUnique();
+	}
 
 
 	public void eliminarPedidoPorId (PersistenceManager pm, Long id)
@@ -78,6 +87,15 @@ public class SQLPedido {
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaPedido());
 		q.setResultClass(Pedido.class);
+		return (List<Pedido>) q.executeList();
+
+	}
+	
+	public List<Pedido> darPedidosEntregados (PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaPedido()+" WHERE estado= ?");
+		q.setResultClass(Pedido.class);
+		q.setParameters(EstadoPedido.ENTREGADO.toString());
 		return (List<Pedido>) q.executeList();
 
 	}

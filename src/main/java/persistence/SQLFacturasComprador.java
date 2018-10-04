@@ -68,13 +68,13 @@ public class SQLFacturasComprador {
 
 	}
 	
-	public FacturasComprador darFacturaCompradorPorNumero (PersistenceManager pm, long numero)
+	public List<FacturasComprador> darFacturaCompradorPorNumero (PersistenceManager pm, long numero)
 	{
 
 		Query q2 = pm.newQuery(SQL, "SELECT FROM " + pp.darTablaFacturasCompradores () + " WHERE numero = ?");
 		q2.setResultClass(FacturasComprador.class);
 		q2.setParameters(numero);
-		return (FacturasComprador)q2.executeUnique();
+		return (List<FacturasComprador>)q2.executeUnique();
 
 	}
 
@@ -102,6 +102,23 @@ public class SQLFacturasComprador {
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaFacturasCompradores()+ " WHERE fecha= ?");
 		q.setResultClass(FacturasComprador.class);
 		q.setParameters(fecha);
+		return (List<FacturasComprador>) q.executeList();
+
+	}
+	public List<FacturasComprador> darFacturasRangoFecha (PersistenceManager pm, Timestamp fechaIni,Timestamp fechaFin)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaFacturasCompradores()+ " WHERE fecha>= ? AND fecha<= ?");
+		q.setResultClass(FacturasComprador.class);
+		q.setParameters(fechaIni,fechaFin);
+		return (List<FacturasComprador>) q.executeList();
+
+	}
+	
+	public List<FacturasComprador> darFacturasRangoFechaPersona (PersistenceManager pm, Timestamp fechaIni,Timestamp fechaFin, String cedula)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaFacturasCompradores()+ " WHERE fecha>= ? AND fecha<= ? AND idComprador= ?");
+		q.setResultClass(FacturasComprador.class);
+		q.setParameters(fechaIni,fechaFin,cedula);
 		return (List<FacturasComprador>) q.executeList();
 
 	}

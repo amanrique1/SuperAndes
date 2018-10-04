@@ -92,6 +92,14 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
+	public List<ProductosVendidos> darProductosVendidosDeFactura (PersistenceManager pm, long noFactura )
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaFacturasCompradores()+ " WHERE noFactura=? ");
+		q.setParameters(noFactura);
+		return (List<ProductosVendidos>) q.executeUnique();
+
+	}
+	
 	public ProductosVendidos darProductoVendido (PersistenceManager pm, long noFactura, String idProductoSucursal )
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaProductosVendidos()+ " WHERE noFactura=? AND idProductoSucursal=?");
@@ -117,6 +125,14 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaFacturasCompradores()+ " WHERE idSucursal= ?");
 		q.setResultClass(ProductosVendidos.class);
 		q.setParameters(idSucursal);
+		return (List<ProductosVendidos>) q.executeList();
+
+	}
+	public List<ProductosVendidos> darProductosSucursalNumero (PersistenceManager pm, long numero)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaFacturasCompradores()+ " WHERE numero= ?");
+		q.setResultClass(ProductosVendidos.class);
+		q.setParameters(numero);
 		return (List<ProductosVendidos>) q.executeList();
 
 	}

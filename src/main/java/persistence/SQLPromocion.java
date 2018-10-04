@@ -57,6 +57,15 @@ public class SQLPromocion {
 
 	}
 
+	public void eliminarPromocionPorFecha (PersistenceManager pm)
+	{
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaPromociones () + " WHERE fechaFinal < ?");
+		q2.setParameters(timestamp);
+		q2.executeUnique();
+
+	}
+	
 	public Promocion darPromocionPorId (PersistenceManager pm, long identificador) 
 	{
 		Query q1 = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaPromociones () + " WHERE idPromocion = ?");
