@@ -246,7 +246,8 @@ public class SuperAndesView {
 		}
 
 		//TODO GENERAR PROVEEDOR CON LOS DATOS
-		persistencia.requerimiento1(nit, nombre, correoElectronico, Long.valueOf(telefono));
+		
+//		persistencia.requerimiento1(nit, nombre, correoElectronico, Long.valueOf(telefono));
 
 		System.out.println("nit: "+nit+" ,nombre: "+nombre+" ,correoElectronico: "+correoElectronico+" ,telefono: (+57)"+telefono);
 
@@ -459,11 +460,11 @@ public class SuperAndesView {
 
 			//TODO GEENERAR PRODUCTO SUCURSAL CON VALORES
 			try {
-				persistencia.agregarProductosSucursal(idSucursal, precio, codigoProducto, Long.MAX_VALUE, idProductoSucursal);
+//				persistencia.agregarProductosSucursal(idSucursal, precio, codigoProducto, Long.MAX_VALUE, idProductoSucursal);
 				System.out.println("idProductoSucursal: "+idProductoSucursal+" ,idSucursal: "+idSucursal+" ,precio: "+precio+" ,codigoProducto: "+codigoProducto);
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 
@@ -624,7 +625,7 @@ public class SuperAndesView {
 
 		//TODO PONER EL ID QUE GENERO EL SISTEMA
 		idSucursal=0l;
-		persistencia.requerimiento4(nombre, ciudad, direccion);
+//		persistencia.requerimiento4(nombre, ciudad, direccion);
 		System.out.println("idSucursal: "+idSucursal+" ,nombre: "+nombre+" ,ciudad: "+ciudad+" ,direccion: "+direccion);
 
 	}
@@ -758,13 +759,13 @@ public class SuperAndesView {
 		Long idBodega=0l;
 
 		try {
-			persistencia.requerimiento5(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, idSucursal, nivelReOrden, tipoProducto);
+//			persistencia.requerimiento5(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, idSucursal, nivelReOrden, tipoProducto);
 			System.out.println("idBodega: "+idBodega+" ,idSucursal: "+idSucursal+" ,unidadPeso: "+unidadPeso
 					+" unidadVolumen: "+unidadVolumen+" ,capacidadPeso: "+capacidadPeso+" ,capacidadVolumen: "+capacidadVolumen
 					+" ,tipoProducto: "+tipoProducto+" ,nivelReOrden: "+nivelReOrden);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -896,13 +897,12 @@ public class SuperAndesView {
 		//TODO PONER EL ID QUE GENERO EL SISTEMA
 		Long idEstante=0l;
 		try {
-			persistencia.requerimiento6(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, idSucursal, nivelReOrden, tipoProducto);
+//			persistencia.requerimiento6(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, idSucursal, nivelReOrden, tipoProducto);
 			System.out.println("idEstante: "+idEstante+" ,idSucursal: "+idSucursal+" ,unidadPeso: "+unidadPeso
 					+" unidadVolumen: "+unidadVolumen+" ,capacidadPeso: "+capacidadPeso+" ,capacidadVolumen: "+capacidadVolumen
 					+" ,tipoProducto: "+tipoProducto+" ,nivelReOrden: "+nivelReOrden);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -1111,7 +1111,7 @@ public class SuperAndesView {
 			}
 
 		}
-		if(tipoPromocion!=TipoPromocion.X_PORCENTAJE_DESCUENTO)
+		if(tipoPromocion!=TipoPromocion.X_PORCENTAJE_DESCUENTO&&tipoPromocion!=TipoPromocion.PAGUE_X_POR_PRODUCTOS_PROMOCION)
 		{
 			while(true)
 			{
@@ -1139,8 +1139,7 @@ public class SuperAndesView {
 		ArrayList<String> idsProductos=new ArrayList<String>(); 
 		while(!termine)
 		{
-			System.out.println("Ingrese el codigo de barras de los productos a los que desea aplicarle la promoción");
-			System.out.println("Para indicar que termino envie la palabra \"termine\"");
+			
 			while(true)
 			{
 				System.out.println("Ingrese el codigo de barras del producto al que desea agregarle una promoción");
@@ -1149,14 +1148,27 @@ public class SuperAndesView {
 
 				if(cod.equals("termine"))
 				{
-					termine=true;
-					break;
+					if(tipoPromocion==TipoPromocion.PAGUE_X_POR_PRODUCTOS_PROMOCION&&idsProductos.size()<2)
+						System.out.println("¡Para que esta promocion sea valida debe incluir por lo menos dos productos!");
+					else if(idsProductos.size()<1)
+						System.out.println("¡La promocion debe ser aplicada por lo menos a un producto!");
+					else
+					{
+						termine=true;
+						break;
+					}
 				}
-				if(!cod.trim().equals(""))
+				else if(!cod.trim().equals(""))
 				{
-					//TODO REVISAR SI ID EXISTEEEEEEE
-					idsProductos.add(cod);
-					System.out.println("agregado");
+					if(idsProductos.contains(cod))
+						System.out.println("¡Este producto ya habia sido agregado!");
+					else
+					{
+						//TODO REVISAR SI ID EXISTEEEEEEE
+						
+						idsProductos.add(cod);
+						System.out.println("agregado");
+					}
 				}
 				else
 					System.out.println("¡El codigo no puede ser vacio!");
@@ -1189,16 +1201,16 @@ public class SuperAndesView {
 		{
 			//TODO REGISTRAR PROMOCION A PRODUCTO SUCURSAL CON idProductoSucursal
 			String idProductoSucursal=idSucursal+"-"+codigoProducto;
-			System.out.println("idProductoSucursal: "+idProductoSucursal+" ,idPromocion: "+idPromocion);
+			System.out.println("idProductoSucursal: "+idProductoSucursal+" ,se le agrego la promocion con id idPromocion: "+idPromocion);
 
 		}
 
-try {
-	persistencia.requerimiento7(descripcion, Timestamp.valueOf(fechaInicial), Timestamp.valueOf(fechaFinal),(int) x, (int) y, tipoPromocion);
-} catch (Exception e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
+		try {
+		//	persistencia.requerimiento7(descripcion, Timestamp.valueOf(fechaInicial), Timestamp.valueOf(fechaFinal),(int) x, (int) y, tipoPromocion);
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
 
 
 
@@ -1211,7 +1223,34 @@ try {
 
 	}
 
+	public static void registrarLlegadaPedidoProductoAUnaSucursal(Scanner sc)
+	{
+		sc.nextLine();
+		while(true)
+		{
+			System.out.println("Ingrese el id del Pedido que Llego");
+			String cant= sc.nextLine();
+			long idPedido=-1l;
+			try
+			{
+				Integer.parseInt(cant);
+				idPedido=Long.valueOf(cant);
 
+				//TODO ENCONTRAR PEDIDO
+				break;
+			}
+			catch(Exception e)
+			{
+				System.out.println("¡Debe ingresar un numero!");
+			}
+
+		}
+		
+		//TODO cambiar estado a ENTREGADO, regitrar fecha de entrega, actualizar cantidad de productos en bodega/estantes
+
+
+	}
+	
 	public static void ingresarASucursal(Scanner sc)
 	{
 		sc.nextLine();
@@ -1252,18 +1291,18 @@ try {
 	public static int compararFechas(String fech,String fech2)
 	{
 		String[]a=fech.split("-");
-		String[]b=fech.split("-");
-		if(Integer.parseInt(a[1])>Integer.parseInt(a[1]))
+		String[]b=fech2.split("-");
+		if(Integer.parseInt(a[0])>Integer.parseInt(b[0]))
 			return 1;
-		if(Integer.parseInt(a[1])<Integer.parseInt(a[1]))
+		if(Integer.parseInt(a[0])<Integer.parseInt(b[0]))
 			return -1;
-		if(Integer.parseInt(a[2])>Integer.parseInt(a[2]))
+		if(Integer.parseInt(a[1])>Integer.parseInt(b[1]))
 			return 1;
-		if(Integer.parseInt(a[2])<Integer.parseInt(a[2]))
+		if(Integer.parseInt(a[1])<Integer.parseInt(b[1]))
 			return -1;
-		if(Integer.parseInt(a[3])>Integer.parseInt(a[3]))
+		if(Integer.parseInt(a[2])>Integer.parseInt(b[2]))
 			return 1;
-		if(Integer.parseInt(a[3])<Integer.parseInt(a[3]))
+		if(Integer.parseInt(a[2])<Integer.parseInt(b[2]))
 			return -1;
 		return 0;
 	}
