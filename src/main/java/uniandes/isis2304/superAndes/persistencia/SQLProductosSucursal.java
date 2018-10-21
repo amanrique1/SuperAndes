@@ -8,6 +8,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import main.java.model.Productos;
 import main.java.model.ProductosSucursal;
 
 /**
@@ -109,7 +110,13 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
-	
+	public List<Productos> darProductosRangoPrecio (PersistenceManager pm, double valMin,double valMax)
+	{
+		Query q = pm.newQuery(SQL, "SELECT codigobarras, nombre,marca,presentacion,unidadPeso,cantidadPeso, unidadVolumen,tipoproducto FROM (SELECT * FROM "+ pp.darTablaProductosSucursal()+" WHERE precio>= "+valMin+" AND precio <= "+valMax+") INNER JOIN "+ pp.darTablaProductos()+" ON codigoproducto=codigobarras");
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+		
+	}
 	
 	
 	

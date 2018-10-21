@@ -1,6 +1,7 @@
 package uniandes.isis2304.superAndes.persistencia;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -9,6 +10,7 @@ import javax.jdo.Query;
 import main.java.model.Productos;
 import main.java.model.Promocion;
 import main.java.model.TipoPromocion;
+import main.java.model.VentaPromocionPromedio;
 
 public class SQLPromocion {
 
@@ -90,6 +92,22 @@ public class SQLPromocion {
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaPromociones());
 		q.setResultClass(Promocion.class);
 		return (List<Promocion>) q.executeList();
+
+	}
+	
+	public List<Promocion> darPromocionesMasVend (PersistenceManager pm)
+	{
+		Query q1 = pm.newQuery(SQL, "SELECT * FROM(SELECT * FROM (SELECT DISTINCT idPromocion, sum(CantidadVendida) AS CantVendida FROM "+ pp.darTablaPromocionesVendidas()+") ORDER BY CantVendidas ASC) WHERE rownum<21");
+		q1.setResultClass(Promocion.class);
+		List<VentaPromocionPromedio> ventas=(List<VentaPromocionPromedio>) q1.executeList();
+		List<Promocion> promos=new LinkedList<>();
+		for(VentaPromocionPromedio act:ventas)
+		{
+			Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaPromociones()+" WHERE idPromocion="+act.getIdPromocion());
+			q.setResultClass(Promocion.class);
+			promos.add((Promocion) q.executeUnique());
+		}
+		return promos;		
 
 	}
 

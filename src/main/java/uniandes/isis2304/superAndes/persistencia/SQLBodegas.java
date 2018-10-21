@@ -7,6 +7,7 @@ import javax.jdo.Query;
 
 import main.java.model.Bodega;
 import main.java.model.Comprador;
+import main.java.model.IndiceBodega;
 
 public class SQLBodegas {
 
@@ -89,6 +90,14 @@ public class SQLBodegas {
 		q.setResultClass(Bodega.class);
 		return (List<Bodega>) q.executeList();
 
+	}
+	public List<IndiceBodega> darOcupacion(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idBodega,capacidadvolumen,x.unidadvolumen AS unidBodega,cantidad,prod.cantidadvolumen,prod.unidadvolumen AS unidProducto FROM("
+				+ "SELECT idBodega,capacidadvolumen,a.unidadvolumen, cantidad, s.codigoproducto FROM(SELECT b.idBodega,b.capacidadvolumen,b.unidadvolumen, p.cantidad, p.idproductosucursal FROM "+pp.darTablaProductosBodega()+" p inner join "+pp.darTablaBodegas()+" b on p.idbodega=b.idbodega)a "
+				+ "INNER JOIN "+pp.darTablaProductosSucursal()+" s on a.idproductosucursal=s.idproductosucursal) x INNER JOIN "+pp.darTablaProductos()+" prod on x.codigoproducto=prod.codigobarras");
+		q.setResultClass(IndiceBodega.class);
+		return (List<IndiceBodega>) q.executeList();
 	}
 
 

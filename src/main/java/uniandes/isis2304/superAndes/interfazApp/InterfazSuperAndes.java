@@ -100,10 +100,6 @@ public class InterfazSuperAndes
         borrarPromocionesVencidas();
 		idSucursal=-1l;
 		Scanner sc = new Scanner(System.in);
-		if(persistencia!=null)
-			persistencia.agregarPersona("11111111", "Calle 109a # 6-21", "Juan", "jd.barriosc@uniandes.edu.co");
-		else 
-			System.out.println("null seefasdf");
 		correr(sc);
         
     	      
