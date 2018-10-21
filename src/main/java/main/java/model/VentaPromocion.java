@@ -1,12 +1,12 @@
 package main.java.model;
 
-public class VentaPromocionPromedio {
+public class VentaPromocion {
 
 private Long idPromocion;
 	
 	private int cantidad;
 	
-	public VentaPromocionPromedio(Long pIdPromocion,int pCantidad)
+	public VentaPromocion(Long pIdPromocion,int pCantidad)
 	{
 		idPromocion=pIdPromocion;
 		cantidad=pCantidad;

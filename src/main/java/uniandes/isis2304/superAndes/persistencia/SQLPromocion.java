@@ -10,7 +10,7 @@ import javax.jdo.Query;
 import main.java.model.Productos;
 import main.java.model.Promocion;
 import main.java.model.TipoPromocion;
-import main.java.model.VentaPromocionPromedio;
+import main.java.model.VentaPromocion;
 
 public class SQLPromocion {
 
@@ -99,9 +99,9 @@ public class SQLPromocion {
 	{
 		Query q1 = pm.newQuery(SQL, "SELECT * FROM(SELECT * FROM (SELECT DISTINCT idPromocion, sum(CantidadVendida) AS CantVendida FROM "+ pp.darTablaPromocionesVendidas()+") ORDER BY CantVendidas ASC) WHERE rownum<21");
 		q1.setResultClass(Promocion.class);
-		List<VentaPromocionPromedio> ventas=(List<VentaPromocionPromedio>) q1.executeList();
+		List<VentaPromocion> ventas=(List<VentaPromocion>) q1.executeList();
 		List<Promocion> promos=new LinkedList<>();
-		for(VentaPromocionPromedio act:ventas)
+		for(VentaPromocion act:ventas)
 		{
 			Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaPromociones()+" WHERE idPromocion="+act.getIdPromocion());
 			q.setResultClass(Promocion.class);
