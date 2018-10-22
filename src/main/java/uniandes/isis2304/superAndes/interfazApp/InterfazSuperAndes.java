@@ -99,12 +99,7 @@ public class InterfazSuperAndes
         persistencia = uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes.getInstance (tableConfig);
         borrarPromocionesVencidas();
 		Scanner sc = new Scanner(System.in);
-<<<<<<< HEAD
 
-		
-		
-=======
->>>>>>> 026c9b5a90ece9ac792b65e2a3de71938c1d0e40
 		correr(sc);
         
     	      
