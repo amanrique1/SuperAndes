@@ -12,6 +12,7 @@ import javax.jdo.JDODataStoreException;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import org.apache.log4j.Logger;
@@ -26,6 +27,8 @@ import main.java.model.Empresa;
 import main.java.model.EstadoPedido;
 import main.java.model.Estante;
 import main.java.model.FacturasComprador;
+import main.java.model.IndiceBodega;
+import main.java.model.IndiceEstante;
 import main.java.model.Lote;
 import main.java.model.Pedido;
 import main.java.model.Persona;
@@ -240,7 +243,6 @@ public class PersistenciaSuperAndes
 		sqlProductosBodega=new SQLProductosBodega(this);
 		sqlProductosEstantes=new SQLProductosEstantes(this);
 		sqlProductosProveedor=new SQLProductosProveedor(this);
-		sqlProductosSucursal=new SQLProductosSucursal(this);
 		sqlProductosVendidos=new SQLProductosVendidos(this);
 		sqlPromocion=new SQLPromocion(this);
 		sqlPromocionesVendidas=new SQLPromocionesVendidas(this);
@@ -248,6 +250,8 @@ public class PersistenciaSuperAndes
 		sqlSucursal=new SQLSucursal(this);
 		sqlTipoProducto=new SQLTipoProducto(this);
 		sqlUtil=new SQLUtil(this);
+		sqlProductosSucursal=new SQLProductosSucursal(this,sqlSucursal,sqlProductos);
+
 
 	}
 
@@ -350,16 +354,23 @@ public class PersistenciaSuperAndes
 
 
 	/**
-	 * Transacci�n para el generador de secuencia de Parranderos
+	 * Transacci�n para el generador de secuencia de superAndes
 	 * Adiciona entradas al log de la aplicaci�n
 	 * @return El siguiente n�mero del secuenciador de Parranderos
 	 */
-	private long nextval ()
-	{
-		long resp = sqlUtil.nextval (pmf.getPersistenceManager());
-		log.trace ("Generando secuencia: " + resp);
-		return resp;
+	private long nextval (PersistenceManager pm,String nombreTabla, String nombreId) {
+		Query q1 = pm.newQuery(SQL, "SELECT MAX("+nombreId+") FROM " + nombreTabla );
+		BigDecimal bgdmal= (BigDecimal) q1.executeUnique();
+		long rta;
+		if(bgdmal==null)
+			rta=0l;
+		else 
+			rta=bgdmal.longValue();
+		return (rta+1);
 	}
+	
+	
+	
 
 	/**
 	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle espec�fico del problema encontrado
@@ -388,7 +399,7 @@ public class PersistenciaSuperAndes
 		Transaction tx=pm.currentTransaction();
 
 		tx.begin();
-		long id = nextval ();
+		long id = nextval (pm,darTablaBodegas(),"idBodega");
 		sqlBodegas.agregarBodega(pm, id,pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
 		tx.commit();
 
@@ -576,7 +587,7 @@ public class PersistenciaSuperAndes
 		Transaction tx=pm.currentTransaction();
 
 		tx.begin();
-		long id = nextval ();
+		long id = nextval (pm,darTablaEstantes(),"idEstante");
 		sqlEstante.agregarEstante(pm, id,pCapV, pCapP, pUniP, pUniV, pIdSuc, pNivel, pTipo);
 		tx.commit();
 
@@ -638,7 +649,7 @@ public class PersistenciaSuperAndes
 		Transaction tx=pm.currentTransaction();
 
 		tx.begin();
-		long id = nextval ();
+		long id = nextval (pm,darTablaFacturasCompradores(),"numero");
 		sqlFacturasComprador.agregarFacturasComprador(pm, id,fecha, idComprador, idSucursal);
 		tx.commit();
 
@@ -771,7 +782,7 @@ public class PersistenciaSuperAndes
 		Transaction tx=pm.currentTransaction();
 
 		tx.begin();
-		long id = nextval ();
+		long id = nextval (pm,darTablaPedido(),"idPedido");
 		sqlPedido.agregarPedido(pm, id,fechaEntregaAc, fechaEntrega, estado, idSucursal, idProveedor);
 		tx.commit();
 
@@ -933,7 +944,7 @@ public class PersistenciaSuperAndes
 	 * 			M�todos para manejar los Productos
 	 *****************************************************************/
 
-	public Productos agregarProducto (String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto) throws Exception 
+	public Productos agregarProducto (String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto)  
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -997,6 +1008,10 @@ public class PersistenciaSuperAndes
 		return sqlProductos.darProductoPorCodigo(pmf.getPersistenceManager(), identificador);
 	}
 
+	public boolean existeProducto ( String identificador) 
+	{
+		return sqlProductos.existeProducto(pmf.getPersistenceManager(), identificador);
+	}
 
 	public List<Productos> darProductos ()
 	{
@@ -1013,7 +1028,8 @@ public class PersistenciaSuperAndes
 		Transaction tx=pm.currentTransaction();
 
 		tx.begin();
-		long id = nextval ();
+		long id = nextval (pm,darTablaSucursal(),"idSucursal");
+
 		sqlSucursal.agregarSucursal(pm, id,pNombre, pCiudad, pDireccion);
 		tx.commit();
 
@@ -1030,7 +1046,7 @@ public class PersistenciaSuperAndes
 
 	}
 
-
+	
 
 	public void eliminarSucursalPorNombre ( String nombre)
 	{
@@ -1080,7 +1096,7 @@ public class PersistenciaSuperAndes
 	}
 
 
-	public List<Sucursal> darSucusales ()
+	public List<Sucursal> darSucursales ()
 	{
 		return sqlSucursal.darSucursales(pmf.getPersistenceManager()); 
 	}
@@ -1415,13 +1431,14 @@ public class PersistenciaSuperAndes
 	 * 			M�todos para manejar los ProductosSucursal
 	 *****************************************************************/
 
-	public ProductosSucursal agregarProductosSucursal (long pIdSuc, double pPrecio,String pCodigo, long pIdPromo, String pIdProductoSucursal) throws Exception 
+	public ProductosSucursal agregarProductosSucursal (long pIdSuc, double pPrecio,String pCodigo) throws Exception 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-
+		String idProductoSucursal=pIdSuc+"-"+pCodigo;
+		
 		tx.begin();
-		sqlProductosSucursal.agregarProductosSucursal(pm, pIdSuc, pPrecio, pCodigo, pIdPromo, pIdProductoSucursal);
+		sqlProductosSucursal.agregarProductosSucursal(pm, pIdSuc, pPrecio, pCodigo, idProductoSucursal);
 		tx.commit();
 
 		log.trace ("Inserci�n de un producto a uns Sucrusal ");
@@ -1431,7 +1448,7 @@ public class PersistenciaSuperAndes
 			tx.rollback();
 		}
 		pm.close();
-		return new ProductosSucursal(pIdSuc, pPrecio, pCodigo, pIdPromo, pIdProductoSucursal);
+		return new ProductosSucursal(pIdSuc, pPrecio, pCodigo, idProductoSucursal);
 
 
 	}
@@ -1502,6 +1519,11 @@ public class PersistenciaSuperAndes
 		return sqlProductosSucursal.darProductoSucursal(pmf.getPersistenceManager(), idProductoSucursal);
 	}
 
+	public boolean existeProductoSucursal (String idProductoSucursal)
+	{
+		return sqlProductosSucursal.existeProductoSucursal(pmf.getPersistenceManager(), idProductoSucursal);
+	}
+	
 	public ProductosSucursal darPromocionSucursal (PersistenceManager pm, long idPromocion)
 	{
 		return sqlProductosSucursal.darPromocionSucursal(pmf.getPersistenceManager(), idPromocion);
@@ -1615,7 +1637,7 @@ public class PersistenciaSuperAndes
 	public Promocion agregarPromocion (String pDescripcion,Timestamp pFechaIni,Timestamp pFechaFin,int px, int py, TipoPromocion pTipo) throws Exception 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
-		long id = nextval ();
+		long id = nextval (pm,darTablaPromociones(),"idPromocion");
 		Transaction tx=pm.currentTransaction();
 
 		tx.begin();
@@ -1685,7 +1707,7 @@ public class PersistenciaSuperAndes
 	}
 
 
-	public List<Promocion> darPromociones (PersistenceManager pm)
+	public List<Promocion> darPromociones ()
 	{
 		return sqlPromocion.darPromociones(pmf.getPersistenceManager()); 
 	}
@@ -1863,6 +1885,11 @@ public class PersistenciaSuperAndes
 	{
 		return sqlProveedor.darProveedorPorNit (pmf.getPersistenceManager(), identificador);
 	}
+	
+	public boolean existeProveedor ( String identificador) 
+	{
+		return sqlProveedor.existeProveedor (pmf.getPersistenceManager(), identificador);
+	}
 
 	public Proveedor darProveedorPorNombre ( String identificador) 
 	{
@@ -1893,9 +1920,9 @@ public class PersistenciaSuperAndes
 		agregarPersona(pIdentificador, pDireccion, pNombre, pCorreo);
 	}
 
-	public void requerimiento4(String pNombre,String pCiudad,String pDireccion)
+	public Sucursal requerimiento4(String pNombre,String pCiudad,String pDireccion)
 	{
-		agregarSucursal(pNombre, pCiudad, pDireccion);
+		return agregarSucursal(pNombre, pCiudad, pDireccion);
 	}
 
 	public void requerimiento5(double pCapV,double pCapP,String pUniP,String pUniV,long pIdSuc, double pNivel, String pTipo) throws Exception
@@ -1944,6 +1971,68 @@ public class PersistenciaSuperAndes
 		return total;
 	}
 	
+	public List<Promocion> requerimientoConsulta2()
+	{		
+		return sqlPromocion.darPromocionesMasVend(pmf.getPersistenceManager());
+	}
+	
+	public List<IndiceBodega> requerimientoConsulta3_1()
+	{
+		List<IndiceBodega> req3= sqlBodegas.darOcupacion(pmf.getPersistenceManager());
+		return req3;
+	}
+	
+	public List<IndiceEstante> requerimientoConsulta3_2()
+	{
+		List<IndiceEstante> req3= sqlEstante.darOcupacion(pmf.getPersistenceManager());
+		return req3;
+	}
+	
+	public List<Productos> requerimientoConsulta4_1(double valMin,double valMax)
+	{		
+		return sqlProductosSucursal.darProductosRangoPrecio(pmf.getPersistenceManager(), valMin, valMax);
+	}
+	
+	public List<Productos> requerimientoConsulta4_2(Timestamp fecha)
+	{		
+		return sqlProductos.darProductosFechaVencPost(pmf.getPersistenceManager(), fecha);
+	}
+	
+	public List<Productos> requerimientoConsulta4_3(double valMin,double valMax)
+	{		
+		return sqlProductos.darProductosRangoPeso(pmf.getPersistenceManager(), valMin, valMax);
+	}
+	
+	public List<Productos> requerimientoConsulta4_4(double valMin,double valMax)
+	{		
+		return sqlProductos.darProductosRangoVol(pmf.getPersistenceManager(), valMin, valMax);
+	}
+	
+	public List<Productos> requerimientoConsulta4_5(String marca)
+	{		
+		return sqlProductos.darProductosMarca(pmf.getPersistenceManager(), marca);
+	}
+	
+	public List<Productos> requerimientoConsulta4_6(String ciudad)
+	{		
+		return sqlProductos.darProductosCiudad(pmf.getPersistenceManager(), ciudad);
+	}
+	
+	public List<Productos> requerimientoConsulta4_7(long sucursal)
+	{		
+		return sqlProductos.darProductosSucursal(pmf.getPersistenceManager(), sucursal);
+	}
+	
+	public List<Productos> requerimientoConsulta4_8(String categoria)
+	{		
+		return sqlProductos.darProductosCategoria(pmf.getPersistenceManager(), categoria);
+	}
+	
+	public List<Productos> requerimientoConsulta4_9(String tipo)
+	{		
+		return sqlProductos.darProductosTipo(pmf.getPersistenceManager(), tipo);
+	}
+		
 	public List<Pedido> requerimientoConsulta5()
 	{
 		return darPedidosEntregados();

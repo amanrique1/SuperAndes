@@ -1,5 +1,6 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -36,7 +37,7 @@ public class SQLSucursal {
 
 	public void agregarSucursal (PersistenceManager pm,long id,String pNombre,String pCiudad,String pDireccion) 
 	{
-		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaSucursal() + "( idSucursal,nombre, Ciudad, direccion) values (?, ?, ?)");
+		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaSucursal() + "( idSucursal,nombre, Ciudad, direccion) values (?, ?, ?,?)");
 		q1.setParameters(id,pNombre,pCiudad,pDireccion);
 		q1.executeUnique();
 	}
@@ -81,7 +82,7 @@ public class SQLSucursal {
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaSucursal());
 		q.setResultClass(Sucursal.class);
-		return (List<Sucursal>) q.executeList();
+		return (List<Sucursal>)q.executeList();
 
 	}
 

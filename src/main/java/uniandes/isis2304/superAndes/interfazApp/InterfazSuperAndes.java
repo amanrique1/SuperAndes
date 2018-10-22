@@ -50,6 +50,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import main.java.model.Productos;
+import main.java.model.ProductosSucursal;
 import main.java.model.Sucursal;
 import main.java.model.TipoPromocion;
 
@@ -80,9 +81,8 @@ public class InterfazSuperAndes
     
     private uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes persistencia;
 
-	private long idSucursal;
 	
-	Sucursal sucursal;
+	private Sucursal sucursalActual;
   
 
 	/* ****************************************************************
@@ -98,12 +98,8 @@ public class InterfazSuperAndes
         tableConfig = openConfig ("Tablas BD", CONFIG_TABLAS);
         persistencia = uniandes.isis2304.superAndes.persistencia.PersistenciaSuperAndes.getInstance (tableConfig);
         borrarPromocionesVencidas();
-		idSucursal=-1l;
 		Scanner sc = new Scanner(System.in);
-		if(persistencia!=null)
-			persistencia.agregarPersona("11111111", "Calle 109a # 6-21", "Juan", "jd.barriosc@uniandes.edu.co");
-		else 
-			System.out.println("null seefasdf");
+
 		correr(sc);
         
     	      
@@ -143,7 +139,7 @@ public class InterfazSuperAndes
     	boolean fin=false;
 		while(!fin)
 		{
-			if(idSucursal==-1l)
+			if(sucursalActual==null)
 			{
 				printMenu();
 
@@ -301,7 +297,9 @@ public class InterfazSuperAndes
 			nit = sc.nextLine();
 			if(nit.trim().equals(""))
 				System.out.println("¡El nit no puede ser vacio!");
-			else 
+			else if(persistencia.existeProveedor(nit))
+				System.out.println("¡Ya existe un proveedor con ese nit!");
+			else
 				break;
 
 		}
@@ -351,11 +349,16 @@ public class InterfazSuperAndes
 
 		}
 
-		//TODO GENERAR PROVEEDOR CON LOS DATOS
-		
-//		persistencia.requerimiento1(nit, nombre, correoElectronico, Long.valueOf(telefono));
+		try
+		{
+			persistencia.requerimiento1(nit, nombre, correoElectronico, Long.valueOf(telefono));
+			System.out.println("nit: "+nit+" ,nombre: "+nombre+" ,correoElectronico: "+correoElectronico+" ,telefono: "+telefono);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Hubo un error, no se logro agregar correctamente al proveedor");
+		}
 
-		System.out.println("nit: "+nit+" ,nombre: "+nombre+" ,correoElectronico: "+correoElectronico+" ,telefono: (+57)"+telefono);
 
 	}
 
@@ -366,8 +369,7 @@ public class InterfazSuperAndes
 
 		String codigoProducto ="";
 		String resp ="0";
-		//		Productos producto=new Productos("x","x","x","x","x",5,"x",5,"x");
-		Productos producto=null;
+		boolean existe=false;
 
 		while(true)
 		{
@@ -378,10 +380,10 @@ public class InterfazSuperAndes
 			else
 			{
 				//TODO traer porducto con ese codigo barras
-				//				producto=
+				existe=persistencia.existeProducto(codigoProducto);
+				
 
-
-				if(producto==null)
+				if(!existe)
 				{
 					while(true)
 					{
@@ -396,6 +398,11 @@ public class InterfazSuperAndes
 						System.out.println("¡Debe escoger una opción valida!");
 
 					}				
+				}
+				else if(persistencia.existeProductoSucursal(sucursalActual.getIdSucursal()+"-"+codigoProducto))
+				{
+					System.out.println("¡Ya se encuentra registrado el producto con ese codigo en su sucursal!");
+					return;
 				}
 
 				break;
@@ -533,14 +540,15 @@ public class InterfazSuperAndes
 			}
 
 			//TODO GENERAR PRODUCTO CON LOS DATOS
-			producto=new Productos("x","x","x","x","x",5,"x",5,"x");
-
+			persistencia.agregarProducto(codigoProducto, nombre, marca, presentacion, unidadPeso, cantidadPeso, unidadVolumen, cantidadVolumen, tipoProducto);
+			existe=true;
+			
 			System.out.println("codigoBarras: "+codigoProducto+" ,nombre: "+nombre+" ,presentacion: "+presentacion+" ,unidadPeso: "+unidadPeso
 					+" unidadVolumen: "+unidadVolumen+" ,cantidadPeso: "+cantidadPeso+" ,cantidadVolumen: "+cantidadVolumen+" ,tipoProducto: "+tipoProducto);
 
 
 		}
-		if(producto!=null)
+		if(existe)
 		{
 			double precio=0;
 			while(true)
@@ -562,12 +570,12 @@ public class InterfazSuperAndes
 
 
 			}
-			String idProductoSucursal=idSucursal+"-"+codigoProducto;
 
-			//TODO GEENERAR PRODUCTO SUCURSAL CON VALORES
 			try {
-//				persistencia.agregarProductosSucursal(idSucursal, precio, codigoProducto, Long.MAX_VALUE, idProductoSucursal);
-				System.out.println("idProductoSucursal: "+idProductoSucursal+" ,idSucursal: "+idSucursal+" ,precio: "+precio+" ,codigoProducto: "+codigoProducto);
+				
+				ProductosSucursal prod=persistencia.agregarProductosSucursal(sucursalActual.getIdSucursal(), precio, codigoProducto);
+			
+				System.out.println("idProductoSucursal: "+prod.getIdProductoSucursal()+" ,idSucursal: "+sucursalActual.getIdSucursal()+" ,precio: "+precio+" ,codigoProducto: "+codigoProducto);
 
 			} catch (Exception e) {
 				
@@ -730,9 +738,8 @@ public class InterfazSuperAndes
 		}
 
 		//TODO PONER EL ID QUE GENERO EL SISTEMA
-		idSucursal=0l;
-//		persistencia.requerimiento4(nombre, ciudad, direccion);
-		System.out.println("idSucursal: "+idSucursal+" ,nombre: "+nombre+" ,ciudad: "+ciudad+" ,direccion: "+direccion);
+		sucursalActual = persistencia.requerimiento4(nombre, ciudad, direccion);
+		System.out.println("idSucursal: "+sucursalActual.getIdSucursal()+" ,nombre: "+nombre+" ,ciudad: "+ciudad+" ,direccion: "+direccion);
 
 	}
 
@@ -866,7 +873,7 @@ public class InterfazSuperAndes
 
 		try {
 //			persistencia.requerimiento5(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, idSucursal, nivelReOrden, tipoProducto);
-			System.out.println("idBodega: "+idBodega+" ,idSucursal: "+idSucursal+" ,unidadPeso: "+unidadPeso
+			System.out.println("idBodega: "+idBodega+" ,idSucursal: "+sucursalActual.getIdSucursal()+" ,unidadPeso: "+unidadPeso
 					+" unidadVolumen: "+unidadVolumen+" ,capacidadPeso: "+capacidadPeso+" ,capacidadVolumen: "+capacidadVolumen
 					+" ,tipoProducto: "+tipoProducto+" ,nivelReOrden: "+nivelReOrden);
 
@@ -1004,7 +1011,7 @@ public class InterfazSuperAndes
 		Long idEstante=0l;
 		try {
 //			persistencia.requerimiento6(capacidadVolumen, capacidadPeso, unidadPeso, unidadVolumen, idSucursal, nivelReOrden, tipoProducto);
-			System.out.println("idEstante: "+idEstante+" ,idSucursal: "+idSucursal+" ,unidadPeso: "+unidadPeso
+			System.out.println("idEstante: "+idEstante+" ,idSucursal: "+sucursalActual.getIdSucursal()+" ,unidadPeso: "+unidadPeso
 					+" unidadVolumen: "+unidadVolumen+" ,capacidadPeso: "+capacidadPeso+" ,capacidadVolumen: "+capacidadVolumen
 					+" ,tipoProducto: "+tipoProducto+" ,nivelReOrden: "+nivelReOrden);
 
@@ -1300,7 +1307,7 @@ public class InterfazSuperAndes
 		for(String codigoProducto:idsProductos)
 		{
 			//TODO REGISTRAR PROMOCION A PRODUCTO SUCURSAL CON idProductoSucursal
-			String idProductoSucursal=idSucursal+"-"+codigoProducto;
+			String idProductoSucursal=sucursalActual.getIdSucursal()+"-"+codigoProducto;
 			System.out.println("idProductoSucursal: "+idProductoSucursal+" ,se le agrego la promocion con id idPromocion: "+idPromocion);
 
 		}
@@ -1395,7 +1402,7 @@ public class InterfazSuperAndes
 
 		}
 		
-		//TODO cambiar estado a ENTREGADO, regitrar fecha de entrega, actualizar cantidad de productos en bodega/estantes
+		//TODO cambiar estado a ENTREGADO, registrar fecha de entrega, actualizar cantidad de productos en bodega/estantes
 
 
 	}
@@ -1407,20 +1414,24 @@ public class InterfazSuperAndes
 		while(true)
 		{
 			System.out.println("Ingrese el id de la Sucursal a la que desea ingresar");
+			System.out.println("---Sucursales Existentes:");
+			for(Sucursal sucursal:persistencia.darSucursales())
+				System.out.println("----- Nombre: "+sucursal.getNombre()+" id: "+sucursal.getIdSucursal());
+
 			String cant= sc.nextLine();
 			try
 			{
 				Integer.parseInt(cant);
-				idSucursal=Long.valueOf(cant);
+				sucursalActual=persistencia.darSucursalPorId(Long.valueOf(cant));
+				if(sucursalActual!=null)
+					break;
+				System.out.println("¡Debe ingresar el id de una sucursal existente!");
 
-				//TODO ENCONTRAR SUCURSAL Y GUARDARLA EN
-				//				sucursal=;
 
-				break;
 			}
 			catch(Exception e)
 			{
-				idSucursal=-1l;
+				sucursalActual=null;
 				System.out.println("¡Debe ingresar un numero!");
 			}
 
@@ -1483,7 +1494,7 @@ public class InterfazSuperAndes
 		System.out.println("---------ISIS - Sistemas Transaccionales----------");
 		System.out.println("---------------------Iteración 1----------------------");
 		System.out.println("---------------------Super Andes----------------------");
-		System.out.println("---------------------Sucursal "+ idSucursal+"----------------------");
+		System.out.println("---------------------Sucursal "+ sucursalActual.getNombre()+ " con id "+sucursalActual.getIdSucursal()+"----------------------");
 		System.out.println("1) RF1. REGISTRAR PROVEEDORES ");
 		System.out.println("2) RF2. REGISTRAR PRODUCTOS");		
 		System.out.println("3) RF3. REGISTRAR CLIENTES");		

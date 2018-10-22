@@ -3,13 +3,15 @@
  */
 package main.java.model;
 
+import java.util.LinkedList;
+
 /**
  * @author Andres
  *
  */
 public class Sucursal {
 
-	private long id;
+	private long idSucursal;
 	
 	private String nombre;
 	
@@ -19,24 +21,36 @@ public class Sucursal {
 	
 	public Sucursal(long pId,String pNombre,String pCiudad,String pDireccion)
 	{
-		id=pId;
+		idSucursal=pId;
 		nombre=pNombre;
 		ciudad=pCiudad;
 		direccion=pDireccion;
 	}
 
 	/**
+	 * Constructor por defecto
+	 */
+	public Sucursal() 
+	{
+		this.idSucursal = 0;
+		this.nombre = "";
+		this.ciudad = "";
+		this.direccion = "";
+		
+	} 
+	
+	/**
 	 * @return the id
 	 */
-	public Long getId() {
-		return id;
+	public Long getIdSucursal() {
+		return idSucursal;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdSucursal(Long id) {
+		this.idSucursal = id;
 	}
 
 	/**

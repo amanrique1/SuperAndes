@@ -8,6 +8,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import main.java.model.Productos;
 import main.java.model.ProductosSucursal;
 
 /**
@@ -38,20 +39,24 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLProductosSucursal (PersistenciaSuperAndes pp)
+	public SQLProductosSucursal (PersistenciaSuperAndes pp,SQLSucursal sqlSucursal,SQLProductos sqlProductos)
 	{
 		this.pp = pp;
+		this.sqlSucursal = sqlSucursal;
+		this.sqlProductos = sqlProductos;
+
+
 	}
 
 
-	public void agregarProductosSucursal (PersistenceManager pm,long pIdSuc, double pPrecio,String pCodigo, long pIdPromo, String pIdProductoSucursal) throws Exception 
+	public void agregarProductosSucursal (PersistenceManager pm,long pIdSuc, double pPrecio,String pCodigo, String pIdProductoSucursal) throws Exception 
 	{
-		if(sqlSucursal.darSucursalPorId(pm,pIdSuc )==null||sqlProductos.darProductoPorCodigo(pm, pCodigo)==null)
+		if(sqlSucursal.darSucursalPorId(pm,pIdSuc )==null||!sqlProductos.existeProducto(pm, pCodigo))
 		{
 			throw new Exception("Datos invalidos");
 		}
-		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProductosSucursal() + "(idSucursal,precio,CodigoProducto,idPromocion,idProductoSucursal) values (?, ?, ?,?,?)");
-		q1.setParameters( pIdSuc,  pPrecio, pCodigo,  pIdPromo,  pIdProductoSucursal  );
+		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProductosSucursal() + "(idSucursal,precio,CodigoProducto,idProductoSucursal) values (?,?,?,?)");
+		q1.setParameters( pIdSuc,  pPrecio, pCodigo,  pIdProductoSucursal  );
 		q1.executeUnique();
 	}
 
@@ -62,6 +67,15 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 		Query q2 = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaProductosSucursal () + " WHERE cantidadVendida = 0");
 		q2.executeUnique();
 
+	}
+	
+	public boolean existeProductoSucursal(PersistenceManager pm, String identificador)
+	{
+		Query q1 = pm.newQuery(SQL, "SELECT idProductoSucursal FROM " + pp.darTablaProductosSucursal()+ " WHERE idProductoSucursal ='"+identificador+"'");
+		String comp=q1.executeUnique()+"";
+		if(comp.equals(identificador))
+			return true;
+		return false;
 	}
 	
 	public void descontarProductoSucursalEnCantidad (PersistenceManager pm,long idProductoSucursal, int cantidadDescontar, String codigo)
@@ -109,7 +123,13 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
-	
+	public List<Productos> darProductosRangoPrecio (PersistenceManager pm, double valMin,double valMax)
+	{
+		Query q = pm.newQuery(SQL, "SELECT codigobarras, nombre,marca,presentacion,unidadPeso,cantidadPeso, unidadVolumen,tipoproducto FROM (SELECT * FROM "+ pp.darTablaProductosSucursal()+" WHERE precio>= "+valMin+" AND precio <= "+valMax+") INNER JOIN "+ pp.darTablaProductos()+" ON codigoproducto=codigobarras");
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+		
+	}
 	
 	
 	
