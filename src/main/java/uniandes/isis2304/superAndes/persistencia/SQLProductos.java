@@ -3,6 +3,7 @@
  */
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -93,7 +94,62 @@ public class SQLProductos {
 		return (List<Productos>) q.executeList();
 		
 	}
-
-
-
-}
+	public List<Productos> darProductosFechaVencPost(PersistenceManager pm, Timestamp fecha)
+	{
+		Query q = pm.newQuery(SQL, "SELECT codigobarras, nombre,marca,presentacion,unidadPeso,cantidadPeso, unidadVolumen,tipoproducto FROM (SELECT * FROM "+ pp.darTablaLotes()+" WHERE FechaVnecimiento> "+ fecha+") INNER JOIN "+pp.darTablaProductos()+" ON codigoProducto=codigoBarras");
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+	}
+	
+	public List<Productos> darProductosRangoPeso (PersistenceManager pm,double valMin,double valMax)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaProductos()+" WHERE cantidadPeso>="+valMin+" cantidadPeso<="+valMax);
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+		
+	}
+	
+	public List<Productos> darProductosRangoVol (PersistenceManager pm,double valMin,double valMax)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaProductos()+" WHERE cantidadVolumen>="+valMin+" cantidadVolumen<="+valMax);
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+		
+	}
+	
+	public List<Productos> darProductosMarca (PersistenceManager pm,String marca)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaProductos()+" WHERE marca="+marca);
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();	
+	}
+	
+	public List<Productos> darProductosCiudad(PersistenceManager pm, String ciudad)
+	{
+		Query q = pm.newQuery(SQL, "SELECT codigobarras, nombre,marca,presentacion,unidadPeso,cantidadPeso, unidadVolumen,tipoproducto FROM (SELECT * FROM "+ pp.darTablaSucursal()+" a INNER JOIN" +pp.darTablaProductosSucursal()+" b ON a.idsucursal=b.idsucursal WHERE ciudad="+ciudad+") INNER JOIN "+pp.darTablaProductos()+" ON codigoProducto=codigoBarras");
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+	}
+	
+	public List<Productos> darProductosSucursal(PersistenceManager pm, long idSucursal)
+	{
+		Query q = pm.newQuery(SQL, "SELECT codigobarras, nombre,marca,presentacion,unidadPeso,cantidadPeso, unidadVolumen,tipoproducto FROM (SELECT * FROM "+ pp.darTablaProductosSucursal()+" WHERE idSucursal="+idSucursal+") INNER JOIN "+pp.darTablaProductos()+" ON codigoProducto=codigoBarras");
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+	}
+	
+	public List<Productos> darProductosCategoria(PersistenceManager pm, String categoria)
+	{
+		Query q = pm.newQuery(SQL, "SELECT codigobarras, nombre,marca,presentacion,unidadPeso,cantidadPeso, unidadVolumen,tipoproducto FROM (SELECT * FROM "+ pp.darTablaTipoProducto()+" WHERE nombreCategoria="+categoria+") t INNER JOIN "+pp.darTablaProductos()+" p ON t.nombretipo=p.tipoproducto");
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+	}
+	
+	public List<Productos> darProductosTipo(PersistenceManager pm, String tipo)
+	{
+		Query q = pm.newQuery(SQL, "SELECT codigobarras, nombre,marca,presentacion,unidadPeso,cantidadPeso, unidadVolumen,tipoproducto FROM "+pp.darTablaTipoProducto()+" INNER JOIN "+pp.darTablaProductos()+" ON nombretipo=tipoproducto");
+		q.setResultClass(Productos.class);
+		return (List<Productos>) q.executeList();
+	}
+	
+	}

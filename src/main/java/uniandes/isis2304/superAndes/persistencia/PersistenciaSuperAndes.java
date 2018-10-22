@@ -27,6 +27,8 @@ import main.java.model.Empresa;
 import main.java.model.EstadoPedido;
 import main.java.model.Estante;
 import main.java.model.FacturasComprador;
+import main.java.model.IndiceBodega;
+import main.java.model.IndiceEstante;
 import main.java.model.Lote;
 import main.java.model.Pedido;
 import main.java.model.Persona;
@@ -352,7 +354,7 @@ public class PersistenciaSuperAndes
 
 
 	/**
-	 * Transacci�n para el generador de secuencia de Parranderos
+	 * Transacci�n para el generador de secuencia de superAndes
 	 * Adiciona entradas al log de la aplicaci�n
 	 * @return El siguiente n�mero del secuenciador de Parranderos
 	 */
@@ -1705,7 +1707,7 @@ public class PersistenciaSuperAndes
 	}
 
 
-	public List<Promocion> darPromociones (PersistenceManager pm)
+	public List<Promocion> darPromociones ()
 	{
 		return sqlPromocion.darPromociones(pmf.getPersistenceManager()); 
 	}
@@ -1969,6 +1971,68 @@ public class PersistenciaSuperAndes
 		return total;
 	}
 	
+	public List<Promocion> requerimientoConsulta2()
+	{		
+		return sqlPromocion.darPromocionesMasVend(pmf.getPersistenceManager());
+	}
+	
+	public List<IndiceBodega> requerimientoConsulta3_1()
+	{
+		List<IndiceBodega> req3= sqlBodegas.darOcupacion(pmf.getPersistenceManager());
+		return req3;
+	}
+	
+	public List<IndiceEstante> requerimientoConsulta3_2()
+	{
+		List<IndiceEstante> req3= sqlEstante.darOcupacion(pmf.getPersistenceManager());
+		return req3;
+	}
+	
+	public List<Productos> requerimientoConsulta4_1(double valMin,double valMax)
+	{		
+		return sqlProductosSucursal.darProductosRangoPrecio(pmf.getPersistenceManager(), valMin, valMax);
+	}
+	
+	public List<Productos> requerimientoConsulta4_2(Timestamp fecha)
+	{		
+		return sqlProductos.darProductosFechaVencPost(pmf.getPersistenceManager(), fecha);
+	}
+	
+	public List<Productos> requerimientoConsulta4_3(double valMin,double valMax)
+	{		
+		return sqlProductos.darProductosRangoPeso(pmf.getPersistenceManager(), valMin, valMax);
+	}
+	
+	public List<Productos> requerimientoConsulta4_4(double valMin,double valMax)
+	{		
+		return sqlProductos.darProductosRangoVol(pmf.getPersistenceManager(), valMin, valMax);
+	}
+	
+	public List<Productos> requerimientoConsulta4_5(String marca)
+	{		
+		return sqlProductos.darProductosMarca(pmf.getPersistenceManager(), marca);
+	}
+	
+	public List<Productos> requerimientoConsulta4_6(String ciudad)
+	{		
+		return sqlProductos.darProductosCiudad(pmf.getPersistenceManager(), ciudad);
+	}
+	
+	public List<Productos> requerimientoConsulta4_7(long sucursal)
+	{		
+		return sqlProductos.darProductosSucursal(pmf.getPersistenceManager(), sucursal);
+	}
+	
+	public List<Productos> requerimientoConsulta4_8(String categoria)
+	{		
+		return sqlProductos.darProductosCategoria(pmf.getPersistenceManager(), categoria);
+	}
+	
+	public List<Productos> requerimientoConsulta4_9(String tipo)
+	{		
+		return sqlProductos.darProductosTipo(pmf.getPersistenceManager(), tipo);
+	}
+		
 	public List<Pedido> requerimientoConsulta5()
 	{
 		return darPedidosEntregados();

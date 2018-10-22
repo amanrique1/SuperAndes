@@ -6,6 +6,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import main.java.model.Estante;
+import main.java.model.IndiceEstante;
+import main.java.model.IndiceEstante;
 
 
 public class SQLEstante {
@@ -88,6 +90,13 @@ public class SQLEstante {
 		return (Estante) q.executeUnique();
 
 	}
-
+	public List<IndiceEstante> darOcupacion(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idEstante,capacidadvolumen,x.unidadvolumen AS unidEstante,cantidad,prod.cantidadvolumen,prod.unidadvolumen AS unidProducto FROM("
+				+ "SELECT idEstante,capacidadvolumen,a.unidadvolumen, cantidad, s.codigoproducto FROM(SELECT b.idEstante,b.capacidadvolumen,b.unidadvolumen, p.cantidad, p.idproductosucursal FROM "+pp.darTablaProductosEstante()+" p inner join "+pp.darTablaEstantes()+" b on p.idestante=b.idestante)a "
+				+ "INNER JOIN "+pp.darTablaProductosSucursal()+" s on a.idproductosucursal=s.idproductosucursal) x INNER JOIN "+pp.darTablaProductos()+" prod on x.codigoproducto=prod.codigobarras");
+		q.setResultClass(IndiceEstante.class);
+		return (List<IndiceEstante>) q.executeList();
+	}
 	
 }
