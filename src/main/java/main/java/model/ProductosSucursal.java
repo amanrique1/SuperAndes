@@ -19,13 +19,12 @@ public class ProductosSucursal {
 	
 	private String idProductoSucursal;
 	
-	public ProductosSucursal(long pIdSuc, double pPrecio,String pCodigo, long pIdPromo, String pIdProductoSucursal)
+	public ProductosSucursal(long pIdSuc, double pPrecio,String pCodigo, String pIdProductoSucursal)
 	{
 	
 		idSucursal=pIdSuc;
 		precio=pPrecio;
 		codigoProducto=pCodigo;
-		idPromocion=pIdPromo;
 		idProductoSucursal=pIdProductoSucursal;
 		
 	}

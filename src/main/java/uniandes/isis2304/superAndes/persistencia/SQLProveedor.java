@@ -6,6 +6,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import main.java.model.Proveedor;
+import main.java.model.Sucursal;
 
 public class SQLProveedor {
 	
@@ -37,7 +38,7 @@ public class SQLProveedor {
 	{
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProveedor() + "(NIT, nombre, correoElectronico, telefono) values (?, ?, ?, ?)");
 		q1.setParameters(pNit,pNombre,pCorreo,pTel);
-	q1.executeUnique();
+		q1.executeUnique();
 	}
 
 	
@@ -60,11 +61,20 @@ public class SQLProveedor {
 
 	public Proveedor darProveedorPorNit (PersistenceManager pm, String identificador) 
 	{
-		Query q1 = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaProveedor () + " WHERE NIT = ?");
+		Query q1 = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaProveedor() + " WHERE nit = ?");
 		q1.setResultClass(Proveedor.class);
 		q1.setParameters(identificador);
 		Proveedor comp=(Proveedor)q1.executeUnique();
 		return comp;
+	}
+	
+	public boolean existeProveedor(PersistenceManager pm, String identificador)
+	{
+		Query q1 = pm.newQuery(SQL, "SELECT nit FROM " + pp.darTablaProveedor () + " WHERE nit ='"+identificador+"'");
+		String comp=q1.executeUnique()+"";
+		if(comp.equals(identificador))
+			return true;
+		return false;
 	}
 	
 	public Proveedor darProveedorPorNombre (PersistenceManager pm, String nombre) 

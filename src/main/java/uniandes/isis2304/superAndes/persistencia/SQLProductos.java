@@ -43,16 +43,11 @@ public class SQLProductos {
 	}
 	
 	
-	public void agregarProducto (PersistenceManager pm, String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto) throws Exception 
+	public void agregarProducto (PersistenceManager pm, String codigo, String nombre, String marca, String presentacion, String unidadPeso, double cantidadPeso, String unidadVolumen,double cantidadVolumen,String tipoProducto) 
 	{
-		if (sqlTipoProducto.darTipoProducto(pm,tipoProducto)==null)
-		{
-		throw new Exception("Datos invalidos");
-		}
-		
 		Query q1 = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProductos() + "( CodigoBarras,  nombre,  marca,  presentacion,  unidadPeso,  cantidadPeso,  unidadVolumen, cantidadVolumen, TipoProducto) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		q1.setParameters( codigo,  nombre,  marca,  presentacion,  unidadPeso,  cantidadPeso,  unidadVolumen, cantidadVolumen, tipoProducto);
-	q1.executeUnique();
+		q1.executeUnique();
 	}
 
 	
@@ -79,6 +74,15 @@ public class SQLProductos {
 		q1.setParameters(identificador);
 		Productos comp=(Productos)q1.executeUnique();
 		return comp;
+	}
+	
+	public boolean existeProducto(PersistenceManager pm, String identificador)
+	{
+		Query q1 = pm.newQuery(SQL, "SELECT codigoBarras FROM " + pp.darTablaProductos()+ " WHERE codigoBarras ='"+identificador+"'");
+		String comp=q1.executeUnique()+"";
+		if(comp.equals(identificador))
+			return true;
+		return false;
 	}
 
 	
