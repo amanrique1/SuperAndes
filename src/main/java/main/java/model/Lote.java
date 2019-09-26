@@ -24,6 +24,11 @@ public class Lote {
 		cantidadProductos=pCantidad;
 	}
 
+	public Lote()
+	{
+	
+	}
+
 
 	/**
 	 * @return the codigoProducto

@@ -1,40 +1,59 @@
 package main.java.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Andres
  *
  */
 public class Estante {
 
-	private Long id;
+	private long idEstante;
 	
 	private double capacidadVolumen;
 	
 	private double capacidadPeso;
 	
-	private String unidadesPeso;
+	private String unidadPeso;
 	
-	private String unidadesVolumen;
+	private String unidadVolumen;
 	
 	private double nivelReOrden;
 	
-	private Long idSucursal;
+	private long idSucursal;
 	
 	private String tipoProducto;
 	
-	public Estante(Long pId,double pCapVol,double pCapPeso,String pUnidVol,String pUnidPeso, double pCantidad,Long pIdSucursal, String pTipo)
+	private List<ProductosMostrar> productos;
+	
+	public Estante(long idEstante,long idSucursal,String unidadPeso,String unidadVolumen,double capacidadPeso,double capacidadVolumen, double nivelReOrden, String tipoProducto)
 	{
-		id=pId;
-		capacidadVolumen=pCapVol;
-		capacidadPeso=pCapPeso;
-		unidadesPeso=pUnidPeso;
-		unidadesVolumen=pUnidVol;
-		nivelReOrden=pCantidad;
-		idSucursal=pIdSucursal;
-		tipoProducto=pTipo;
+		this.idEstante=idEstante;
+		this.capacidadVolumen=capacidadVolumen;
+		this.capacidadPeso=capacidadPeso;
+		this.unidadPeso=unidadPeso;
+		this.unidadVolumen=unidadVolumen;
+		this.nivelReOrden=nivelReOrden;
+		this.idSucursal=idSucursal;
+		this.tipoProducto=tipoProducto;
+		productos=new ArrayList<ProductosMostrar>();
+
 	}
 
-	
+	public Estante(long pId, String pTipo)
+	{
+		idEstante=pId;
+		tipoProducto=pTipo;
+		productos=new ArrayList<ProductosMostrar>();
+	}
+
+	public Estante()
+	{
+		
+		productos=new ArrayList<ProductosMostrar>();
+	}
+
 	
 	/**
 	 * @return the tipoProducto
@@ -57,15 +76,15 @@ public class Estante {
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
-		return id;
+	public Long getIdEstante() {
+		return idEstante;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdEstante(Long id) {
+		this.idEstante =id;
 	}
 
 	/**
@@ -78,7 +97,7 @@ public class Estante {
 	/**
 	 * @param capacidadVolumen the capacidadVolumen to set
 	 */
-	public void setCapacidadVolumen(double capacidadVolumen) {
+	public void setCapacidadVolumen(Float capacidadVolumen) {
 		this.capacidadVolumen = capacidadVolumen;
 	}
 
@@ -92,36 +111,36 @@ public class Estante {
 	/**
 	 * @param capacidadPeso the capacidadPeso to set
 	 */
-	public void setCapacidadPeso(double capacidadPeso) {
+	public void setCapacidadPeso(Float capacidadPeso) {
 		this.capacidadPeso = capacidadPeso;
 	}
 
 	/**
 	 * @return the unidadesPeso
 	 */
-	public String getUnidadesPeso() {
-		return unidadesPeso;
+	public String getUnidadPeso() {
+		return unidadPeso;
 	}
 
 	/**
 	 * @param unidadesPeso the unidadesPeso to set
 	 */
-	public void setUnidadesPeso(String unidadesPeso) {
-		this.unidadesPeso = unidadesPeso;
+	public void setUnidadPeso(String unidadesPeso) {
+		this.unidadPeso = unidadesPeso;
 	}
 
 	/**
 	 * @return the unidadesVolumen
 	 */
-	public String getUnidadesVolumen() {
-		return unidadesVolumen;
+	public String getUnidadVolumen() {
+		return unidadVolumen;
 	}
 
 	/**
 	 * @param unidadesVolumen the unidadesVolumen to set
 	 */
-	public void setUnidadesVolumen(String unidadesVolumen) {
-		this.unidadesVolumen = unidadesVolumen;
+	public void setUnidadVolumen(String unidadesVolumen) {
+		this.unidadVolumen = unidadesVolumen;
 	}
 
 	/**
@@ -134,7 +153,7 @@ public class Estante {
 	/**
 	 * @param nivelReOrden the nivelReOrden to set
 	 */
-	public void setNivelReOrden(int cantidadReOrden) {
+	public void setNivelReOrden(Float cantidadReOrden) {
 		this.nivelReOrden = cantidadReOrden;
 	}
 
@@ -152,5 +171,22 @@ public class Estante {
 		this.idSucursal = idSucursal;
 	}
 	
+	public List<ProductosMostrar> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<ProductosMostrar> productos) {
+		this.productos = productos;
+	}
 	
+	public void agregarProducto(ProductosMostrar producto)
+	{
+		productos.add(producto);
+	}
+
+	public void deletaAll()
+	{
+		productos.clear();
+	}
+
 }

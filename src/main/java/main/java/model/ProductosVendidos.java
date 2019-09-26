@@ -1,59 +1,66 @@
 package main.java.model;
 
+
 public class ProductosVendidos {
 
-	private long idFactura;
+	private long noFactura;
+	
+	private int cantidadVendida;
 	
 	private String idProductoSucursal;
 	
-	private int cantidad;
+
 	
+	public ProductosVendidos()
+	{
+		noFactura=0;
+		idProductoSucursal="";
+		cantidadVendida=0;
+	}
 	public ProductosVendidos(long pIdFactura,String pIdProductoSucursal, int pCantidad)
 	{
-		idFactura=pIdFactura;
+		noFactura=pIdFactura;
 		idProductoSucursal=pIdProductoSucursal;
-		cantidad=pCantidad;
+		cantidadVendida=pCantidad;
 	}
-
 	/**
-	 * @return the idFactura
+	 * @return the noFactura
 	 */
-	public long getIdFactura() {
-		return idFactura;
+	public long getNoFactura() {
+		return noFactura;
 	}
-
 	/**
-	 * @param idFactura the idFactura to set
+	 * @param noFactura the noFactura to set
 	 */
-	public void setIdFactura(long idFactura) {
-		this.idFactura = idFactura;
+	public void setNoFactura(long noFactura) {
+		this.noFactura = noFactura;
 	}
-
 	/**
-	 * @return the codigoProducto
+	 * @return the cantidadVendida
+	 */
+	public int getCantidadVendida() {
+		return cantidadVendida;
+	}
+	/**
+	 * @param cantidadVendida the cantidadVendida to set
+	 */
+	public void setCantidadVendida(int cantidadVendida) {
+		this.cantidadVendida = cantidadVendida;
+	}
+	/**
+	 * @return the idProductoSucursal
 	 */
 	public String getIdProductoSucursal() {
 		return idProductoSucursal;
 	}
-
 	/**
-	 * @param codigoProducto the codigoProducto to set
+	 * @param idProductoSucursal the idProductoSucursal to set
 	 */
-	public void setIdProductoSucursalProducto(String codigoProducto) {
-		this.idProductoSucursal = codigoProducto;
+	public void setIdProductoSucursal(String idProductoSucursal) {
+		this.idProductoSucursal = idProductoSucursal;
 	}
 
-	/**
-	 * @return the cantidad
-	 */
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	/**
-	 * @param cantidad the cantidad to set
-	 */
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
+	
+	
+	
 }

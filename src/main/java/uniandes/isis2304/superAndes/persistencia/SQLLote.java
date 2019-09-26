@@ -31,9 +31,10 @@ public class SQLLote {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLLote (PersistenciaSuperAndes pp)
+	public SQLLote (PersistenciaSuperAndes pp,SQLProductos pSqlProductos)
 	{
 		this.pp = pp;
+		sqlProductos=pSqlProductos;
 	}
 
 

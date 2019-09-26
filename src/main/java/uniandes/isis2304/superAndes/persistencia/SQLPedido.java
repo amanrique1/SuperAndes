@@ -34,13 +34,15 @@ public class SQLPedido {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLPedido (PersistenciaSuperAndes pp)
+	public SQLPedido (PersistenciaSuperAndes pp, SQLProveedor pSqlProveedor, SQLSucursal pSqlSucursal)
 	{
 		this.pp = pp;
+		sqlProveedor=pSqlProveedor;
+		sqlSucursal=pSqlSucursal;
 	}
 
 
-	public void agregarPedido (PersistenceManager pm,long id,Timestamp fechaEntregaAc,Timestamp fechaEntrega,EstadoPedido estado, long idSucursal, String idProveedor) throws Exception 
+	public void agregarPedido (PersistenceManager pm,long id,String fechaEntregaAc,String fechaEntrega,EstadoPedido estado, long idSucursal, String idProveedor) throws Exception 
 	{
 		
 		if (sqlSucursal.darSucursalPorId(pm,idSucursal)==null||sqlProveedor.darProveedorPorNit(pm,idProveedor)==null)
@@ -53,12 +55,21 @@ public class SQLPedido {
 		q1.executeUnique();
 	}
 	
-	public void recibirPedido (PersistenceManager pm,EstadoPedido estado, long idPedido) 
+	public void cambiarEstadoPedido (PersistenceManager pm,EstadoPedido estado, long idPedido) 
 	{
 		
 		
 		Query q1 = pm.newQuery(SQL, "UPDATE " + pp.darTablaPedido() + " SET estado= ? WHERE idPedido= ?");
 		q1.setParameters(  estado.toString(),idPedido);
+		q1.executeUnique();
+	}
+
+	public void recibirPedido (PersistenceManager pm,Timestamp fechaEntrega, long idPedido) 
+	{
+		
+		
+		Query q1 = pm.newQuery(SQL, "UPDATE " + pp.darTablaPedido() + " SET fechaEntrega= ? WHERE idPedido= ?");
+		q1.setParameters(  fechaEntrega,idPedido);
 		q1.executeUnique();
 	}
 
@@ -75,10 +86,20 @@ public class SQLPedido {
 	public Pedido darPedidoPorId (PersistenceManager pm, Long id)
 	{
 
-		Query q2 = pm.newQuery(SQL, "SELECT FROM " + pp.darTablaPedido () + " WHERE idPedido = ?");
+		Query q2 = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaPedido () + " WHERE idPedido = ?");
 		q2.setResultClass(Pedido.class);
 		q2.setParameters(id);
 		return (Pedido)q2.executeUnique();
+
+	}
+	
+	public long darIdSucursalPorIdPedido (PersistenceManager pm, long idPedido)
+	{
+
+		Query q2 = pm.newQuery(SQL, "SELECT idSucursal FROM " + pp.darTablaPedido () + " WHERE idPedido = ?");
+		q2.setResultClass(long.class);
+		q2.setParameters(idPedido);
+		return (long)q2.executeUnique();
 
 	}
 

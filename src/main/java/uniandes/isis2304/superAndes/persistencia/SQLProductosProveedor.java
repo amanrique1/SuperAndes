@@ -36,9 +36,12 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLProductosProveedor (PersistenciaSuperAndes pp)
+	public SQLProductosProveedor (PersistenciaSuperAndes pp,SQLPedido pSqlPedido, SQLProductos pSqlProductos,SQLProveedor pSqlProveedor)
 	{
 		this.pp = pp;
+		sqlPedido=pSqlPedido;
+		sqlProductos=pSqlProductos;
+		sqlProveedor=pSqlProveedor;
 	}
 
 

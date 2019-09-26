@@ -31,9 +31,10 @@ public class SQLTipoProducto {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLTipoProducto (PersistenciaSuperAndes pp)
+	public SQLTipoProducto (PersistenciaSuperAndes pp,SQLCategoria pSqlCategoria)
 	{
 		this.pp = pp;
+		sqlCategoria=pSqlCategoria;
 	}
 
 
@@ -74,6 +75,5 @@ public class SQLTipoProducto {
 		q.executeUnique();
 
 	}
-
-	
+		
 }

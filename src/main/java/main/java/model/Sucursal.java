@@ -51,6 +51,7 @@ public class Sucursal {
 	 */
 	public void setIdSucursal(Long id) {
 		this.idSucursal = id;
+
 	}
 
 	/**

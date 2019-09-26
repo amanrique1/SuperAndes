@@ -37,9 +37,10 @@ public class SQLEmpresas {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLEmpresas (PersistenciaSuperAndes pp)
+	public SQLEmpresas (PersistenciaSuperAndes pp,SQLCompradores pSqlCompradores)
 	{
 		this.pp = pp;
+		sqlCompradores=pSqlCompradores;
 	}
 	
 	
@@ -77,7 +78,7 @@ public class SQLEmpresas {
 		q.setResultClass(String.class);
 		q.setParameters(idEmpresa);
 		String direccion=(String)q.executeUnique();
-		Empresa emp= new Empresa(comp.getIdentificador(), comp.getNombre(), comp.getCorreoElectronico(), direccion);
+		Empresa emp= new Empresa(comp.getIdentificador(), comp.getNombre(), comp.getCorreoElectronico(), direccion,comp.getPuntos());
 		return emp;
 	}
 
@@ -87,6 +88,15 @@ public class SQLEmpresas {
 		q.setResultClass(Empresa.class);
 		return (List<Empresa>) q.executeList();
 		
+	}
+	
+	public boolean existeEmpresa(PersistenceManager pm, String nit)
+	{
+		Query q1 = pm.newQuery(SQL, "SELECT nit FROM " + pp.darTablaEmpresas() + " WHERE nit ='"+nit+"'");
+		String comp=q1.executeUnique()+"";
+		if(comp.equals(nit))
+			return true;
+		return false;
 	}
 
 }

@@ -38,7 +38,10 @@ public class ProductosProveedor {
 
 	}
 
-	
+	public ProductosProveedor()
+	{
+	}
+
 
 	/**
 	 * @return the idPedido

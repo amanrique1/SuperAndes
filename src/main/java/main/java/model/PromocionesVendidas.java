@@ -9,58 +9,45 @@ package main.java.model;
  */
 public class PromocionesVendidas {
 
-private Long idFactura;
+private Long noFactura;
 	
 	private Long idPromocion;
 	
-	private int cantidad;
+	private int cantidadVendida;
 	
 	public PromocionesVendidas(Long pIdFactura,Long pCodigo, int pCantidad)
 	{
-		idFactura=pIdFactura;
+		noFactura=pIdFactura;
 		idPromocion=pCodigo;
-		cantidad=pCantidad;
+		cantidadVendida=pCantidad;
+	}
+	public PromocionesVendidas()
+	{	
 	}
 
-	/**
-	 * @return the idFactura
-	 */
-	public Long getIdFactura() {
-		return idFactura;
+	public Long getNoFactura() {
+		return noFactura;
 	}
 
-	/**
-	 * @param idFactura the idFactura to set
-	 */
-	public void setIdFactura(Long idFactura) {
-		this.idFactura = idFactura;
+	public void setNoFactura(Long noFactura) {
+		this.noFactura = noFactura;
 	}
 
-	/**
-	 * @return the codigoProducto
-	 */
-	public Long detIdPromocion() {
+	public Long getIdPromocion() {
 		return idPromocion;
 	}
 
-	/**
-	 * @param codigoProducto the codigoProducto to set
-	 */
-	public void setIdPromocion(Long codigoProducto) {
-		this.idPromocion = codigoProducto;
+	public void setIdPromocion(Long idPromocion) {
+		this.idPromocion = idPromocion;
 	}
 
-	/**
-	 * @return the cantidad
-	 */
-	public int getCantidad() {
-		return cantidad;
+	public int getCantidadVendida() {
+		return cantidadVendida;
 	}
 
-	/**
-	 * @param cantidad the cantidad to set
-	 */
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
+	public void setCantidadVendida(int cantidadVendida) {
+		this.cantidadVendida = cantidadVendida;
 	}
+
+	
 }

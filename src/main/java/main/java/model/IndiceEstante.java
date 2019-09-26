@@ -177,5 +177,10 @@ public class IndiceEstante {
 		}
 		
 	}
+	public String toString()
+	{
+		return idEstante+"";
+	}
+	
 	
 }

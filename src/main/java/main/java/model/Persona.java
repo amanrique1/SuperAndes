@@ -14,13 +14,16 @@ public class Persona extends Comprador {
 
 	private String cedula;
 
-	public Persona(String pCedula,String pNombre,String pCorreo)
+	public Persona(String pCedula,String pNombre,String pCorreo,double pPuntos)
 	{
-		super(pNombre, pCorreo, "CEDULA", 0);
+		super(pNombre, pCorreo, pCedula, pPuntos);
 		cedula=pCedula;
 
 	}
-
+	public Persona()
+	{
+		super();
+	}
 	/**
 	 * @return the cedula
 	 */
@@ -32,6 +35,7 @@ public class Persona extends Comprador {
 	 * @param cedula the cedula to set
 	 */
 	public void setCedula(String cedula) {
+		setIdentificador(cedula);
 		this.cedula = cedula;
 	}
 

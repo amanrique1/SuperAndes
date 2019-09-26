@@ -13,22 +13,26 @@ public class ProductosBodega {
 	
 	private long idBodega;
 	
-	private int cantidadProductos;
+	private int cantidad;
 	
 	public ProductosBodega(long pId, int pCant,String pIdProductoSucursal)
 	{
 		idProductoSucursal=pIdProductoSucursal;
 		idBodega=pId;
-		cantidadProductos=pCant;
+		cantidad=pCant;
 	}
 	
+	public ProductosBodega()
+	{
+		
+	}
 	
 
 	/**
 	 * @return the cantidadProductos
 	 */
-	public int getCantidadProductos() {
-		return cantidadProductos;
+	public int getCantidad() {
+		return cantidad;
 	}
 
 
@@ -36,8 +40,8 @@ public class ProductosBodega {
 	/**
 	 * @param cantidadProductos the cantidadProductos to set
 	 */
-	public void setCantidadProductos(int cantidadProductos) {
-		this.cantidadProductos = cantidadProductos;
+	public void setCantidad(int cantidadProductos) {
+		this.cantidad = cantidadProductos;
 	}
 
 

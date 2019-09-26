@@ -38,7 +38,7 @@ public class SQLPromocion {
 	}
 
 
-	public void agregarPromocion (PersistenceManager pm,long id,String pDescripcion,Timestamp pFechaIni,Timestamp pFechaFin,int px, int py, TipoPromocion pTipo) throws Exception 
+	public void agregarPromocion (PersistenceManager pm,long id,String pDescripcion,String pFechaIni,String pFechaFin,int px, int py, TipoPromocion pTipo) throws Exception 
 	{
 
 

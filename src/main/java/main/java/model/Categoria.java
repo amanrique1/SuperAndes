@@ -19,6 +19,10 @@ public class Categoria {
 		perecedero=pPerecedero;
 	}
 
+	public Categoria()
+	{
+	}
+
 	/**
 	 * @return the nombreCategoria
 	 */
@@ -45,6 +49,15 @@ public class Categoria {
 	 */
 	public void setPerecedero(boolean perecedero) {
 		this.perecedero = perecedero;
+	}
+	/**
+	 * @param perecedero the perecedero to set
+	 */
+	public void setPerecedero(String perecedero) {
+		if(perecedero.equalsIgnoreCase("true"))
+			this.perecedero = true;
+		else
+			this.perecedero = false;		
 	}
 	
 }

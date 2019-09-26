@@ -3,12 +3,16 @@
  */
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import main.java.model.Productos;
+import main.java.model.ProductosMostrar;
 import main.java.model.ProductosSucursal;
 
 /**
@@ -72,26 +76,29 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	public boolean existeProductoSucursal(PersistenceManager pm, String identificador)
 	{
 		Query q1 = pm.newQuery(SQL, "SELECT idProductoSucursal FROM " + pp.darTablaProductosSucursal()+ " WHERE idProductoSucursal ='"+identificador+"'");
+		q1.setResultClass(String.class);
 		String comp=q1.executeUnique()+"";
 		if(comp.equals(identificador))
 			return true;
 		return false;
 	}
 	
-	public void descontarProductoSucursalEnCantidad (PersistenceManager pm,long idProductoSucursal, int cantidadDescontar, String codigo)
+	public void descontarProductoSucursalEnCantidad (PersistenceManager pm,String idProductoSucursal, int cantidadDescontar)
 	{
 
-		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosSucursal () + " SET cantidad=cantidad-? WHERE idProductoSucursal=? AND CodigoProducto=?");
-		q3.setParameters( cantidadDescontar ,idProductoSucursal, codigo);
+		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosSucursal () + " SET cantidadProducto=cantidadProducto-? WHERE idProductoSucursal=?");
+		q3.setParameters( cantidadDescontar ,idProductoSucursal);
 		q3.executeUnique();
+		
 
 	}
+	
 
-	public void abastecerProductoSucursalEnCantidad (PersistenceManager pm,long idProductoSucursal, int cantidadDescontar, String codigo)
+	public void abastecerProductoSucursalEnCantidad (PersistenceManager pm,String idProductoSucursal, int cantidadDescontar)
 	{
 
-		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosSucursal () + " SET cantidad=cantidad+? WHERE idProductoSucursal=? AND CodigoProducto=?");
-		q3.setParameters( cantidadDescontar ,idProductoSucursal, codigo);
+		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosSucursal () + " SET cantidadProducto=cantidadProducto+? WHERE idProductoSucursal=?");
+		q3.setParameters( cantidadDescontar ,idProductoSucursal);
 		q3.executeUnique();
 
 	}
@@ -131,8 +138,41 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 		
 	}
 	
+	public void actualizarListaProductosMostrarProductoSucursal (PersistenceManager pm, List<ProductosMostrar> productos)
+	{
+		for(ProductosMostrar producto:productos)
+		{
+			Query q = pm.newQuery(SQL, "SELECT precio FROM "+ pp.darTablaProductosSucursal()+ " WHERE idProductoSucursal='"+producto.getIdProductoSucursal()+"'");		
+			producto.setPrecio(Double.parseDouble(""+q.executeUnique()));
+			
+
+			q = pm.newQuery(SQL, "SELECT idPromocion FROM "+ pp.darTablaProductosSucursal()+ " WHERE idProductoSucursal='"+producto.getIdProductoSucursal()+"'");		
+			try
+			{
+				BigInteger id=(BigInteger)q.executeUnique();
+				producto.setIdPromocion(id.longValue());
+			}
+			catch(Exception e) {
+				//no tiene promoción
+			}
+		}
+
+	}	
+	public List<String> darIdsProductosSucursalDeEstante (PersistenceManager pm, long idEstante)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idProductoSUcursal FROM "+ pp.darTablaProductosEstante()+ " WHERE idEstante= ?");
+		q.setParameters(idEstante+"");
+		return (List<String>) q.executeList();
+
+	}
 	
-	
+	public int darCantidadProductoPorId(PersistenceManager pm, String idProductoSucursal)
+	{
+		Query q = pm.newQuery(SQL, "SELECT cantidadProducto FROM "+ pp.darTablaProductosSucursal()+ " WHERE idProductoSucursal= ?");
+		q.setParameters(idProductoSucursal);
+		return ( (BigDecimal) q.executeUnique()).intValue();
+
+	}
 
 
 }

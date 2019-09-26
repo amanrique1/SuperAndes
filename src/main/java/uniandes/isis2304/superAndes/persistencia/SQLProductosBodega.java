@@ -1,10 +1,14 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import main.java.model.Productos;
 import main.java.model.ProductosBodega;
 import main.java.model.ProductosEstante;
 
@@ -32,9 +36,11 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLProductosBodega (PersistenciaSuperAndes pp)
+	public SQLProductosBodega (PersistenciaSuperAndes pp,SQLProductosSucursal pSqlProductosSucursal,SQLBodegas pSqlBodega)
 	{
 		this.pp = pp;
+		sqlProductosSucursal=pSqlProductosSucursal;
+		sqlBodega=pSqlBodega;
 	}
 
 
@@ -66,6 +72,18 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 		q3.executeUnique();
 
 	}
+	public long descontarProductoSucursalDeBodegaEnCantidad (PersistenceManager pm,int cant,String idProductoSucursal)
+	{
+
+		Query q3 = pm.newQuery(SQL, "UPDATE " + pp.darTablaProductosBodega () + " SET cantidad=cantidad-? WHERE idProductoSucursal=?");
+		q3.setParameters( cant ,idProductoSucursal);
+		q3.executeUnique();
+		q3 = pm.newQuery(SQL, "SELECT idBodega FROM " + pp.darTablaProductosBodega () + " WHERE idProductoSucursal=?");
+		q3.setParameters( idProductoSucursal);
+		return ((BigDecimal)q3.executeUnique()).longValue();
+
+
+	}
 
 	public void abastecerProductoSucursalDeBodegaEnCantidad (PersistenceManager pm,long idBodega,int cant,String idProductoSucursal)
 	{
@@ -85,6 +103,8 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 	
+
+	
 	public int darCantidadProductoSucursalDeBogega (PersistenceManager pm, long idBodega, String idProductoSucursal )
 	{
 		Query q = pm.newQuery(SQL, "SELECT cantidad FROM "+ pp.darTablaProductosBodega()+ " WHERE idBodega= ? AND idProductoSucursal=?");
@@ -93,6 +113,17 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 
+	
+	public int darCantidadProductoSucursalEnBodegas (PersistenceManager pm, String idProductoSucursal )
+	{
+		Query q = pm.newQuery(SQL, "SELECT cantidad FROM "+ pp.darTablaProductosBodega()+ " WHERE idProductoSucursal=?");
+		q.setParameters(idProductoSucursal);
+		int cantBodega=0;
+		for(BigDecimal n:(List<BigDecimal>) q.executeList())
+			cantBodega+=n.intValue();
+		return cantBodega;
+
+	}
 	public List<ProductosBodega> darProductosBodega (PersistenceManager pm, long idBodega)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaProductosBodega()+ " WHERE idBodega= ?");
@@ -113,5 +144,44 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 
 	}
 
+	List<Productos> productos;
+	
+	public double[] darCantidadLleno (PersistenceManager pm, long idBodega,SQLProductos sqlProductos)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaProductosBodega()+" WHERE idBodega=?");
+		q.setResultClass(ProductosBodega.class);
+		q.setParameters(idBodega);
+		double volumen=0;
+		double peso=0;
+		productos=new ArrayList<Productos>();
+		for(ProductosEstante productosEstante:(List<ProductosEstante>)q.executeList())
+		{
+			String codigoBarras=productosEstante.getIdProductoSucursal().substring(productosEstante.getIdProductoSucursal().indexOf("-")+1);
+			int cantidad=productosEstante.getCantidad();
+			double pPeso=(sqlProductos.darPesoPorIdProducto(pm, codigoBarras));
+			if(sqlProductos.darUnidadPesoPorIdProducto(pm, codigoBarras).equalsIgnoreCase("g"))
+				pPeso=pPeso/1000;			
+			peso+=pPeso*cantidad;
+			
+			double pVolumen=(sqlProductos.darVolumenPorIdProducto(pm, codigoBarras));
+
+			if(sqlProductos.darUnidadVolumenPorIdProducto(pm, codigoBarras).equalsIgnoreCase("ml"))
+				pVolumen=volumen/1000;
+			volumen+=pVolumen*cantidad;
+			
+			productos.add(new Productos(codigoBarras,pPeso,pVolumen,cantidad));
+		}
+		double[] cants=new double[2];
+		cants[0]=peso;
+		cants[1]=volumen;
+		return cants;
+	}
+	public List<Productos> getProductos(){
+		return productos;
+	}
+	public void setProductosNull()
+	{
+		productos=null;
+	}
 	
 }

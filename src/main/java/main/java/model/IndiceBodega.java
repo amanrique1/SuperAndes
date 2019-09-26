@@ -178,4 +178,9 @@ public class IndiceBodega {
 		
 	}
 	
+	public String toString()
+	{
+		return idBodega+"";
+	}
+	
 }

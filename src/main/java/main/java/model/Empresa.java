@@ -9,10 +9,14 @@ public class Empresa extends Comprador
 	
 	private String direccion;
 
-	public Empresa(String pNit,String pNombre,String pCorreoElectronico,String pDireccion){
-		super(pNit,pNombre,pCorreoElectronico,0);
+	public Empresa(String pNit,String pNombre,String pCorreoElectronico,String pDireccion,double puntos){
+		super(pNombre,pCorreoElectronico,pNit,puntos);
 		nit=pNit;		
 		direccion=pDireccion;
+		
+	}
+	public Empresa(){
+		super();
 		
 	}
 
@@ -27,6 +31,7 @@ public class Empresa extends Comprador
 	 * @param nit the nit to set
 	 */
 	public void setNit(String nit) {
+		setIdentificador(nit);
 		this.nit = nit;
 	}
 

@@ -9,7 +9,7 @@ package main.java.model;
  */
 public class TipoProducto {
 	
-	private String tipo;
+	private String nombreTipo;
 	
 	private String metodoAlmacenamiento;
 	
@@ -17,52 +17,40 @@ public class TipoProducto {
 	
 	public TipoProducto(String pTipo,String pMetodoAlmacenamiento,String pCategoria)
 	{
-		tipo=pTipo;
+		nombreTipo=pTipo;
 		metodoAlmacenamiento=pMetodoAlmacenamiento;
 		nombreCategoria=pCategoria;
 	}
-
-	/**
-	 * @return the nombreCategoria
-	 */
-	public String getNombreCategoria() {
-		return nombreCategoria;
+	public TipoProducto()
+	{
+		
 	}
 
-	/**
-	 * @param nombreCategoria the nombreCategoria to set
-	 */
-	public void setNombreCategoria(String nombreCategoria) {
-		this.nombreCategoria = nombreCategoria;
+
+	public String getNombreTipo() {
+		return nombreTipo;
 	}
 
-	/**
-	 * @return the tipo
-	 */
-	public String getTipo() {
-		return tipo;
+	public void setNombreTipo(String nombreTipo) {
+		this.nombreTipo = nombreTipo;
 	}
 
-	/**
-	 * @param tipo the tipo to set
-	 */
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	/**
-	 * @return the metodoAlmacenamiento
-	 */
 	public String getMetodoAlmacenamiento() {
 		return metodoAlmacenamiento;
 	}
 
-	/**
-	 * @param metodoAlmacenamiento the metodoAlmacenamiento to set
-	 */
 	public void setMetodoAlmacenamiento(String metodoAlmacenamiento) {
 		this.metodoAlmacenamiento = metodoAlmacenamiento;
 	}
+
+	public String getNombreCategoria() {
+		return nombreCategoria;
+	}
+
+	public void setNombreCategoria(String nombreCategoria) {
+		this.nombreCategoria = nombreCategoria;
+	}
+
 
 	
 	

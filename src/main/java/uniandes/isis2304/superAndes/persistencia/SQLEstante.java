@@ -1,5 +1,7 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -7,6 +9,7 @@ import javax.jdo.Query;
 
 import main.java.model.Estante;
 import main.java.model.IndiceEstante;
+import main.java.model.Sucursal;
 import main.java.model.IndiceEstante;
 
 
@@ -34,9 +37,11 @@ public class SQLEstante {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLEstante (PersistenciaSuperAndes pp)
+	public SQLEstante (PersistenciaSuperAndes pp,SQLSucursal pSqlSucursal,SQLTipoProducto pSqlTipoProducto)
 	{
 		this.pp = pp;
+		sqlSucursal=pSqlSucursal;
+		sqlTipoProducto=pSqlTipoProducto;
 	}
 
 
@@ -63,22 +68,46 @@ public class SQLEstante {
 
 
 
-	public List<Estante> darEstantesSucursal (PersistenceManager pm,long idSucursal)
+	public List<String> darTipos(PersistenceManager pm, String identificador)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaEstantes()+" WHERE idSucursal= ?");
+		Query q1 = pm.newQuery(SQL, "SELECT tipoProducto FROM " + pp.darTablaEstantes () + " WHERE idSucursal = ?");
+		q1.setParameters(identificador);
+		List<String> tipos= (List<String>) q1.executeList();
+		
+		return tipos;
+	}
+
+	public List<Long> darIds(PersistenceManager pm, String identificador)
+	{
+		Query q1 = pm.newQuery(SQL, "SELECT idEstante FROM " + pp.darTablaEstantes () + " WHERE idSucursal = ?");
+		q1.setParameters(identificador);
+		List<BigDecimal> ids1= (List<BigDecimal>) q1.executeList();
+		List<Long> ids= new ArrayList<Long>();
+
+		for(BigDecimal id:ids1)
+			ids.add(id.longValue());
+		
+		
+		return ids;
+	}
+	public List<Estante> darEstantes (PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM ESTANTE");
 		q.setResultClass(Estante.class);
-		q.setParameters(idSucursal);
 		List<Estante> estante= (List<Estante>) q.executeList();
 		return estante;
 
 	}
-
-
-	public List<Estante> darEstantes (PersistenceManager pm)
+	public List<Estante> darEstantesPorSucursal (PersistenceManager pm,long idSucursal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaEstantes());
-		q.setResultClass(Estante.class);
-		return (List<Estante>) q.executeList();
+		List<Estante> estantes= new ArrayList<Estante>();
+		List<String> tipos=darTipos(pm, idSucursal+"");
+		List<Long> ids=darIds(pm, idSucursal+"");
+		
+		for(int i=0;i<ids.size();i++)
+			estantes.add(new Estante(ids.get(i),tipos.get(i)));
+		
+		return estantes;
 
 	}
 
@@ -97,6 +126,42 @@ public class SQLEstante {
 				+ "INNER JOIN "+pp.darTablaProductosSucursal()+" s on a.idproductosucursal=s.idproductosucursal) x INNER JOIN "+pp.darTablaProductos()+" prod on x.codigoproducto=prod.codigobarras");
 		q.setResultClass(IndiceEstante.class);
 		return (List<IndiceEstante>) q.executeList();
+	}
+	
+	
+	public int darNivelReOrden (PersistenceManager pm, long idEstante)
+	{
+		Query q = pm.newQuery(SQL, "SELECT nivelReOrden FROM "+ pp.darTablaEstantes()+" WHERE idEstante= ?");
+		q.setParameters(idEstante);
+		return ((BigDecimal)q.executeUnique()).intValue();
+
+	}
+
+	
+	public double[] darPorLlenar (PersistenceManager pm, long idEstante,double[] cantidad)
+	{
+		
+		
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaEstantes()+" WHERE idEstante= ?");
+		q.setResultClass(Estante.class);
+		q.setParameters(idEstante);
+		Estante estante=(Estante)q.executeUnique(); 
+		
+		
+		double[] porLlenar= new double[2];
+		System.out.println("Capacidad peso: "+estante.getCapacidadPeso()+estante.getUnidadPeso());
+		if(estante.getUnidadPeso().equalsIgnoreCase("kg"))
+			porLlenar[0]=estante.getCapacidadPeso()-cantidad[0];
+		else
+			porLlenar[0]=(estante.getCapacidadPeso()/1000)-cantidad[0];
+		
+		System.out.println("Capacidad volumen: "+estante.getCapacidadVolumen()+estante.getUnidadVolumen());
+		if(estante.getUnidadVolumen().equalsIgnoreCase("l"))
+			porLlenar[1]=estante.getCapacidadVolumen()-cantidad[1];
+		else
+			porLlenar[1]=(estante.getCapacidadVolumen()/1000)-cantidad[1];
+		return porLlenar;
+
 	}
 	
 }

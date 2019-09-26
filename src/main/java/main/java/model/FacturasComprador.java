@@ -13,19 +13,29 @@ import java.util.List;
  */
 public class FacturasComprador {
 
-	private Long numero;
+	private long numero;
 	
 	private Timestamp fecha;
 	
-	private String idCliente;
+	private String idComprador;
 	
-	private Long idSucursal;
+	private long idSucursal;
+	
+	public FacturasComprador()
+	{
+		numero=0;
+		fecha=new Timestamp(System.currentTimeMillis());
+		idComprador="";
+		idSucursal=0;
+		
+		
+	}
 	
 	public FacturasComprador(Long pId,Timestamp pFecha,String pIdPersona, long pIdSucursal)
 	{
 		numero=pId;
 		fecha=pFecha;
-		idCliente=pIdPersona;
+		idComprador=pIdPersona;
 		idSucursal=pIdSucursal;
 		
 	}
@@ -33,19 +43,19 @@ public class FacturasComprador {
 	
 	
 	/**
-	 * @return the idCliente
+	 * @return the idComprador
 	 */
-	public String getIdCliente() {
-		return idCliente;
+	public String getIdComprador() {
+		return idComprador;
 	}
 
 
 
 	/**
-	 * @param idCliente the idCliente to set
+	 * @param idComprador the idComprador to set
 	 */
-	public void setIdCliente(String idCliente) {
-		this.idCliente = idCliente;
+	public void setIdComprador(String idComprador) {
+		this.idComprador = idComprador;
 	}
 
 
@@ -71,7 +81,7 @@ public class FacturasComprador {
 	/**
 	 * @return the numero
 	 */
-	public Long getNumero() {
+	public long getNumero() {
 		return numero;
 	}
 
@@ -96,6 +106,9 @@ public class FacturasComprador {
 		this.fecha = fecha;
 	}
 
-
+	public String toString()
+	{
+		return numero+"";
+	}
 
 }

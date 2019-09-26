@@ -3,20 +3,22 @@ package main.java.model;
 public class ProductosEstante {
 
 	private Long idEstante;
-	
-	private String codigoBarrasProducto;
-	
+
+	private String idProductoSucursal;
+
 	private int cantidad;
-	
+
 	public  ProductosEstante(Long pId,String pCodigoBarras, int pCantidad) {
-		
+
 		idEstante=pId;
-		codigoBarrasProducto=pCodigoBarras;
+		idProductoSucursal=pCodigoBarras;
 		cantidad=pCantidad;
 	}
 
-	
-	
+	public  ProductosEstante() {
+	}
+
+
 	/**
 	 * @return the cantidad
 	 */
@@ -52,15 +54,15 @@ public class ProductosEstante {
 	/**
 	 * @return the codigoBarrasProducto
 	 */
-	public String getCodigoBarrasProducto() {
-		return codigoBarrasProducto;
+	public String getIdProductoSucursal() {
+		return idProductoSucursal;
 	}
 
 	/**
 	 * @param codigoBarrasProducto the codigoBarrasProducto to set
 	 */
-	public void setCodigoBarrasProducto(String codigoBarrasProducto) {
-		this.codigoBarrasProducto = codigoBarrasProducto;
+	public void setIdProductoSucursal(String idProductoSucursal) {
+		this.idProductoSucursal = idProductoSucursal;
 	}
-	
+
 }

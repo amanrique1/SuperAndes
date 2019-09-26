@@ -7,7 +7,7 @@ package main.java.model;
  * @author Andres
  *
  */
-public abstract class Comprador {
+public class Comprador {
 	
 	protected String nombre;
 	
@@ -23,6 +23,10 @@ public abstract class Comprador {
 		correoElectronico=pCorreoElectronico;
 		identificador=pIdentificador;
 		puntos=pPuntos;
+	}
+	public Comprador()
+	{
+	
 	}
 	
 	/**
@@ -81,6 +85,9 @@ public abstract class Comprador {
 		this.puntos = puntos;
 	}
 	
-	
+	public String toString()
+	{
+		return identificador;
+	}
 
 }

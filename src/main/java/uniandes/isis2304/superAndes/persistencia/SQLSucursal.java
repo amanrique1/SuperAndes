@@ -76,6 +76,15 @@ public class SQLSucursal {
 		Sucursal comp=(Sucursal)q1.executeUnique();
 		return comp;
 	}
+	
+	public long darIdSucursalPorNombre (PersistenceManager pm, String nombre) 
+	{
+		Query q1 = pm.newQuery(SQL, "SELECT idSucursal FROM " + pp.darTablaSucursal () + " WHERE nombre = ?");
+		q1.setResultClass(long.class);
+		q1.setParameters(nombre);
+		
+		return (long)q1.executeUnique();
+	}
 
 
 	public List<Sucursal> darSucursales (PersistenceManager pm)

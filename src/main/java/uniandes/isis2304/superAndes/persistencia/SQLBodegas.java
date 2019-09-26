@@ -1,5 +1,7 @@
 package uniandes.isis2304.superAndes.persistencia;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -7,7 +9,11 @@ import javax.jdo.Query;
 
 import main.java.model.Bodega;
 import main.java.model.Comprador;
+import main.java.model.Estante;
 import main.java.model.IndiceBodega;
+import main.java.model.Productos;
+import main.java.model.ProductosBodega;
+import main.java.model.ProductosEstante;
 
 public class SQLBodegas {
 
@@ -33,9 +39,11 @@ public class SQLBodegas {
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLBodegas (PersistenciaSuperAndes pp)
+	public SQLBodegas (PersistenciaSuperAndes pp,SQLSucursal pSqlSucursal,SQLTipoProducto pSqlTipoProducto)
 	{
 		this.pp = pp;
+		sqlSucursal=pSqlSucursal;
+		sqlTipoProducto=pSqlTipoProducto;
 	}
 
 
@@ -82,6 +90,14 @@ public class SQLBodegas {
 		return bodega;
 
 	}
+	
+	public int darNivelReOrden (PersistenceManager pm, long idBodega)
+	{
+		Query q = pm.newQuery(SQL, "SELECT nivelReOrden FROM "+ pp.darTablaBodegas()+" WHERE idBodega= ?");
+		q.setParameters(idBodega);
+		return ((BigDecimal)q.executeUnique()).intValue();
+
+	}
 
 
 	public List<Bodega> darBodegas (PersistenceManager pm)
@@ -98,6 +114,31 @@ public class SQLBodegas {
 				+ "INNER JOIN "+pp.darTablaProductosSucursal()+" s on a.idproductosucursal=s.idproductosucursal) x INNER JOIN "+pp.darTablaProductos()+" prod on x.codigoproducto=prod.codigobarras");
 		q.setResultClass(IndiceBodega.class);
 		return (List<IndiceBodega>) q.executeList();
+	}
+	public double[] darPorLlenar (PersistenceManager pm, long idBodega,double[] cantidad)
+	{
+		
+		
+		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaBodegas()+" WHERE idBodega= ?");
+		q.setResultClass(Bodega.class);
+		q.setParameters(idBodega);
+		Bodega bodega=(Bodega)q.executeUnique(); 
+		
+		
+		double[] porLlenar= new double[2];
+		System.out.println("Capacidad peso: "+bodega.getCapacidadPeso()+bodega.getUnidadPeso());
+		if(bodega.getUnidadPeso().equalsIgnoreCase("kg"))
+			porLlenar[0]=bodega.getCapacidadPeso()-cantidad[0];
+		else
+			porLlenar[0]=(bodega.getCapacidadPeso()/1000)-cantidad[0];
+		
+		System.out.println("Capacidad volumen: "+bodega.getCapacidadVolumen()+bodega.getUnidadVolumen());
+		if(bodega.getUnidadVolumen().equalsIgnoreCase("l"))
+			porLlenar[1]=bodega.getCapacidadVolumen()-cantidad[1];
+		else
+			porLlenar[1]=(bodega.getCapacidadVolumen()/1000)-cantidad[1];
+		return porLlenar;
+
 	}
 
 

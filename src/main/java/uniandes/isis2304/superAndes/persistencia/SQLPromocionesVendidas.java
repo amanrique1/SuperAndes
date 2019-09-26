@@ -16,9 +16,9 @@ import main.java.model.PromocionesVendidas;
  *
  */
 public class SQLPromocionesVendidas {
-	
-private final static String SQL = PersistenciaSuperAndes.SQL;
-	
+
+	private final static String SQL = PersistenciaSuperAndes.SQL;
+
 	/* ********
 	 * 			Atributos
 	 *********/
@@ -26,9 +26,9 @@ private final static String SQL = PersistenciaSuperAndes.SQL;
 	 * El manejador de persistencia general de la aplicaci�n
 	 */
 	private PersistenciaSuperAndes pp;
-	
-private SQLFacturasComprador sqlFacturas;
-	
+
+	private SQLFacturasComprador sqlFacturas;
+
 	private SQLProductosSucursal sqlProductosSucursal;
 
 
@@ -40,9 +40,11 @@ private SQLFacturasComprador sqlFacturas;
 	 * Constructor
 	 * @param pp - El Manejador de persistencia de la aplicaci�n
 	 */
-	public SQLPromocionesVendidas (PersistenciaSuperAndes pp)
+	public SQLPromocionesVendidas (PersistenciaSuperAndes pp,SQLFacturasComprador pSqlFacturas,SQLProductosSucursal pSqlProductosSucursal)
 	{
 		this.pp = pp;
+		sqlFacturas=pSqlFacturas;
+		sqlProductosSucursal=pSqlProductosSucursal;
 	}
 
 
@@ -65,7 +67,7 @@ private SQLFacturasComprador sqlFacturas;
 		q2.executeUnique();
 
 	}
-	
+
 	public void disminuirPromocionesVendidasDeFacturaEnCantidad (PersistenceManager pm,long noFactura,int cant,long idPromocion)
 	{
 
@@ -83,7 +85,7 @@ private SQLFacturasComprador sqlFacturas;
 		q3.executeUnique();
 
 	}
-	
+
 	public int darCantidadPromocionesVendidasDeFactura (PersistenceManager pm, long noFactura, long idPromocion )
 	{
 		Query q = pm.newQuery(SQL, "SELECT cantidad FROM "+ pp.darTablaFacturasCompradores()+ " WHERE noFactura=? AND idPromocion=?");
@@ -91,7 +93,7 @@ private SQLFacturasComprador sqlFacturas;
 		return (int) q.executeUnique();
 
 	}
-	
+
 	public PromocionesVendidas darProductoVendido (PersistenceManager pm, long noFactura, long idPromocion )
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM "+ pp.darTablaPromocionesVendidas()+ " WHERE noFactura=? AND idPromocion=?");
@@ -109,8 +111,8 @@ private SQLFacturasComprador sqlFacturas;
 		return (List<PromocionesVendidas>) q.executeList();
 
 	}
-	
-	
+
+
 
 	public List<PromocionesVendidas> darPromocionesSucursal (PersistenceManager pm, long idSucursal)
 	{

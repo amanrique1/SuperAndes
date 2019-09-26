@@ -9,15 +9,15 @@ package main.java.model;
  */
 public class Bodega {
 	
-	private Long id;
+	private Long idBodega;
 	
 	private double capacidadVolumen;
 	
 	private double capacidadPeso;
 	
-	private String unidadesPeso;
+	private String unidadPeso;
 	
-	private String unidadesVolumen;
+	private String unidadVolumen;
 	
 	private Long idSucursal;
 	
@@ -27,17 +27,19 @@ public class Bodega {
 	
 	public Bodega(Long pId,double pCapV,double pCapP,String pUniP,String pUniV,Long pIdSuc, double pNivel, String pTipo)
 	{
-		id=pId;
+		idBodega=pId;
 		capacidadVolumen=pCapV;
 		capacidadPeso=pCapP;
-		unidadesPeso=pUniP;
-		unidadesVolumen=pUniV;
+		unidadPeso=pUniP;
+		unidadVolumen=pUniV;
 		idSucursal=pIdSuc;
 		nivelReOrden=pNivel;
 		tipoProducto=pTipo;
 	}
 	
-	
+	public Bodega()
+	{
+	}
 
 	/**
 	 * @return the tipoProducto
@@ -79,14 +81,14 @@ public class Bodega {
 	 * @return the id
 	 */
 	public Long getId() {
-		return id;
+		return idBodega;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
 	public void setId(Long id) {
-		this.id = id;
+		this.idBodega = id;
 	}
 
 	/**
@@ -120,29 +122,29 @@ public class Bodega {
 	/**
 	 * @return the unidadesPeso
 	 */
-	public String getUnidadesPeso() {
-		return unidadesPeso;
+	public String getUnidadPeso() {
+		return unidadPeso;
 	}
 
 	/**
 	 * @param unidadesPeso the unidadesPeso to set
 	 */
-	public void setUnidadesPeso(String unidadesPeso) {
-		this.unidadesPeso = unidadesPeso;
+	public void setUnidadPeso(String unidadesPeso) {
+		this.unidadPeso = unidadesPeso;
 	}
 
 	/**
 	 * @return the unidadesVolumen
 	 */
-	public String getUnidadesVolumen() {
-		return unidadesVolumen;
+	public String getUnidadVolumen() {
+		return unidadVolumen;
 	}
 
 	/**
 	 * @param unidadesVolumen the unidadesVolumen to set
 	 */
-	public void setUnidadesVolumen(String unidadesVolumen) {
-		this.unidadesVolumen = unidadesVolumen;
+	public void setUnidadVolumen(String unidadesVolumen) {
+		this.unidadVolumen = unidadesVolumen;
 	}
 
 	/**

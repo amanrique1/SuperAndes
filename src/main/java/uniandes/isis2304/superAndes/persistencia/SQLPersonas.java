@@ -76,7 +76,7 @@ public class SQLPersonas {
 	{
 		
 		Comprador comp=sqlCompradores.darCompradorPorIdentificador(pm, identificador);
-		Persona pers= new Persona(comp.getIdentificador(), comp.getNombre(), comp.getCorreoElectronico());
+		Persona pers= new Persona(comp.getIdentificador(), comp.getNombre(), comp.getCorreoElectronico(),comp.getPuntos());
 		return pers;
 	}
 
@@ -86,6 +86,15 @@ public class SQLPersonas {
 		q.setResultClass(Persona.class);
 		return (List<Persona>) q.executeList();
 		
+	}
+	
+	public boolean existePersona(PersistenceManager pm, String identificador)
+	{
+		Query q1 = pm.newQuery(SQL, "SELECT cedula FROM " + pp.darTablaPersonas() + " WHERE cedula ='"+identificador+"'");
+		String comp=q1.executeUnique()+"";
+		if(comp.equals(identificador))
+			return true;
+		return false;
 	}
 	
 }

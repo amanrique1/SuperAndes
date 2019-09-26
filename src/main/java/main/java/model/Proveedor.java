@@ -27,6 +27,10 @@ public class Proveedor {
 		
 	}
 
+	public Proveedor()
+	{
+	
+	}
 	/**
 	 * @return the nit
 	 */
